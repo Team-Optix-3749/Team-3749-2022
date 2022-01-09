@@ -18,12 +18,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-          
-      - name: Change Director
-        run: cd ./Team-3749-2022
 
       - name: Grant execute permission for gradlew
+        working-directory: ./Team-3749-2022
         run: chmod +x ./gradlew
 
       - name: Build with Gradle
+        working-directory: ./Team-3749-2022
         run: ./gradlew build

@@ -5,15 +5,22 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.*;
+
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
 public class ArcadeDrive extends CommandBase {
 
   private final Drivetrain m_drive;
+  private final DoubleSupplier m_forward;
+  private final DoubleSupplier m_rotation;
 
-  public ArcadeDrive(Drivetrain drivetrain) {
+  public ArcadeDrive(Drivetrain drivetrain, DoubleSupplier forward, DoubleSupplier rotation) {
     m_drive = drivetrain;
+    m_forward = forward;
+    m_rotation = rotation;
     addRequirements(drivetrain);
   }
 
@@ -21,7 +28,9 @@ public class ArcadeDrive extends CommandBase {
   public void initialize() {}
 
   @Override
-  public void execute() {}
+  public void execute() {
+    m_drive.arcadeDrive(m_forward.getAsDouble(), m_rotation.getAsDouble());
+  }
 
   @Override
   public void end(boolean interrupted) {}

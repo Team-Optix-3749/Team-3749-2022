@@ -10,6 +10,12 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+
+/**
+ * @author Jadon Lee
+ * @author Rohin Sood
+ * @author Toby Leeder
+ */
 /** An example command that uses an example subsystem. */
 public class ArcadeDrive extends CommandBase {
 

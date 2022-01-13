@@ -51,4 +51,12 @@ public final class Constants {
         public static final JoystickButton XBOX_R = new JoystickButton(XBOX_CONTROLLER, Button.kRightBumper.value);
         
     }
+
+    public static final class Intake {
+        public static final int intakeMotor = 0; // FIND DEVICE ID
+        public static final int liftMotor = 0; // FIND DEVICE ID
+        public static final double kIntakeSpeed = 1.0;
+        public static final double kIntakeLiftUpSpeed = 1.0;
+        public static final double kIntakeLiftDownSpeed = -1.0;
+    }
 }

@@ -48,7 +48,13 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    m_drivetrain.setDefaultCommand(new ArcadeDrive(m_drivetrain, () -> m_xboxController.getRightY(), () -> m_xboxController.getLeftX()));
+    m_drivetrain.setDefaultCommand(
+      new ArcadeDrive(
+        m_drivetrain, 
+        () -> m_xboxController.getLeftY(), 
+        () -> m_xboxController.getRightX()
+      )
+    );
   }
 
   /**
@@ -66,7 +72,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-
+    // return null;
     // Create a voltage constraint to ensure we don't accelerate too fast
     var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
@@ -90,7 +96,7 @@ public class RobotContainer {
    } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory", ex.getStackTrace());
    }
-
+   
     RamseteCommand ramseteCommand =
         new RamseteCommand(
             exampleTrajectory,

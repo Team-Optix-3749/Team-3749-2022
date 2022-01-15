@@ -19,10 +19,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public final class Constants {
     public static final class Drivetrain {
-        public static final int leftFront = 24;
-        public static final int leftBack = 13;
-        public static final int rightFront = 23;
-        public static final int rightBack = 15;
+        public static final int leftFront = 11;
+        public static final int leftBack = 12;
+        public static final int rightFront = 13;
+        public static final int rightBack = 14;
         public static final double ksVolts = 0.22;
         public static final double kvVoltSecondsPerMeter = 1.98;
         public static final double kaVoltSecondsSquaredPerMeter = 0.2;

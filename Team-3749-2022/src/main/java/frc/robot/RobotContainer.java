@@ -91,7 +91,7 @@ public class RobotContainer {
     Trajectory exampleTrajectory = new Trajectory();
 
     try {
-      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("paths/Straight.wpilib.json");
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("paths/output/Straight.wpilib.json");
       exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
    } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory", ex.getStackTrace());

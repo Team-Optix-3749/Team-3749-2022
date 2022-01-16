@@ -23,19 +23,19 @@ public final class Constants {
         public static final int leftBack = 12;
         public static final int rightFront = 13;
         public static final int rightBack = 14;
-        public static final double ksVolts = 0.22;
-        public static final double kvVoltSecondsPerMeter = 1.98;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.2;
-        public static final double kPDriveVel = 8.5;
-        public static final double kTrackwidthMeters = 0.69;
+        public static final double ksVolts = 0.56049;
+        public static final double kvVoltSecondsPerMeter = 3.0424;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.15556;
+        public static final double kPDriveVel = 1.7169;
+        public static final double kTrackwidthMeters = 0.584;
         public static final DifferentialDriveKinematics kDriveKinematics =
             new DifferentialDriveKinematics(kTrackwidthMeters);
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+        public static final double kMaxSpeedMetersPerSecond = .1;
+        public static final double kMaxAccelerationMetersPerSecondSquared = .1;
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
         public static final double kWheelRadius = 0.0508;
-        public static final int kEncoderResolution = -2048;
+        public static final int kEncoderResolution = 2048;
     }
     public static final class Vision{
         public static final double kVisionP = 0.1;

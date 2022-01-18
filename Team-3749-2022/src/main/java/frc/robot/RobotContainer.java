@@ -40,7 +40,6 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain m_drivetrain = new Drivetrain();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final XboxController m_xboxController = new XboxController(0);
   //private final JoystickButton m_leftJoystick = new JoystickButton(m_xboxController);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -51,8 +50,8 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(
       new ArcadeDrive(
         m_drivetrain, 
-        () -> m_xboxController.getLeftY(), 
-        () -> m_xboxController.getRightX()
+        Xbox.leftJoystickY, 
+        Xbox.leftJoystickX
       )
     );
   }

@@ -23,10 +23,10 @@ public final class Constants {
         public static final int leftBack = 12;
         public static final int rightFront = 13;
         public static final int rightBack = 14;
-        public static final double ksVolts = 0.56049;
-        public static final double kvVoltSecondsPerMeter = 3.0424;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.15556;
-        public static final double kPDriveVel = 1.7169;
+        public static final double ksVolts = 0.0015; //0.59817
+        public static final double kvVoltSecondsPerMeter = 1.5; //3.0078
+        public static final double kaVoltSecondsSquaredPerMeter = 0.15896;
+        public static final double kPDriveVel = 2.9456;//2.9456;
         public static final double kTrackwidthMeters = 0.584;
         public static final DifferentialDriveKinematics kDriveKinematics =
             new DifferentialDriveKinematics(kTrackwidthMeters);
@@ -40,16 +40,6 @@ public final class Constants {
     public static final class Vision{
         public static final double kVisionP = 0.1;
         public static final double kVisionLimit = 0.5;
-    }
-    public static final class XBoxButton{
-        public static final XboxController XBOX_CONTROLLER = new XboxController(0);
-        public static final JoystickButton XBOX_X = new JoystickButton(XBOX_CONTROLLER, Button.kX.value);
-        public static final JoystickButton XBOX_Y = new JoystickButton(XBOX_CONTROLLER, Button.kY.value);
-        public static final JoystickButton XBOX_A = new JoystickButton(XBOX_CONTROLLER, Button.kA.value);
-        public static final JoystickButton XBOX_B = new JoystickButton(XBOX_CONTROLLER, Button.kB.value);
-        public static final JoystickButton XBOX_L = new JoystickButton(XBOX_CONTROLLER, Button.kLeftBumper.value);
-        public static final JoystickButton XBOX_R = new JoystickButton(XBOX_CONTROLLER, Button.kRightBumper.value);
-        
     }
 
     public static final class Intake {

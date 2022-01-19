@@ -29,7 +29,7 @@ public class ArcadeDrive extends CommandBase {
 
   @Override
   public void execute() {
-    m_drive.arcadeDrive(m_forward.getAsDouble(), -m_rotation.getAsDouble());
+    m_drive.arcadeDrive(-m_forward.getAsDouble(), m_rotation.getAsDouble());
   }
 
   @Override

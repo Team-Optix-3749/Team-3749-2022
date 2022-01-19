@@ -51,7 +51,7 @@ public class RobotContainer {
       new ArcadeDrive(
         m_drivetrain, 
         Xbox.leftJoystickY, 
-        Xbox.leftJoystickX
+        Xbox.rightJoystickX
       )
     );
   }
@@ -79,7 +79,7 @@ public class RobotContainer {
     Trajectory exampleTrajectory = new Trajectory();
 
     try {
-      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("paths/output/Straight.wpilib.json");
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("paths/output/output/straight.wpilib.json");
       exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
    } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory", ex.getStackTrace());

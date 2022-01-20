@@ -52,8 +52,8 @@ public class Drivetrain extends SubsystemBase {
 
     // Sets the distance per pulse for the encoders
     // Y'all need to check if this should be soemthing else
-    m_leftEncoder.setDistancePerPulse(2 * Math.PI * Constants.Drivetrain.kWheelRadius / Constants.Drivetrain.kEncoderResolution * 2);
-    m_rightEncoder.setDistancePerPulse(2 * Math.PI * Constants.Drivetrain.kWheelRadius / Constants.Drivetrain.kEncoderResolution * 2);
+    m_leftEncoder.setDistancePerPulse(2 * Math.PI * Constants.Drivetrain.kWheelRadius / Constants.Drivetrain.kEncoderResolution / 9.29);
+    m_rightEncoder.setDistancePerPulse(2 * Math.PI * Constants.Drivetrain.kWheelRadius / Constants.Drivetrain.kEncoderResolution / 9.29);
 
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
@@ -88,6 +88,7 @@ public class Drivetrain extends SubsystemBase {
    * @return The pose.
    */
   public Pose2d getPose() {
+    System.out.println(m_odometry.getPoseMeters().getX() + " " + m_odometry.getPoseMeters().getY());
     return m_odometry.getPoseMeters();
   }
 

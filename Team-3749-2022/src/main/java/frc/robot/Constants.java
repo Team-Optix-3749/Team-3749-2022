@@ -23,11 +23,16 @@ public final class Constants {
         public static final int leftBack = 12;
         public static final int rightFront = 13;
         public static final int rightBack = 14;
-        public static final double ksVolts = 0.0015; //0.59817
-        public static final double kvVoltSecondsPerMeter = 1.5; //3.0078
+        public static final double ksVolts = 0.0015; //0.59817;
+        public static final double kvVoltSecondsPerMeter = 2; //3.0078
         public static final double kaVoltSecondsSquaredPerMeter = 0.15896;
         public static final double kPDriveVel = 2.9456;//2.9456;
         public static final double kTrackwidthMeters = 0.584;
+        // public static final double ksVolts = 0.59817;
+        // public static final double kvVoltSecondsPerMeter = 3.0078;
+        // public static final double kaVoltSecondsSquaredPerMeter = 0.15896;
+        // public static final double kPDriveVel = 2.9456;
+        // public static final double kTrackwidthMeters = 0.584;
         public static final DifferentialDriveKinematics kDriveKinematics =
             new DifferentialDriveKinematics(kTrackwidthMeters);
         public static final double kMaxSpeedMetersPerSecond = .1;

@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 public class Drivetrain extends SubsystemBase {
   // tracking
   NetworkTable m_table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -57,13 +56,14 @@ public class Drivetrain extends SubsystemBase {
 
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+
   }
 
 
   public void arcadeDrive(double speed, double rotation) {
     m_drive.arcadeDrive(speed, rotation);
   }
-  public void tankDraive(double leftSpeed, double rightSpeed) {
+  public void tankDrive(double leftSpeed, double rightSpeed) {
     m_drive.tankDrive(leftSpeed, rightSpeed);
   }
   public void limeAlign () {
@@ -88,7 +88,7 @@ public class Drivetrain extends SubsystemBase {
    * @return The pose.
    */
   public Pose2d getPose() {
-    System.out.println(m_odometry.getPoseMeters().getX() + " " + m_odometry.getPoseMeters().getY());
+    // System.out.println(m_odometry.getPoseMeters().getX() + " " + m_odometry.getPoseMeters().getY());
     return m_odometry.getPoseMeters();
   }
 
@@ -187,4 +187,12 @@ public class Drivetrain extends SubsystemBase {
     return -m_gyro.getRate();
   }
 
+
+  public double getDistanceLeft() {
+    return m_leftEncoder.getDistance();
+  }
+
+  public double getDistanceRight() {
+    return m_rightEncoder.getDistance();
+  }
 }

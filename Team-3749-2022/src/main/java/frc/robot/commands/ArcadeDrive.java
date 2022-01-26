@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * @author Rohin Sood
  * @author Toby Leeder
  */
+import frc.robot.Xbox;
+
 /** An example command that uses an example subsystem. */
 public class ArcadeDrive extends CommandBase {
 
@@ -35,7 +37,12 @@ public class ArcadeDrive extends CommandBase {
 
   @Override
   public void execute() {
-    m_drive.arcadeDrive(m_forward.getAsDouble(), m_rotation.getAsDouble());
+    m_drive.arcadeDrive(-m_forward.getAsDouble()*.9, m_rotation.getAsDouble()*.75);
+
+    if (Xbox.XBOX_LS.get()) {
+      m_drive.arcadeDrive(-m_forward.getAsDouble(), m_rotation.getAsDouble()*.75);
+    }
+    // sprint button on joystick button
   }
 
   @Override

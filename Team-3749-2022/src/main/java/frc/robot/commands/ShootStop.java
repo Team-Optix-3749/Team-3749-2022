@@ -24,14 +24,12 @@ public class ShootStop extends CommandBase {
 
   @Override
   public void execute() {
-    m_shooter.resetShooter();
-    m_shooter.beltStop();
+    m_shooter.stopMotor();
   }
 
   @Override
   public void end(boolean interrupted) {
-    m_shooter.resetShooter();
-    m_shooter.beltStop();
+    m_shooter.stopMotor();
   }
 
   @Override

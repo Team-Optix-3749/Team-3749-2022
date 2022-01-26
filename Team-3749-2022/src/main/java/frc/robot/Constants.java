@@ -42,9 +42,10 @@ public final class Constants {
     public final class Shooter{
         public static final int motorRight = 0;
         public static final int motorLeft = 0;
-        public static final double kP = 0.0;
+        public static final double kP = 1.0;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
+        public static final double targetRPM = 5000;
         // public static final int maxRPM = 3000;
         // public static final int maxVoltage = 10;
     }

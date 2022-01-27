@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import java.io.InputStream;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
@@ -53,12 +51,15 @@ public class Shooter extends SubsystemBase{
         m_shooterMotor.set(m_pidController.calculate(current, target) * 0.004);
     }
 
+    public void setTurretMotor(double speed){
+        m_turretMotor.set(speed);
+    }
     public void visionAlign(){
-        double x = tx.getDouble(0.0);
-        double input = x * 0.02;
-        if (input>1){
-            m_turretMotor.set(0.8*input);
-        }
+
       }
+
+    public void visionAlign2(){
+
+    }
     
 }

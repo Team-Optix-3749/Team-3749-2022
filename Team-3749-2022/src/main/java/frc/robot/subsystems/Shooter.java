@@ -55,7 +55,21 @@ public class Shooter extends SubsystemBase{
         m_turretMotor.set(speed);
     }
     public void visionAlign(){
-
+        double x = tx.getDouble(0.0);
+        double multiplier = 1;
+        if (x<=5){
+          multiplier = 5;
+        }
+        else if (x>=5){
+          multiplier = 3;
+        }
+        else if (x>=10){
+          multiplier = 2;
+        }
+        double input = x * Constants.Vision.kVisionP * multiplier;
+        if (input>1){
+            m_turretMotor.set(0.8*input);
+        }
       }
 
     public void visionAlign2(){

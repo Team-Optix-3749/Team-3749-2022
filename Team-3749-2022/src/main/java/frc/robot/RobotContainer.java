@@ -23,7 +23,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 
 
@@ -37,6 +39,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final Drivetrain m_drivetrain = new Drivetrain();
+  private final Shooter m_shooter = new Shooter();
   //private final JoystickButton m_leftJoystick = new JoystickButton(m_xboxController);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -51,6 +54,8 @@ public class RobotContainer {
         Xbox.rightJoystickX
       )
     );
+    new RunCommand(() -> m_shooter.visionAlign(), m_shooter);
+    new PerpetualCommand(new VisionAlign(m_shooter).beforeStarting(() -> System.out.println("Hello")));
   }
 
   /**
@@ -66,7 +71,7 @@ public class RobotContainer {
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
-   * @return the command tqw2o run in autonomous
+   * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
 

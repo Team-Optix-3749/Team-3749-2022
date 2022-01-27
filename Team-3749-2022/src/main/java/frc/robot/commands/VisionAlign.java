@@ -17,7 +17,7 @@ public class VisionAlign extends CommandBase {
   private final Shooter m_shooter;
   NetworkTable m_table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = m_table.getEntry("tx");
-  double multiplier;
+  double multiplier = 1;
 
   public VisionAlign(Shooter shooter) {
     m_shooter = shooter;

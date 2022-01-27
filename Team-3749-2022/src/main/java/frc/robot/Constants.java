@@ -40,6 +40,7 @@ public final class Constants {
         public static final int kEncoderResolution = 2048;
     }
     public final class Shooter{
+        public static final int turretMotor = 0;
         public static final int motorRight = 0;
         public static final int motorLeft = 0;
         public static final double kP = 1.0;

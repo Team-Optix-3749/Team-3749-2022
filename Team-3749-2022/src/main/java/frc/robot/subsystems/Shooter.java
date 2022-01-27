@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase{
     private WPI_TalonFX m_motorRight = new WPI_TalonFX(Constants.Shooter.motorRight);
     
     private CANSparkMax m_turretMotor = new CANSparkMax(Constants.Shooter.turretMotor, MotorType.kBrushless);
-    private CANEncoder m_encoder = m_turretMotor.getEncoder();
+    private CANEncoder m_turretEncoder = m_turretMotor.getEncoder();
 
 
     private MotorControllerGroup m_shooterMotor = new MotorControllerGroup(m_motorLeft, m_motorRight);

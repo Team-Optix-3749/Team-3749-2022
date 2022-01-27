@@ -27,26 +27,32 @@ public class VisionAlign extends CommandBase {
 
   @Override
   public void initialize() {
-    double x = tx.getDouble(0.0);
-    if (x<=5){
-      multiplier = 5;
-    }
-    else if (x>=5){
-      multiplier = 3;
-    }
-    else if (x>=10){
-      multiplier = 2;
-    }
   }
 
 
   @Override
   public void execute() {
     double x = tx.getDouble(0.0);
+    if (Math.abs(x)<=5)
+      multiplier = 5;
+
+    else if (Math.abs(x)>=5)
+      multiplier = 3;
+
+    else if (Math.abs(x)>=10)
+      multiplier = 2;
+
     double input = x * Constants.Vision.kVisionP * multiplier;
-    if (input>1){
-        m_shooter.setTurretMotor(0.8*input);
-    }
+
+    if (input > 0.8)
+        m_shooter.setTurretMotor(0.8);
+
+    else if (input < -0.8)
+      m_shooter.setTurretMotor(-0.8);
+
+    else
+    m_shooter.setTurretMotor(input);
+    
   }
 
 

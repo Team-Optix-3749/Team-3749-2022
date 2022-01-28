@@ -1,88 +1,78 @@
+
+// Intake real
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
-
+ 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
-/**
- * Intake Subsystem
- * 
- * @author Jadon Lee
- * @author Rohin Sood
- */
 public class Intake extends SubsystemBase {
-  /** Creates a new ExampleSubsystem. */
-
-  public CANSparkMax m_intakeMotor;
-  public CANSparkMax m_liftMotor;
+    public CANSparkMax m_frontMotor;
+    public CANSparkMax m_leftMotor;
+    public CANSparkMax m_rightMotor; 
   
-  private final Timer m_timer = new Timer();
-  
-  public Intake() {
-    m_intakeMotor = new CANSparkMax(Constants.Intake.intakeMotor, MotorType.kBrushless);
-    m_intakeMotor.setIdleMode(IdleMode.kCoast);
-    m_intakeMotor.setInverted(true);
-    m_liftMotor = new CANSparkMax(Constants.Intake.liftMotor, MotorType.kBrushless);
-    
-  }
-  public void intakeIn() {
-    m_intakeMotor.set(Constants.Intake.kIntakeSpeed);
-  }
+    int backupPortNumber = 100;
+    int my_front_motor_port = Constants.CAN.intake_front;
 
-  /**
-   * Expel power cells out
-   */
-  public void intakeOut() {
-    m_intakeMotor.set(-Constants.Intake.kIntakeSpeed);
+//Intake myIntake = new Intake(my_front_motor_port);
+
+    public Intake(){
+      m_frontMotor = new CANSparkMax(Constants.CAN.intake_front, MotorType.kBrushless);
+      m_leftMotor = new CANSparkMax(Constants.CAN.intake_left, MotorType.kBrushless);
+      m_rightMotor = new CANSparkMax(Constants.CAN.intake_right, MotorType.kBrushless);
+
+      m_rightMotor.setInverted(true);
+      final SpeedControllerGroup m_shintake = new SpeedControllerGroup(m_leftMotor, m_rightMotor);
+      m_shintake.set(Constants.CAN.shintake_speed);
+    }
+
+
+public void IntakeIn(){
+  m_frontMotor.set(Constants.CAN.intakein_speed);
+ }
+
+ public void IntakeOut(){
+  m_frontMotor.set(-Constants.CAN.intakein_speed);
+ }
+
+ public void AlternateIntakePort(){
+    if ( CheckPorts(my_front_motor_port) != true){
+      if ( CheckPorts(backupPortNumber) == true){
+
+        m_frontMotor = new CANSparkMax(backupPortNumber,MotorType.kBrushless);
+
+      }
+    }
+ }
+ public boolean CheckPorts(int port){
+    return true;
+ }
+
+ public void Shintake(){
+    // m_rightMotor.setInverted(true);
+    // final SpeedControllerGroup m_shintake = new SpeedControllerGroup(m_leftMotor, m_rightMotor);
+    // m_shintake.set(Constants.CAN.shintake_speed);
+ }
+ 
+ //@Override
+  public void periodic() {
+    // This method will be called once per scheduler run
   }
-
-  /**
-   * Stop intake
-   */
-  public void intakeStop() {
-    m_intakeMotor.set(0);
+ 
+  //@Override
+  public void simulationPeriodic() {
+    // This method will be called once per scheduler run during simulation
   }
-
-  /**
-   * Lift intake up
-   */
-  public void liftUp() {
-    m_liftMotor.set(Constants.Intake.kIntakeLiftUpSpeed);
-  }
-
-  /**
-   * Drop intake down
-   */
-  public void liftDown() {
-    m_liftMotor.set(Constants.Intake.kIntakeLiftDownSpeed);
-  }
-
-  /**
-   * Drop intake down with timer
-   */
-  public void liftDownTimer() {
-    m_timer.reset();
-    m_timer.start();
-
-    while (m_timer.get() < 0.3)
-    m_liftMotor.set(Constants.Intake.kIntakeLiftDownSpeed);
-  }
-
-  /**
-   * Stop intake lift
-   */
-  public void liftStop() {
-    m_liftMotor.set(0);
-  }
-  /** */
-
-  
 }
+ 
+
+

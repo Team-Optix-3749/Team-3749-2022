@@ -1,7 +1,13 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
+/* 
+@authors
+@BING CHILLING
+@Rohin Kumar Sood
+@Dinesh K. Sahia
 
+*/
 package frc.robot;
 
 import java.util.List;
@@ -37,6 +43,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final Drivetrain m_drivetrain = new Drivetrain();
+
+  private final Elevator m_elevator = new Elevator();
   //private final JoystickButton m_leftJoystick = new JoystickButton(m_xboxController);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -47,6 +55,7 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(
       new ArcadeDrive(
         m_drivetrain, 
+        m_elevator,
         Xbox.leftJoystickY, 
         Xbox.rightJoystickX
       )
@@ -60,7 +69,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    Xbox.XBOX_A.whenHeld(new ManualTrajectory(m_drivetrain), true);
+    Xbox.XBOX_A.whenPressed(new ElevatorCommand(m_elevator));
+    Xbox.XBOX_X.whenPressed(new ElevatorCommand(m_elevator));
+    Xbox.XBOX_B.whenPressed(new ElevatorCommand(m_elevator));
+    Xbox.XBOX_Y.whenPressed(new ElevatorCommand(m_elevator));
   }
 
   /**

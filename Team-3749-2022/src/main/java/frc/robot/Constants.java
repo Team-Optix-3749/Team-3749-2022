@@ -47,6 +47,8 @@ public final class Constants {
         public static final double kI = 0.0;
         public static final double kD = 0.0;
         public static final double targetRPM = 5000;
+        public static final double maxTurretRotation = .25;
+        public static final double gearRatio = 1;
         // public static final int maxRPM = 3000;
         // public static final int maxVoltage = 10;
     }

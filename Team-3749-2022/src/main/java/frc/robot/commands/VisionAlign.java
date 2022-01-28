@@ -27,6 +27,7 @@ public class VisionAlign extends CommandBase {
 
   @Override
   public void initialize() {
+    m_shooter.resetEncoder();
   }
 
 

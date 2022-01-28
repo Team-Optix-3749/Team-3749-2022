@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
@@ -30,9 +32,11 @@ public class Shooter extends SubsystemBase{
     NetworkTable m_table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = m_table.getEntry("tx");
     
-    private PIDController m_pidController;
+    private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD);
+
     public Shooter(){
         m_motorRight.setInverted(true);
+        m_turretEncoder.setPositionConversionFactor(Constants.Shooter.gearRatio);
     }
 
     public void stopMotor(){
@@ -52,7 +56,16 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setTurretMotor(double speed){
-        m_turretMotor.set(speed);
+        if (Math.abs(m_turretEncoder.getPosition()) <= .24){
+            m_turretMotor.set(m_pidController.calculate(speed));
+        }
+        else if (m_turretEncoder.getPosition() * speed < 0) { //Checks if speed and encoder position have opposite signs
+            m_turretMotor.set(m_pidController.calculate(speed));
+        }
+        else{
+            m_turretMotor.set(0);
+            System.out.println("lol + L + you're* + mald + cry about it + stay mad + dreamsmp + lmao + cry + ratio + \"women\" + ");
+        }
     }
     public void visionAlign(){
         double x = tx.getDouble(0.0);
@@ -70,10 +83,14 @@ public class Shooter extends SubsystemBase{
         if (input>1){
             m_turretMotor.set(0.8*input);
         }
+        System.out.println(m_turretEncoder.getPosition());
       }
 
-    public void visionAlign2(){
-
-    }
+      public void moveTurret(double input){
+          m_turretMotor.set(input);
+      }
     
+    public void resetEncoder(){
+        m_turretEncoder.setPosition(0);
+    }
 }

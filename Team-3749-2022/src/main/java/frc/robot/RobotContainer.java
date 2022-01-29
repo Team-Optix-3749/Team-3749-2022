@@ -25,7 +25,6 @@ public class RobotContainer {
   private final IntakeIn m_intake = new IntakeIn(my_Intake);
   private final IntakeOut m_intakeout = new IntakeOut(my_Intake);
 
-  private final 
  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {

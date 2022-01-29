@@ -5,6 +5,7 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot.subsystems;
  
+import com.ctre.phoenix.sensors.WPI_CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -16,39 +17,40 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 public class Intake extends SubsystemBase {
-    public CANSparkMax m_frontMotor;
-    public CANSparkMax m_leftMotor;
-    public CANSparkMax m_rightMotor; 
+  public CANSparkMax m_frontIntakeMotor;
+  public CANSparkMax m_leftShintakeMotor;
+  public CANSparkMax m_rightShintakeMotor; 
+
+  int backupPortNumber = 100;
+  int my_front_motor_port = Constants.Intake.intakeFront;
+
+  public Intake(){
+    m_frontIntakeMotor = new CANSparkMax(Constants.Intake.intakeFront, MotorType.kBrushless);
+    m_leftShintakeMotor = new CANSparkMax(Constants.Intake.intakeLeft, MotorType.kBrushless);
+    m_rightShintakeMotor = new CANSparkMax(Constants.Intake.intakeRight, MotorType.kBrushless);
+    
+    m_rightShintakeMotor.setInverted(true);
+  }
+
   
-    int backupPortNumber = 100;
-    int my_front_motor_port = Constants.CAN.intake_front;
+private void setShintake (double speed) {
+  m_leftShintakeMotor.set(speed);
+  m_rightShintakeMotor.set(speed);
+}
+//beans
+  public void IntakeIn(){
+    m_frontIntakeMotor.set(Constants.Intake.intakeSpeed);
+  }
 
-//Intake myIntake = new Intake(my_front_motor_port);
-
-    public Intake(){
-      m_frontMotor = new CANSparkMax(Constants.CAN.intake_front, MotorType.kBrushless);
-      m_leftMotor = new CANSparkMax(Constants.CAN.intake_left, MotorType.kBrushless);
-      m_rightMotor = new CANSparkMax(Constants.CAN.intake_right, MotorType.kBrushless);
-
-      m_rightMotor.setInverted(true);
-      final SpeedControllerGroup m_shintake = new SpeedControllerGroup(m_leftMotor, m_rightMotor);
-      m_shintake.set(Constants.CAN.shintake_speed);
-    }
-
-
-public void IntakeIn(){
-  m_frontMotor.set(Constants.CAN.intakein_speed);
- }
-
- public void IntakeOut(){
-  m_frontMotor.set(-Constants.CAN.intakein_speed);
- }
+  public void IntakeOut(){
+    m_frontIntakeMotor.set(-Constants.Intake.intakeSpeed);
+  }
 
  public void AlternateIntakePort(){
     if ( CheckPorts(my_front_motor_port) != true){
       if ( CheckPorts(backupPortNumber) == true){
 
-        m_frontMotor = new CANSparkMax(backupPortNumber,MotorType.kBrushless);
+        m_frontIntakeMotor = new CANSparkMax(backupPortNumber,MotorType.kBrushless);
 
       }
     }
@@ -57,12 +59,7 @@ public void IntakeIn(){
     return true;
  }
 
- public void Shintake(){
-    // m_rightMotor.setInverted(true);
-    // final SpeedControllerGroup m_shintake = new SpeedControllerGroup(m_leftMotor, m_rightMotor);
-    // m_shintake.set(Constants.CAN.shintake_speed);
- }
- 
+// no mas errors but how do I fix the speedcontroller groups they dont exist anymore
  //@Override
   public void periodic() {
     // This method will be called once per scheduler run

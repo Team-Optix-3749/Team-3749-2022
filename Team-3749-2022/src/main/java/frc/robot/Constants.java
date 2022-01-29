@@ -43,12 +43,21 @@ public final class Constants {
         public static final double kVisionP = 0.1;
         public static final double kVisionLimit = 0.5;
     }
-
     public static final class Intake {
-        public static final int intakeMotor = 0; // FIND DEVICE ID
+        public static final int intakeFront = 0; // FIND DEVICE ID
+        public static final int intakeRight = 0;
+        public static final int intakeLeft = 0; // FIND DEVICE ID
         public static final int liftMotor = 0; // FIND DEVICE ID
+        public static final double intakeSpeed = 0.5;
+        public static final double shintakeSpeed = 0.5;
         public static final double kIntakeSpeed = 1.0;
         public static final double kIntakeLiftUpSpeed = 1.0;
         public static final double kIntakeLiftDownSpeed = -1.0;
     }
 }
+// Wdym? I am confusion
+//I was makeing variabler stuff
+// Constants are camel case
+// Joe mama**
+// will fix
+//*spank*

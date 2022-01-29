@@ -40,7 +40,7 @@ public class Elevator extends SubsystemBase {
         m_leftTilt.set(speed);
     }
 
-    private double getTiltEncoders() {
+    public double getTiltEncoders() {
         return (m_rightTiltEncoder.getPosition() + m_leftTiltEncoder.getPosition())/2;
     }
     
@@ -50,7 +50,8 @@ public class Elevator extends SubsystemBase {
     }
 
     public void tiltForward() {
-        setTiltMotors(m_tiltPIDController.calculate(getTiltEncoders(), 10));
+        //setTiltMotors(m_tiltPIDController.calculate(getTiltEncoders(), 10));
+        setTiltMotors(0.5);
     }
 
     public void tiltForwardIncrement() {

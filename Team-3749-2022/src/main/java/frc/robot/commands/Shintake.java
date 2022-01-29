@@ -4,13 +4,15 @@
  
 package frc.robot.commands;
  
+import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Xbox;
  
 /** An example command that uses an example subsystem. */
 public class Shintake extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Intake m_ShintakeCommand;
+  private final Intake m_intake;
  
   /**
    * Creates a new ExampleCommand.
@@ -18,7 +20,7 @@ public class Shintake extends CommandBase {
    * @param intake The subsystem used by this command.
    */
   public Shintake(Intake intake) {
-    m_ShintakeCommand = intake;
+    m_intake = intake;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
   }
@@ -31,8 +33,13 @@ public class Shintake extends CommandBase {
   @Override
   public void execute() {
  
-    m_ShintakeCommand.Shintake();
- 
+    m_intake.setShintake(-Constants.Intake.shintakeSpeed);
+
+    if (Xbox.XBOX_A.get()) m_intake.setShintake(-Constants.Intake.shintakeSpeed);
+    // A == shintake up
+    if (Xbox.XBOX_B.get()) m_intake.IntakeIn();
+    // B == intake in 
+    if (Xbox.XBOX_X.get()) m_intake.IntakeOut();
 }
  
   // Called once the command ends or is interrupted.

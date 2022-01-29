@@ -9,7 +9,6 @@ import com.ctre.phoenix.sensors.WPI_CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -33,7 +32,7 @@ public class Intake extends SubsystemBase {
   }
 
   
-private void setShintake (double speed) {
+public void setShintake (double speed) {
   m_leftShintakeMotor.set(speed);
   m_rightShintakeMotor.set(speed);
 }

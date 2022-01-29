@@ -53,11 +53,16 @@ public final class Constants {
         public static final double kIntakeSpeed = 1.0;
         public static final double kIntakeLiftUpSpeed = 1.0;
         public static final double kIntakeLiftDownSpeed = -1.0;
+        public static final double shintakeSpeedInverted = -0.5;
+    }
+
+    public static class Pneumatics {
+        public static enum SolenoidDirection {
+            FORWARD, REVERSE, OFF, COMPRESSOR, TRIGGER
+        }
+        public final static int[] kSolenoidForwardChannel = {2,4};
+        public final static int[] kSolenoidReverseChannel = {3,5};
+        public final static double kPneumaticsSpeed = 0.5;
+        public final static double kPneumaticsSpeedInverted = -0.5;
     }
 }
-// Wdym? I am confusion
-//I was makeing variabler stuff
-// Constants are camel case
-// Joe mama**
-// will fix
-//*spank*

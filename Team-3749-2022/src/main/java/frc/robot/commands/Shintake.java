@@ -24,7 +24,7 @@ public class Shintake extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
   }
- 
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
@@ -35,11 +35,14 @@ public class Shintake extends CommandBase {
  
     m_intake.setShintake(-Constants.Intake.shintakeSpeed);
 
-    if (Xbox.XBOX_A.get()) m_intake.setShintake(-Constants.Intake.shintakeSpeed);
+    if (Xbox.XBOX_A.get()) m_intake.setShintake(-Constants.Intake.shintakeSpeedInverted);
     // A == shintake up
     if (Xbox.XBOX_B.get()) m_intake.IntakeIn();
     // B == intake in 
     if (Xbox.XBOX_X.get()) m_intake.IntakeOut();
+    
+    if (Xbox.XBOX_Y.get()) m_intake.IntakePneumatics();
+
 }
  
   // Called once the command ends or is interrupted.

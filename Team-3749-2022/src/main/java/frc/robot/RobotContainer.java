@@ -10,6 +10,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Shintake;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.Command;
  
 /**
@@ -22,9 +23,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   public final Drivetrain m_drive = new Drivetrain();
-
   private final Intake m_intake = new Intake();
-
  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -41,7 +40,11 @@ public class RobotContainer {
       new Shintake(
         m_intake
       )
-    );
+    // m_solenoid.setDefaultCommand( 
+    //   new SolenoidCommand(
+    //     m_solenoid
+      );
+    
   }
  
   /**

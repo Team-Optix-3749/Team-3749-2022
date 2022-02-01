@@ -35,6 +35,7 @@ public class Shooter extends SubsystemBase{
     private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD);
 
     public Shooter(){
+        resetEncoder();
         m_motorRight.setInverted(true);
         m_turretEncoder.setPositionConversionFactor(Constants.Shooter.gearRatio);
     }

@@ -61,7 +61,7 @@ public final class Constants {
 
     public static final class Elevator {
         public static final int leftTilt = 0; // FIND CAN ID
-        public static final int rightTilt = 0; // FIND CAN ID
+        public static final int rightTilt = 10; // FIND CAN ID
         public static final int chain = 0; // FIND CAN ID
         public static final double chainMPR = 0.0; // FMD SPROCKET DIAMETER
         public static final double chainGR = 0.0; // FIND GEAR RATIO ON MOTOR

@@ -37,7 +37,7 @@ public class ElevatorCommand extends CommandBase {
         if (Xbox.XBOX_A.get()) m_elevator.extendUp();
         if (Xbox.XBOX_B.get()) m_elevator.raise();
         if (Xbox.XBOX_X.get()) m_elevator.tiltBack();
-        if (Xbox.XBOX_Y.get()) m_elevator.tiltForward();
+        if (Xbox.XBOX_Y.get()) m_elevator.tiltForward(.5);
 
         if(Xbox.XBOX_CONTROLLER.getPOV() == 0.0) m_elevator.tiltForwardIncrement();
         if(Xbox.XBOX_CONTROLLER.getPOV() == 180.0) m_elevator.tiltBackIncrement();

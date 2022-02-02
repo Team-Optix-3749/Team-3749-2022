@@ -6,11 +6,8 @@ package frc.robot;
  
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.Shintake;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
  
 /**
@@ -24,6 +21,7 @@ public class RobotContainer {
 
   public final Drivetrain m_drive = new Drivetrain();
   private final Intake m_intake = new Intake();
+  private final Solenoid m_solenoid = new Solenoid();
  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -38,7 +36,8 @@ public class RobotContainer {
     );
     m_intake.setDefaultCommand(
       new Shintake(
-        m_intake
+        m_intake,
+        m_solenoid
       )
     // m_solenoid.setDefaultCommand( 
     //   new SolenoidCommand(

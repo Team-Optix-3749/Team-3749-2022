@@ -6,29 +6,37 @@ package frc.robot.commands;
  
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Xbox;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
  
 /** An example command that uses an example subsystem. */
 public class Shintake extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Intake m_intake;
+  private final Solenoid m_solenoid;
  
   /**
    * Creates a new ExampleCommand.
    *
    * @param intake The subsystem used by this command.
+   * @param solenoid The subsystem used for solenoid
    */
-  public Shintake(Intake intake) {
+  public Shintake(Intake intake, Solenoid solenoid) {
     m_intake = intake;
+    m_solenoid = solenoid;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
+    addRequirements(intake, solenoid);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
- 
+  public void initialize() {
+    m_solenoid.reverseAll();
+  }
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
@@ -40,9 +48,17 @@ public class Shintake extends CommandBase {
     if (Xbox.XBOX_B.get()) m_intake.IntakeIn();
     // B == intake in 
     if (Xbox.XBOX_X.get()) m_intake.IntakeOut();
-    
-    if (Xbox.XBOX_Y.get()) m_intake.IntakePneumatics();
-
+    boolean forward = false;
+    if (Xbox.XBOX_Y.get()){
+    if (forward == true){
+      m_solenoid.IntakePneumatics(DoubleSolenoid.Value.kReverse);
+      forward = false;
+    }
+    else{
+      m_solenoid.IntakePneumatics(DoubleSolenoid.Value.kForward);
+      forward = true;
+    }
+    }
 }
  
   // Called once the command ends or is interrupted.
@@ -55,3 +71,4 @@ public class Shintake extends CommandBase {
     return false;
   }
 }
+//hi

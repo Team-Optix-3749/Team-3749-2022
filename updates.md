@@ -7,6 +7,7 @@
  - Ordered camera
  - Tried Google API dataset for balls, determined that it's precision was too low 
  - Started training dataset provided by FIRST
+ - Need to figure out if we need Google Coral Accelerator because out of stock :(
 
 ### Subsystems
  - Reviewed code for eventual merges

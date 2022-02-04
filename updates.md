@@ -1,7 +1,15 @@
 # ✔️ Updates
 > One person from each team should update this every meeting.
 
-## Febuary 2nd, 20222
+## February 3rd, 2022
+### AI/ML
+ - Detected cargo w/ML after figuring out how the .py application works, printed coordinates and other info to the console
+ - Need to implement in ML branch
+
+### Subsystems
+ - Made progress on drawing paths to collect cargo
+
+## February 2nd, 2022
 ### AI/ML
  - Ordered Raspberry Pi :D
  - Ordered camera

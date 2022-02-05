@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
  
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -110,15 +111,15 @@ public class RobotContainer {
         new RamseteCommand(
             exampleTrajectory,
             m_drivetrain::getPose,
-            new RamseteController(Constants.Drivetrain.kRamseteB, Constants.Drivetrain.kRamseteZeta),
+            new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
             new SimpleMotorFeedforward(
-                Constants.Drivetrain.ksVolts,
-                Constants.Drivetrain.kvVoltSecondsPerMeter,
-                Constants.Drivetrain.kaVoltSecondsSquaredPerMeter),
-            Constants.Drivetrain.kDriveKinematics,
+                Constants.Auto.ksVolts,
+                Constants.Auto.kvVoltSecondsPerMeter,
+                Constants.Auto.kaVoltSecondsSquaredPerMeter),
+            Constants.Auto.kDriveKinematics,
             m_drivetrain::getWheelSpeeds,
-            new PIDController(Constants.Drivetrain.kPDriveVel, 0, 0),
-            new PIDController(Constants.Drivetrain.kPDriveVel, 0, 0),
+            new PIDController(Constants.Auto.kPDriveVel, 0, 0),
+            new PIDController(Constants.Auto.kPDriveVel, 0, 0),
             // RamseteCommand passes volts to the callback
             m_drivetrain::tankDriveVolts,
             m_drivetrain);

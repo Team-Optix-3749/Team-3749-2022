@@ -21,7 +21,6 @@ public class RobotContainer {
 
   public final Drivetrain m_drive = new Drivetrain();
   private final Intake m_intake = new Intake();
-  private final Solenoid m_solenoid = new Solenoid();
  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -35,14 +34,10 @@ public class RobotContainer {
       )
     );
     m_intake.setDefaultCommand(
-      new Shintake(
-        m_intake,
-        m_solenoid
+      new IntakeCommand(
+        m_intake
       )
-    // m_solenoid.setDefaultCommand( 
-    //   new SolenoidCommand(
-    //     m_solenoid
-      );
+    );
     
   }
  

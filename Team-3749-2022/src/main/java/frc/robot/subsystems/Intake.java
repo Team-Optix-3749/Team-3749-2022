@@ -36,16 +36,22 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
+import java.util.ArrayList;
+
 
 public class Intake extends SubsystemBase {
   public CANSparkMax m_frontIntakeMotor;
   public CANSparkMax m_leftShintakeMotor;
   public CANSparkMax m_rightShintakeMotor; 
 
-  int backupPortNumber = 100;
-  int my_front_motor_port = Constants.Intake.intakeFront;
+  private final Compressor m_comp = new Compressor(0, PneumaticsModuleType.CTREPCM);
+  private final ArrayList<DoubleSolenoid> m_doubleSolenoid = new ArrayList<DoubleSolenoid>(2);
 
   public Intake(){
+    for (int i = 0; i<2; i++) {
+      m_doubleSolenoid.set(i,new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Pneumatics.kSolenoidForwardChannel[i], Pneumatics.kSolenoidReverseChannel[i]));
+    }
+
     m_frontIntakeMotor = new CANSparkMax(Constants.Intake.intakeFront, MotorType.kBrushless);
     m_leftShintakeMotor = new CANSparkMax(Constants.Intake.intakeLeft, MotorType.kBrushless);
     m_rightShintakeMotor = new CANSparkMax(Constants.Intake.intakeRight, MotorType.kBrushless);
@@ -54,16 +60,28 @@ public class Intake extends SubsystemBase {
   }
 
   
-public void setShintake (double speed) {
-  m_leftShintakeMotor.set(speed);
-  m_rightShintakeMotor.set(speed);
-}
-//beans
+  public void setShintake (double speed) {
+    m_leftShintakeMotor.set(speed);
+    m_rightShintakeMotor.set(speed);
+  }
+  //beans
   public void IntakeIn(){
     m_frontIntakeMotor.set(Constants.Intake.intakeSpeed);
   }
 
   public void IntakeOut(){
     m_frontIntakeMotor.set(-Constants.Intake.intakeSpeed);
+  }
+
+  public void loopControl(){
+    m_comp.enableDigital();
+  }
+
+  public void disableLoopControl() {
+      m_comp.disable();
+  }
+
+  public void intakePneumatics(DoubleSolenoid.Value val){
+    for (var i : m_doubleSolenoid) i.set(val);
   }
 }

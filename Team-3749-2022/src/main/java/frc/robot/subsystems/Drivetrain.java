@@ -43,7 +43,7 @@ public class Drivetrain extends SubsystemBase {
   private final DifferentialDriveOdometry m_odometry;
 
   public double convertToMeters(double in) {
-    return in * 2 * Math.PI * Constants.Drivetrain.kWheelRadius / Constants.Drivetrain.kEncoderResolution / 9.29;
+    return in * 2 * Math.PI * Constants.Auto.kWheelRadius / Constants.Auto.kEncoderResolution / 9.29;
   }
 
   public Drivetrain() {

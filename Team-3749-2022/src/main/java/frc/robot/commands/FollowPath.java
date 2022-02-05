@@ -19,7 +19,7 @@ public class FollowPath extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Drivetrain m_drivetrain;
   private final List<Move> m_moves;
-  private final int movePos = 0;
+  private int movePos = 0;
   private boolean needsReset = true;
 
   /**
@@ -72,6 +72,7 @@ public class FollowPath extends CommandBase {
         m_drivetrain.stop();
         m_drivetrain.resetEncoders();
         needsReset = true;
+        movePos++;
       } 
 
       //target is close
@@ -92,6 +93,7 @@ public class FollowPath extends CommandBase {
         m_drivetrain.stop();
         m_drivetrain.resetEncoders();
         needsReset = true;
+        movePos++;
       } 
 
       //target is close
@@ -116,6 +118,7 @@ public class FollowPath extends CommandBase {
         m_drivetrain.resetEncoders();
         m_drivetrain.zeroHeading();
         needsReset = true;
+        movePos++;
       } 
 
       //target is close
@@ -135,6 +138,7 @@ public class FollowPath extends CommandBase {
         m_drivetrain.resetEncoders();
         m_drivetrain.zeroHeading();
         needsReset = true;
+        movePos++;
       } 
 
       //target is close

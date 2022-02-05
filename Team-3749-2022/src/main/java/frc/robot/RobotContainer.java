@@ -40,7 +40,6 @@ public class RobotContainer {
 
   private final Drivetrain m_drivetrain = new Drivetrain();
   private final Shooter m_shooter = new Shooter();
-  private boolean shooterInterrupt = false;
   //private final JoystickButton m_leftJoystick = new JoystickButton(m_xboxController);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -55,10 +54,8 @@ public class RobotContainer {
         Xbox.rightJoystickX
       )
     );
-    m_shooter.setDefaultCommand(new MoveTurret(
-      m_shooter,
-      Xbox.m_leftTriggerValue,
-      Xbox.m_rightTriggerValue
+    m_shooter.setDefaultCommand(new Shoot(
+      m_shooter
         )
       );
   }
@@ -70,12 +67,6 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    Xbox.XBOX_X.whenHeld(new ManualTrajectory(m_drivetrain), true);
-    // Xbox.XBOX_A.whenPressed(new VisionAlign(m_shooter).withInterrupt(() -> shooterInterrupt));
-    // Xbox.XBOX_B.whenPressed(new ShootStop(m_shooter).andThen(() -> shooterInterrupt = true));
-    Xbox.XBOX_A.whenPressed(new VisionAlign(m_shooter));
-    Xbox.XBOX_B.whenPressed(new ShootStop(m_shooter));
-    Xbox.XBOX_Y.whenHeld(new Shoot(m_shooter).andThen(new ShootStop(m_shooter)), true);
     
   }
 

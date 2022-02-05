@@ -208,4 +208,9 @@ public class Drivetrain extends SubsystemBase {
   public double getDistanceRight() {
     return rightDist();
   }
+
+  public void stop () {
+    m_drive.arcadeDrive(0, 0);
+  }
+   
 }

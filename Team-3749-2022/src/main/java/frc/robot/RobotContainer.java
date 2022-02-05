@@ -33,10 +33,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-
-
-
+ 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -46,6 +43,8 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
+  private final Intake m_intake = new Intake();
+ 
   private final Drivetrain m_drivetrain = new Drivetrain();
 
   private final Elevator m_elevator = new Elevator();
@@ -55,17 +54,27 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-
-    // m_drivetrain.setDefaultCommand(
-    //   new ArcadeDrive(
-    //     m_drivetrain, 
-    //     m_elevator,
-    //     Xbox.leftJoystickY, 
-    //     Xbox.rightJoystickX
-    //   )
-    // );
+    m_intake.setDefaultCommand(
+      new IntakeCommand(
+        m_intake
+      )
+    );
+    m_drivetrain.setDefaultCommand(
+      new ArcadeDrive(
+        m_drivetrain, 
+        m_elevator,
+        Xbox.leftJoystickY, 
+        Xbox.rightJoystickX
+      )
+    );
+    
+    m_intake.setDefaultCommand(
+      new IntakeCommand(
+        m_intake
+      )
+    );
   }
-
+ 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -73,18 +82,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Xbox.XBOX_A.whenPressed(new ElevatorCommand(m_elevator));
-    // Xbox.XBOX_X.whenPressed(new ElevatorCommand(m_elevator));
-    // Xbox.XBOX_B.whenPressed(new ElevatorCommand(m_elevator));
-    // Xbox.XBOX_Y.whenPressed(new ElevatorCommand(m_elevator));
     Xbox.XBOX_A.whenPressed(new RotateElevator(m_elevator,.5));
     Xbox.XBOX_L.whenPressed(new RotateElevator(m_elevator,.25));
   }
-
+ 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
-   * @return the command tqw2o run in autonomous
+   * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
     // return null;

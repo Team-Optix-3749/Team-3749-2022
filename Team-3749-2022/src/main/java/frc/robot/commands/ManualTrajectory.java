@@ -32,10 +32,10 @@ public class ManualTrajectory extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if((m_drivetrain.getDistanceLeft() != 1)) {
+    if((m_drivetrain.getLeftEncoder() != 1)) {
         m_drivetrain.tankDrive(.1, .1);
     }
-    System.out.println(m_drivetrain.getDistanceLeft());
+    System.out.println(m_drivetrain.getRightEncoder());
   }
 
   // Called once the command ends or is interrupted.

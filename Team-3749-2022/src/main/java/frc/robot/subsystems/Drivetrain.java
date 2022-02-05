@@ -1,7 +1,7 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
+// "No, I will never code, Never!" - Rohin 1/25/22
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -51,8 +51,8 @@ public class Drivetrain extends SubsystemBase {
 
     // Sets the distance per pulse for the encoders
     // Y'all need to check if this should be soemthing else
-    m_leftEncoder.setDistancePerPulse(2 * Math.PI * Constants.Drivetrain.kWheelRadius / Constants.Drivetrain.kEncoderResolution / 9.29);
-    m_rightEncoder.setDistancePerPulse(2 * Math.PI * Constants.Drivetrain.kWheelRadius / Constants.Drivetrain.kEncoderResolution / 9.29);
+    m_leftEncoder.setDistancePerPulse(2 * Math.PI * Constants.Auto.kWheelRadius / Constants.Auto.kEncoderResolution / 9.29);
+    m_rightEncoder.setDistancePerPulse(2 * Math.PI * Constants.Auto.kWheelRadius / Constants.Auto.kEncoderResolution / 9.29);
 
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());

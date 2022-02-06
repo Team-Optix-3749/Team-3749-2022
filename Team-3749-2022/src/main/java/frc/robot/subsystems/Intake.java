@@ -17,24 +17,17 @@
 
 package frc.robot.subsystems;
  
-import com.ctre.phoenix.sensors.WPI_CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
-import edu.wpi.first.wpilibj.Compressor.*;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.Constants.Pneumatics;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
 import java.util.ArrayList;
 

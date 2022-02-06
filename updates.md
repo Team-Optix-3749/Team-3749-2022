@@ -1,6 +1,22 @@
 # ✔️ Updates
 > One person from each team should update this every meeting.
 
+## February 5th, 2022
+### AI/ML
+ - Got network tables from pi by changing uploaded.py to start a server instead of a client, displayed label, area, and xy coordinates on ShuffleBoard
+ - Created [Raspberry-Vission-2022](https://github.com/Team-Optix-3749/Raspberry-Vision-2022/blob/master/uploaded.py) repo
+ - Returned 2gb rpi 🤮
+ - Created Optix user on rpi, user is optix, pwd is team3749, s alias runs uploaded.py, r alias runs "echo is rohin bad"
+
+### Subsystems
+ - CHAD PATH GENERATION IN PATH FOLDER 👌👌👌👌👌🤘🤘🤘🤘🥰🥰🥰😎😋😋😋🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🕉️🕉️🕉️
+ - Made game paths with PathPlanner
+ - Made 1 Shooter command
+ - Find hub dist using tvert, area, or big brain math so we can calculate speeds to shoot from variable dist
+ - Made 1 Intake command
+ - Merged all subsystem branches in Drivetrain after resolving merge error
+ - Need to fix button bindings lol
+
 ## February 3rd, 2022
 ### AI/ML
  - Detected cargo w/ML after figuring out how the .py application works, printed coordinates and other info to the console

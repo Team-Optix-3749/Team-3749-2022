@@ -41,15 +41,29 @@ public final class Constants {
         public static final double kRamseteZeta = 0.7;
         public static final double kWheelRadius = 0.0508;
         public static final int kEncoderResolution = 2048;
-
+    }
+    public final class Shooter{
+        public static final int turretMotor = 0;
+        public static final int motorRight = 0;
+        public static final int motorLeft = 0;
+        public static final double kP = 1.0;
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
+        public static final double targetRPM = 5000;
+        public static final double maxTurretRotation = .25;
+        public static final double gearRatio = 1;
+        public static final int maxRPM = 3000;
+        public static final int maxVoltage = 10;
         public static final double kP = 1.0;
         public static final double kI = 0.5;
         public static final double kD = 0.0;
     } 
+
     public static final class Vision{
         public static final double kVisionP = 0.1;
         public static final double kVisionLimit = 0.5;
     }
+  
     public static final class Intake {
         public static final int intakeFront = 0; // FIND DEVICE ID
         public static final int intakeRight = 0;

@@ -33,7 +33,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+
  
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -47,10 +50,11 @@ public class RobotContainer {
   private final Intake m_intake = new Intake();
  
   private final Drivetrain m_drivetrain = new Drivetrain();
+  
+  private final Shooter m_shooter = new Shooter();
 
   private final Elevator m_elevator = new Elevator();
-  //private final JoystickButton m_leftJoystick = new JoystickButton(m_xboxController);
-  
+    
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -68,7 +72,10 @@ public class RobotContainer {
         Xbox.rightJoystickX
       )
     );
-    
+    m_shooter.setDefaultCommand(new Shoot(
+      m_shooter
+        )
+      );
     m_intake.setDefaultCommand(
       new IntakeCommand(
         m_intake

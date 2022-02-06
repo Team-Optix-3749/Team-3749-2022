@@ -9,7 +9,7 @@
  - Created Optix user on rpi, user is optix, pwd is team3749, s alias runs uploaded.py, r alias runs "echo is rohin bad"
 
 ### Subsystems
- - CHAD PATH GENERATION IN PATH FOLDER 👌👌👌👌👌🤘🤘🤘🤘🥰🥰🥰😎😋😋😋🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🤑🕉️🕉️🕉️
+ - CHAD PATH GENERATION IN PATH FOLDER 👌
  - Made game paths with PathPlanner
  - Made 1 Shooter command
  - Find hub dist using tvert, area, or big brain math so we can calculate speeds to shoot from variable dist

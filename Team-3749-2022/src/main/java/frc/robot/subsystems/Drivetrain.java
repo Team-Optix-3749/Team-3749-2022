@@ -1,7 +1,7 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
+// "No, I will never code, Never!" - Rohin 1/25/22
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -11,6 +11,8 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -41,14 +43,15 @@ public class Drivetrain extends SubsystemBase {
 
   public DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
 
-  
-  public final Encoder m_leftEncoder = new Encoder(0, 1);
-  public final Encoder m_rightEncoder = new Encoder(2, 3);
 
   private final Gyro m_gyro = new AHRS();
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
+
+  public double convertToMeters(double in) {
+    return in * 2 * Math.PI * Constants.Auto.kWheelRadius / Constants.Auto.kEncoderResolution / 9.29;
+  }
 
   public Drivetrain() {
     // We need to invert one side of the drivetrain so that positive voltages
@@ -56,16 +59,26 @@ public class Drivetrain extends SubsystemBase {
     // gearbox is constructed, you might have to invert the left side instead.
     m_left.setInverted(true);
 
-    // Sets the distance per pulse for the encoders
-    // Y'all need to check if this should be soemthing else
-    m_leftEncoder.setDistancePerPulse(2 * Math.PI * Constants.Drivetrain.kWheelRadius / Constants.Drivetrain.kEncoderResolution / 9.29);
-    m_rightEncoder.setDistancePerPulse(2 * Math.PI * Constants.Drivetrain.kWheelRadius / Constants.Drivetrain.kEncoderResolution / 9.29);
-
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
 
   }
 
+  private double leftVel () {
+    return convertToMeters(m_leftFront.getSelectedSensorVelocity());
+  }
+
+  private double rightVel () {
+    return convertToMeters(m_rightFront.getSelectedSensorVelocity());
+  }
+
+  private double leftDist () {
+    return convertToMeters(m_leftFront.getSelectedSensorPosition());
+  }
+
+  private double rightDist () {
+    return convertToMeters(m_rightFront.getSelectedSensorPosition());
+  }
 
   public void arcadeDrive(double speed, double rotation) {
     m_drive.arcadeDrive(speed, rotation);
@@ -86,7 +99,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // Update the odometry in the periodic block
     m_odometry.update(
-        m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
+        m_gyro.getRotation2d(), leftDist(), rightDist());
   }
 
   /**
@@ -105,7 +118,7 @@ public class Drivetrain extends SubsystemBase {
    * @return The current wheel speeds.
    */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
+    return new DifferentialDriveWheelSpeeds(leftVel(), rightVel());
   }
 
   /**
@@ -131,8 +144,8 @@ public class Drivetrain extends SubsystemBase {
 
   /** Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {
-    m_leftEncoder.reset();
-    m_rightEncoder.reset();
+    m_rightFront.setSelectedSensorPosition(0);
+    m_leftFront.setSelectedSensorPosition(0);
   }
 
   /**
@@ -141,7 +154,7 @@ public class Drivetrain extends SubsystemBase {
    * @return the average of the two encoder readings
    */
   public double getAverageEncoderDistance() {
-    return (m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0;
+    return (leftDist() + rightDist()) / 2.0;
   }
 
   /**
@@ -149,8 +162,8 @@ public class Drivetrain extends SubsystemBase {
    *
    * @return the left drive encoder
    */
-  public Encoder getLeftEncoder() {
-    return m_leftEncoder;
+  public double getLeftEncoder() {
+    return leftDist();
   }
 
   /**
@@ -158,8 +171,8 @@ public class Drivetrain extends SubsystemBase {
    *
    * @return the right drive encoder
    */
-  public Encoder getRightEncoder() {
-    return m_rightEncoder;
+  public double getRightEncoder() {
+    return rightDist();
   }
 
   /**
@@ -196,10 +209,15 @@ public class Drivetrain extends SubsystemBase {
 
 
   public double getDistanceLeft() {
-    return m_leftEncoder.getDistance();
+    return leftDist();
   }
 
   public double getDistanceRight() {
-    return m_rightEncoder.getDistance();
+    return rightDist();
   }
+
+  public void stop () {
+    m_drive.arcadeDrive(0, 0);
+  }
+   
 }

@@ -1,9 +1,17 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
+/* 
+@authors
+@BING CHILLING
+@Rohin Kumar Sood
+@Dinesh K. Sahia
 
+*/
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 import com.pathplanner.lib.PathPlanner;
@@ -18,6 +26,8 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
@@ -27,8 +37,7 @@ import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
-
-
+ 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -38,18 +47,27 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
+  private final Intake m_intake = new Intake();
+ 
   private final Drivetrain m_drivetrain = new Drivetrain();
-  private final Shooter m_shooter = new Shooter();
-  //private final JoystickButton m_leftJoystick = new JoystickButton(m_xboxController);
   
+  private final Shooter m_shooter = new Shooter();
+
+  private final Elevator m_elevator = new Elevator();
+    
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-
+    m_intake.setDefaultCommand(
+      new IntakeCommand(
+        m_intake
+      )
+    );
     m_drivetrain.setDefaultCommand(
       new ArcadeDrive(
         m_drivetrain, 
+        m_elevator,
         Xbox.leftJoystickY, 
         Xbox.rightJoystickX
       )
@@ -58,8 +76,13 @@ public class RobotContainer {
       m_shooter
         )
       );
+    m_intake.setDefaultCommand(
+      new IntakeCommand(
+        m_intake
+      )
+    );
   }
-
+ 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -67,85 +90,51 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    
+    Xbox.XBOX_A.whenPressed(new RotateElevator(m_elevator,.5));
+    Xbox.XBOX_L.whenPressed(new RotateElevator(m_elevator,.25));
   }
-
+ 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-
-    // return ManualTrajectory(m_drivetrain);
-    return null;
+    // return null;
     // Create a voltage constraint to ensure we don't accelerate too fast
 
     // An example trajectory to follow.  All units in meters.
 
-    // Trajectory exampleTrajectory = PathPlanner.loadPath("New New Path", .1, .1);
-    // Trajectory exampleTrajectory = new Trajectory();
-  //   var autoVoltageConstraint =
-  //       new DifferentialDriveVoltageConstraint(
-  //           new SimpleMotorFeedforward(
-  //               Constants.Drivetrain.ksVolts,
-  //               Constants.Drivetrain.kvVoltSecondsPerMeter,
-  //               Constants.Drivetrain.kaVoltSecondsSquaredPerMeter),
-  //               Constants.Drivetrain.kDriveKinematics,
-  //           10);
+    Trajectory exampleTrajectory = new Trajectory();
 
-
-  //   // Create config for trajectory
-  //   TrajectoryConfig config =
-  //       new TrajectoryConfig(
-  //               Constants.Drivetrain.kMaxSpeedMetersPerSecond,
-  //               Constants.Drivetrain.kMaxAccelerationMetersPerSecondSquared)
-  //           // Add kinematics to ensure max speed is actually obeyed
-  //           .setKinematics(Constants.Drivetrain.kDriveKinematics)
-  //           // Apply the voltage constraint
-  //           .addConstraint(autoVoltageConstraint);
-
-  //   // An example trajectory to follow.  All units in meters.
-  //   Trajectory exampleTrajectory =
-  //       TrajectoryGenerator.generateTrajectory(
-  //           // Start at the origin facing the +X direction
-  //           new Pose2d(0, 0, new Rotation2d(0)),
-  //           // Pass through these two interior waypoints, making an 's' curve path
-  //           List.of(new Translation2d(.5, 0)),
-  //           // End 3 meters straight ahead of where we started, facing forward
-  //           new Pose2d(1, 0, new Rotation2d(0)),
-  //           // Pass config
-  //           config);
-
-  // //   try {
-  // //     Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("pathplanner/generatedJSON/2m.wpilib.json");
-  // //     exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-
-  // //  } catch (IOException ex) {
-  // //     DriverStation.reportError("Unable to open trajectory", ex.getStackTrace());
-  // //  }
+    try {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("pathplanner/2m.path");
+      exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+   } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory", ex.getStackTrace());
+   }
    
-  //   RamseteCommand ramseteCommand =
-  //       new RamseteCommand(
-  //           exampleTrajectory,
-  //           m_drivetrain::getPose,
-  //           new RamseteController(Constants.Drivetrain.kRamseteB, Constants.Drivetrain.kRamseteZeta),
-  //           new SimpleMotorFeedforward(
-  //               Constants.Drivetrain.ksVolts,
-  //               Constants.Drivetrain.kvVoltSecondsPerMeter,
-  //               Constants.Drivetrain.kaVoltSecondsSquaredPerMeter),
-  //           Constants.Drivetrain.kDriveKinematics,
-  //           m_drivetrain::getWheelSpeeds,
-  //           new PIDController(Constants.Drivetrain.kPDriveVel, 0, 0),
-  //           new PIDController(Constants.Drivetrain.kPDriveVel, 0, 0),
-  //           // RamseteCommand passes volts to the callback
-  //           m_drivetrain::tankDriveVolts,
-  //           m_drivetrain);
+    RamseteCommand ramseteCommand =
+        new RamseteCommand(
+            exampleTrajectory,
+            m_drivetrain::getPose,
+            new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
+            new SimpleMotorFeedforward(
+                Constants.Auto.ksVolts,
+                Constants.Auto.kvVoltSecondsPerMeter,
+                Constants.Auto.kaVoltSecondsSquaredPerMeter),
+            Constants.Auto.kDriveKinematics,
+            m_drivetrain::getWheelSpeeds,
+            new PIDController(Constants.Auto.kPDriveVel, 0, 0),
+            new PIDController(Constants.Auto.kPDriveVel, 0, 0),
+            // RamseteCommand passes volts to the callback
+            m_drivetrain::tankDriveVolts,
+            m_drivetrain);
 
-  //   // Reset odometry to the starting pose of the trajectory.
-  //   m_drivetrain.resetOdometry(exampleTrajectory.getInitialPose());
+    // Reset odometry to the starting pose of the trajectory.
+    m_drivetrain.resetOdometry(exampleTrajectory.getInitialPose());
 
-  //   // Run path following command, then stop at the end.
-  //   return ramseteCommand.andThen(() -> m_drivetrain.tankDriveVolts(0, 0));
+    // Run path following command, then stop at the end.
+    return ramseteCommand.andThen(() -> m_drivetrain.tankDriveVolts(0, 0));
   }
 }

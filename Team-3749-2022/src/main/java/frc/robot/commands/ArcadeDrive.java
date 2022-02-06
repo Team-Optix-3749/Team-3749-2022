@@ -10,6 +10,12 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+
+/**
+ * @author Jadon Lee
+ * @author Rohin Sood
+ * @author Toby Leeder
+ */
 import frc.robot.Xbox;
 
 /** An example command that uses an example subsystem. */

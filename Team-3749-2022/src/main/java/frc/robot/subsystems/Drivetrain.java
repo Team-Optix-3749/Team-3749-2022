@@ -17,6 +17,13 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+
+/**
+ * @author Jadon Lee
+ * @author Rohin Sood
+ * @author Toby Leeder
+ */
 public class Drivetrain extends SubsystemBase {
   // tracking
   NetworkTable m_table = NetworkTableInstance.getDefault().getTable("limelight");

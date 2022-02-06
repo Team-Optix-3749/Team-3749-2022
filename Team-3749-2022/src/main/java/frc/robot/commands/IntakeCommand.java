@@ -40,8 +40,11 @@ public class IntakeCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(Xbox.XBOX_R.get() && (shintakeNum % 2 == 1)) m_intake.setShintake(Constants.Intake.shintakeSpeed); shintakeNum++;
+        if((Xbox.leftTriggerValue.getAsDouble() > 0) && (shintakeNum % 2 == 1)) m_intake.setShintake(Constants.Intake.shintakeSpeed); shintakeNum++;
+        
         if(Xbox.XBOX_L.get() && (intakeNum % 2 == 1)) m_intake.setShintake(Constants.Intake.shintakeSpeed); intakeNum++;
+        if(Xbox.XBOX_R.get() && (intakeNum % 2 == 0)) m_intake.setShintake(-Constants.Intake.shintakeSpeed); intakeNum++;
+
         if(Xbox.XBOX_B.get() && (pnuematicNum % 2 == 1)) m_intake.intakePneumatics(kReverse); pnuematicNum++;
         if (Xbox.XBOX_B.get() && (pnuematicNum % 2 == 0)) m_intake.intakePneumatics(kForward); pnuematicNum++;
     }

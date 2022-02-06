@@ -23,6 +23,6 @@ public class Xbox{
     public static final DoubleSupplier rightJoystickX = XBOX_CONTROLLER::getRightX;
     public static final DoubleSupplier rightJoystickY = XBOX_CONTROLLER::getRightY;
 
-    public static final DoubleSupplier m_leftTriggerValue = XBOX_CONTROLLER::getLeftTriggerAxis;
-    public static final DoubleSupplier m_rightTriggerValue = XBOX_CONTROLLER::getRightTriggerAxis;
+    public static final DoubleSupplier leftTriggerValue = XBOX_CONTROLLER::getLeftTriggerAxis;
+    public static final DoubleSupplier rightTriggerValue = XBOX_CONTROLLER::getRightTriggerAxis;
 }

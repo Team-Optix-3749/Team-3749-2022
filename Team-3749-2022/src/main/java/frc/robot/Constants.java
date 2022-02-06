@@ -44,18 +44,15 @@ public final class Constants {
     }
     public final class Shooter{
         public static final int turretMotor = 0;
-        public static final int motorRight = 0;
-        public static final int motorLeft = 0;
-        public static final double kP = 1.0;
-        public static final double kI = 0.0;
-        public static final double kD = 0.0;
+        public static final int rightShooterMotor = 0;
+        public static final int leftShooterMotor = 0;
         public static final double targetRPM = 5000;
         public static final double maxTurretRotation = .25;
         public static final double gearRatio = 1;
         public static final int maxRPM = 3000;
         public static final int maxVoltage = 10;
         public static final double kP = 1.0;
-        public static final double kI = 0.5;
+        public static final double kI = 0.0;
         public static final double kD = 0.0;
     } 
 
@@ -70,7 +67,7 @@ public final class Constants {
         public static final int intakeLeft = 0; // FIND DEVICE ID
         public static final int liftMotor = 0; // FIND DEVICE ID
         public static final double intakeSpeed = 0.5;
-        public static final double shintakeSpeed = 0.5;
+        public static final double shintakeSpeed = -0.5;
         public static final double kIntakeSpeed = 1.0;
         public static final double kIntakeLiftUpSpeed = 1.0;
         public static final double kIntakeLiftDownSpeed = -1.0;
@@ -93,6 +90,8 @@ public final class Constants {
         public static final int chain = 0; // FIND CAN ID
         public static final double chainMPR = 0.0; // FMD SPROCKET DIAMETER
         public static final double chainGR = 0.0; // FIND GEAR RATIO ON MOTOR
-
+        public static final double kP = 1.0;
+        public static final double kI = 0.5;
+        public static final double kD = 0.0;
     }
 }

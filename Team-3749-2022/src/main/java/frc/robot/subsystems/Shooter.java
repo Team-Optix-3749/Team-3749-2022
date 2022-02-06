@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import java.util.function.DoubleSupplier;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
@@ -20,40 +18,33 @@ import frc.robot.Constants;
  * @author Rohin Sood
  */
 public class Shooter extends SubsystemBase{
-    private WPI_TalonFX m_motorLeft = new WPI_TalonFX(Constants.Shooter.motorLeft);
-    private WPI_TalonFX m_motorRight = new WPI_TalonFX(Constants.Shooter.motorRight);
-    
+    private WPI_TalonFX m_leftShooterMotor = new WPI_TalonFX(Constants.Shooter.leftShooterMotor);
+    private WPI_TalonFX m_rightShooterMotor = new WPI_TalonFX(Constants.Shooter.rightShooterMotor);
+
     private CANSparkMax m_turretMotor = new CANSparkMax(Constants.Shooter.turretMotor, MotorType.kBrushless);
     private CANEncoder m_turretEncoder = m_turretMotor.getEncoder();
 
-
-    private MotorControllerGroup m_shooterMotor = new MotorControllerGroup(m_motorLeft, m_motorRight);
+    private MotorControllerGroup m_shooterMotor = new MotorControllerGroup(m_leftShooterMotor, m_rightShooterMotor);
 
     NetworkTable m_table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = m_table.getEntry("tx");
-    
+
     private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD);
 
     public Shooter(){
         resetEncoder();
-        m_motorRight.setInverted(true);
+        m_rightShooterMotor.setInverted(true);
         m_turretEncoder.setPositionConversionFactor(Constants.Shooter.gearRatio);
     }
 
-    public void stopMotor(){
+    public void stopMotors(){
         m_shooterMotor.set(0);
+        m_turretMotor.set(0);
     }
 
-    public double getLeftVelocity(){
-        return m_motorLeft.getSelectedSensorVelocity();
-    }
-
-    public double getRightVelocity(){
-        return m_motorRight.getSelectedSensorVelocity();
-    }
-
-    public void setShooter(double current, double target){
-        m_shooterMotor.set(m_pidController.calculate(current, target) * 0.004);
+    public void setShooter(double target){
+        m_shooterMotor.set(m_pidController.calculate((m_leftShooterMotor.getSelectedSensorPosition() + 
+        m_rightShooterMotor.getSelectedSensorPosition())/2, target) * 0.004);
     }
 
     public void setTurretMotor(double speed){
@@ -62,38 +53,34 @@ public class Shooter extends SubsystemBase{
         }
         else if (m_turretEncoder.getPosition() * speed < 0) { //Checks if speed and encoder position have opposite signs
             m_turretMotor.set(m_pidController.calculate(speed));
-        }
-        else{
+        } else {
             m_turretMotor.set(0);
-            System.out.println("lol + L + you're* + mald + cry about it + stay mad + dreamsmp + lmao + cry + ratio + \"women\" + ");
         }
     }
+
     public void visionAlign(){
         double x = tx.getDouble(0.0);
         double multiplier = 1;
         if (x<=5){
-          multiplier = 5;
+            multiplier = 5;
         }
         else if (x>=5){
-          multiplier = 3;
+            multiplier = 3;
         }
         else if (x>=10){
-          multiplier = 2;
+            multiplier = 2;
         }
         double input = x * Constants.Vision.kVisionP * multiplier;
         if (input>1){
             m_turretMotor.set(0.8*input);
         }
         System.out.println(m_turretEncoder.getPosition());
-      }
+    }
 
-      public void moveTurret(double input){
-          m_turretMotor.set(input);
-      }
     
+
     public void resetEncoder(){
         m_turretEncoder.setPosition(0);
     }
 
-    
 }

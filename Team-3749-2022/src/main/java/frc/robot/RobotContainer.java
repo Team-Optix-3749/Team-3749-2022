@@ -53,7 +53,6 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(
       new ArcadeDrive(
         m_drivetrain, 
-        m_elevator,
         Xbox.leftJoystickY, 
         Xbox.rightJoystickX
       )
@@ -77,15 +76,6 @@ public class RobotContainer {
       )
     );
 
-    m_drivetrain.setDefaultCommand(
-      new ArcadeDrive(
-        m_drivetrain, 
-        m_elevator,
-        Xbox.leftJoystickY, 
-        Xbox.rightJoystickX
-      )
-    );
-
   }
  
   /**
@@ -95,8 +85,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    Xbox.XBOX_A.whenPressed(new RotateElevator(m_elevator,.5));
-    Xbox.XBOX_L.whenPressed(new RotateElevator(m_elevator,.25));
+    // Xbox.XBOX_A.whenPressed(new RotateElevator(m_elevator,.5));
+    // Xbox.XBOX_L.whenPressed(new RotateElevator(m_elevator,.25));
   }
  
   /**

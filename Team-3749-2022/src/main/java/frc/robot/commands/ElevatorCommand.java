@@ -34,10 +34,10 @@ public class ElevatorCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(Xbox.XBOX_CONTROLLER.getPOV() == 0.0) m_elevator.extendUp();
-        if(Xbox.XBOX_CONTROLLER.getPOV() == 90.0) m_elevator.tiltBack();
-        if(Xbox.XBOX_CONTROLLER.getPOV() == 180.0) m_elevator.raise();
-        if(Xbox.XBOX_CONTROLLER.getPOV() == 270.0) m_elevator.tiltForward(.5);
+        if(Xbox.XBOX_CONTROLLER.getPOV() == 0.0) m_elevator.extendClimber(10);
+        if(Xbox.XBOX_CONTROLLER.getPOV() == 90.0) m_elevator.tilt(0.1);
+        if(Xbox.XBOX_CONTROLLER.getPOV() == 180.0) m_elevator.extendClimber(0);
+        if(Xbox.XBOX_CONTROLLER.getPOV() == 270.0) m_elevator.tilt(-0.1);
     }
 
     // Called once the command ends or is interrupted.

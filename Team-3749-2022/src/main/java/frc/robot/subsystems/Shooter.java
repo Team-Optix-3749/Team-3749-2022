@@ -18,6 +18,9 @@ import frc.robot.Constants;
  * @author Rohin Sood
  */
 public class Shooter extends SubsystemBase{
+    public CANSparkMax m_leftShintakeMotor;
+    public CANSparkMax m_rightShintakeMotor; 
+
     private WPI_TalonFX m_leftShooterMotor = new WPI_TalonFX(Constants.Shooter.leftShooterMotor);
     private WPI_TalonFX m_rightShooterMotor = new WPI_TalonFX(Constants.Shooter.rightShooterMotor);
 
@@ -28,13 +31,23 @@ public class Shooter extends SubsystemBase{
 
     NetworkTable m_table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = m_table.getEntry("tx");
-
     private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD);
 
     public Shooter(){
         resetEncoder();
+
         m_rightShooterMotor.setInverted(true);
         m_turretEncoder.setPositionConversionFactor(Constants.Shooter.gearRatio);
+
+        m_leftShintakeMotor = new CANSparkMax(Constants.Shooter.shintakeLeft, MotorType.kBrushless);
+        m_rightShintakeMotor = new CANSparkMax(Constants.Shooter.shintakeRight, MotorType.kBrushless);
+        
+        m_rightShintakeMotor.setInverted(true);
+    }
+
+    public void setShintake (double dir) {
+        m_leftShintakeMotor.set(dir*Constants.Shooter.kShintakeSpeed);
+        m_rightShintakeMotor.set(dir*Constants.Shooter.kShintakeSpeed);
     }
 
     public void stopMotors(){
@@ -42,42 +55,13 @@ public class Shooter extends SubsystemBase{
         m_turretMotor.set(0);
     }
 
-    public void setShooter(double target){
-        m_shooterMotor.set(m_pidController.calculate((m_leftShooterMotor.getSelectedSensorPosition() + 
-        m_rightShooterMotor.getSelectedSensorPosition())/2, target) * 0.004);
-    }
-
-    public void setTurretMotor(double speed){
-        if (Math.abs(m_turretEncoder.getPosition()) <= .24){
-            m_turretMotor.set(m_pidController.calculate(speed));
-        }
-        else if (m_turretEncoder.getPosition() * speed < 0) { //Checks if speed and encoder position have opposite signs
-            m_turretMotor.set(m_pidController.calculate(speed));
-        } else {
-            m_turretMotor.set(0);
-        }
+    public void setShooter(){
+        m_shooterMotor.set(Constants.Shooter.kShootSpeed);
     }
 
     public void visionAlign(){
-        double x = tx.getDouble(0.0);
-        double multiplier = 1;
-        if (x<=5){
-            multiplier = 5;
-        }
-        else if (x>=5){
-            multiplier = 3;
-        }
-        else if (x>=10){
-            multiplier = 2;
-        }
-        double input = x * Constants.Vision.kVisionP * multiplier;
-        if (input>1){
-            m_turretMotor.set(0.8*input);
-        }
-        System.out.println(m_turretEncoder.getPosition());
+        // https://docs.limelightvision.io/en/latest/cs_aiming.html
     }
-
-    
 
     public void resetEncoder(){
         m_turretEncoder.setPosition(0);

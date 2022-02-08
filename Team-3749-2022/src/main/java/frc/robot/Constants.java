@@ -43,14 +43,16 @@ public final class Constants {
         public static final int kEncoderResolution = 2048;
     }
     public final class Shooter{
+        public static final int shintakeFront = 0; // FIND DEVICE ID
+        public static final int shintakeRight = 0;
+        public static final int shintakeLeft = 0; // FIND DEVICE ID
         public static final int turretMotor = 0;
         public static final int rightShooterMotor = 0;
         public static final int leftShooterMotor = 0;
-        public static final double targetRPM = 5000;
-        public static final double maxTurretRotation = .25;
+
+        public static final double kShootSpeed = 0; // https://docs.limelightvision.io/en/latest/cs_estimating_distance.html
         public static final double gearRatio = 1;
-        public static final int maxRPM = 3000;
-        public static final int maxVoltage = 10;
+        public static final double kShintakeSpeed = 0.5;
         public static final double kP = 1.0;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
@@ -62,16 +64,8 @@ public final class Constants {
     }
   
     public static final class Intake {
-        public static final int intakeFront = 0; // FIND DEVICE ID
-        public static final int intakeRight = 0;
-        public static final int intakeLeft = 0; // FIND DEVICE ID
-        public static final int liftMotor = 0; // FIND DEVICE ID
-        public static final double intakeSpeed = 0.5;
-        public static final double shintakeSpeed = -0.5;
+        public static final int intakePiston = 0; // FIND DEVICE ID
         public static final double kIntakeSpeed = 1.0;
-        public static final double kIntakeLiftUpSpeed = 1.0;
-        public static final double kIntakeLiftDownSpeed = -1.0;
-        public static final double shintakeSpeedInverted = -0.5;
     }
 
     public static class Pneumatics {

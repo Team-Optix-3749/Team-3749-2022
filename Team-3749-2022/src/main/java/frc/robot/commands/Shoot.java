@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Xbox;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -10,6 +11,7 @@ import frc.robot.subsystems.Shooter;
  */
 public class Shoot extends CommandBase{
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+    
     private final Shooter m_shooter;
 
     public Shoot(Shooter shooter){
@@ -25,7 +27,7 @@ public class Shoot extends CommandBase{
     @Override
     public void execute() {
         // CALCULATE SPEEDS BASED ON DIST FROM HUB
-        m_shooter.setShooter(Constants.Shooter.targetRPM);
+        if((Xbox.rightTriggerValue.getAsDouble() > 0)) m_shooter.setShintake(Constants.Intake.kIntakeSpeed); m_shooter.setShooter();;
         m_shooter.visionAlign();
     }
 

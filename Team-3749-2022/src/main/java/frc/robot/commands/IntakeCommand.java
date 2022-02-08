@@ -4,7 +4,6 @@
  
 package frc.robot.commands;
  
-import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Xbox;
@@ -15,7 +14,6 @@ public class IntakeCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake m_intake;
 
-    private double shintakeNum = 1;
     private double intakeNum = 1;
     private double pnuematicNum = 1;
 
@@ -39,11 +37,9 @@ public class IntakeCommand extends CommandBase {
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {
-        if((Xbox.leftTriggerValue.getAsDouble() > 0) && (shintakeNum % 2 == 1)) m_intake.setShintake(Constants.Intake.shintakeSpeed); shintakeNum++;
-        
-        if(Xbox.XBOX_L.get() && (intakeNum % 2 == 1)) m_intake.setShintake(Constants.Intake.shintakeSpeed); intakeNum++;
-        if(Xbox.XBOX_R.get() && (intakeNum % 2 == 0)) m_intake.setShintake(-Constants.Intake.shintakeSpeed); intakeNum++;
+    public void execute() {        
+        if(Xbox.XBOX_L.get() && (intakeNum % 2 == 1)) m_intake.setIntake(1); intakeNum++;
+        if(Xbox.XBOX_R.get() && (intakeNum % 2 == 0)) m_intake.setIntake(-1); intakeNum++;
 
         if(Xbox.XBOX_B.get() && (pnuematicNum % 2 == 1)) m_intake.intakePneumatics(kReverse); pnuematicNum++;
         if (Xbox.XBOX_B.get() && (pnuematicNum % 2 == 0)) m_intake.intakePneumatics(kForward); pnuematicNum++;

@@ -64,28 +64,20 @@ public class Elevator extends SubsystemBase {
         m_leftTiltEncoder.setPosition(0.0);
     }
 
-    public void tiltForward(double target) {
+    public void tilt(double target) {
         setTiltMotors(10);
     }
 
-    public void tiltForwardIncrement() {
-        setTiltMotors(getTiltEncoders() + 0.1);
-    }
-
-    public void tiltBackIncrement() {
-        setTiltMotors(getTiltEncoders() - 0.1);
-    }
-
-    public void tiltBack() {
-        setTiltMotors(0);
+    public void tiltForwardIncrement(double dist) {
+        setTiltMotors(getTiltEncoders() + dist);
     }
 
     public void extendUp () {
         m_chain.set(m_chainPIDContoller.calculate(getTiltEncoders(), 10));
     }
 
-    public void raise() {
-        m_chain.set(m_chainPIDContoller.calculate(getTiltEncoders(), 0));
+    public void extendClimber(double target) {
+        m_chain.set(m_chainPIDContoller.calculate(getTiltEncoders(), target));
     }
 
     public void stopMotors(){

@@ -26,9 +26,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import java.util.ArrayList;
 
 public class Intake extends SubsystemBase {
-    public CANSparkMax m_frontIntakeMotor;
-    public CANSparkMax m_leftShintakeMotor;
-    public CANSparkMax m_rightShintakeMotor; 
+    public CANSparkMax m_intakeMotor;
 
     private final Compressor m_comp = new Compressor(0, PneumaticsModuleType.CTREPCM);
     private final ArrayList<DoubleSolenoid> m_doubleSolenoid = new ArrayList<DoubleSolenoid>(2);
@@ -37,22 +35,11 @@ public class Intake extends SubsystemBase {
         for (int i = 0; i<2; i++) {
             m_doubleSolenoid.set(i,new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Pneumatics.kSolenoidForwardChannel[i], Pneumatics.kSolenoidReverseChannel[i]));
         }
-
-        m_frontIntakeMotor = new CANSparkMax(Constants.Intake.intakeFront, MotorType.kBrushless);
-        m_leftShintakeMotor = new CANSparkMax(Constants.Intake.intakeLeft, MotorType.kBrushless);
-        m_rightShintakeMotor = new CANSparkMax(Constants.Intake.intakeRight, MotorType.kBrushless);
-        
-        m_rightShintakeMotor.setInverted(true);
-    }
-
-
-    public void setShintake (double speed) {
-        m_leftShintakeMotor.set(speed);
-        m_rightShintakeMotor.set(speed);
+        m_intakeMotor = new CANSparkMax(Constants.Shooter.shintakeFront, MotorType.kBrushless);
     }
 
     public void setIntake(int dir){
-        m_frontIntakeMotor.set(dir*Constants.Intake.intakeSpeed);
+        m_intakeMotor.set(dir*Constants.Intake.kIntakeSpeed);
     }
 
     public void loopControl(){

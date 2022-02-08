@@ -13,12 +13,12 @@
 ### D-Pad:
  - **Up:** _Extends interior hooks upwards_
  - **Down:** _Retracts interior hooks back to original position_
- - **Right:** _Tilts exterior set of hooks forwards towards the front of the robot_
- - **Left:** _Retracts exterior set of hooks to original position_
+ - **Right:** _Tilts exterior hooks forwards towards the front of the robot_
+ - **Left:** Returns exterior hooks to original position_
 
 ### Bumpers:
  - **Left Bumper:** _Toggle to rotate intake wheels outward_
- -** Right Bumper:** _Toggle to rotate intake wheels inward_ 
+ - **Right Bumper:** _Toggle to rotate intake wheels inward_ 
 
 ### Triggers:
- - **Right Trigger:** Runs Shintake and Shooter motor on turret to shoot (Turret aligns autonomously)
+ - **Right Trigger:** Runs Shintake and Shooter motor (Turret aligns autonomously)

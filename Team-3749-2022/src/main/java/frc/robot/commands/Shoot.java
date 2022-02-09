@@ -27,7 +27,11 @@ public class Shoot extends CommandBase{
     @Override
     public void execute() {
         // CALCULATE SPEEDS BASED ON DIST FROM HUB
-        if((Xbox.rightTriggerValue.getAsDouble() > 0)) m_shooter.setShintake(Constants.Intake.kIntakeSpeed); m_shooter.setShooter();;
+        if(Xbox.rightTriggerValue.getAsDouble() > 0){
+            m_shooter.setShintake(Constants.Intake.kIntakeSpeed); 
+            m_shooter.setShooter();
+        }
+        
         m_shooter.visionAlign();
     }
 

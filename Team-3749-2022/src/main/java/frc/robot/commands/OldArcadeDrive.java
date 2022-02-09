@@ -19,14 +19,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Xbox;
 
 /** An example command that uses an example subsystem. */
-public class ArcadeDrive extends CommandBase {
+public class OldArcadeDrive extends CommandBase {
 
-  private final Drivetrain m_drive;
+  private final OldDrivetrain m_drive;
   private final DoubleSupplier m_forward;
   private final DoubleSupplier m_rotation;
   private boolean speedToggle = false;
 
-  public ArcadeDrive(Drivetrain drivetrain, DoubleSupplier forward, DoubleSupplier rotation) {
+  public OldArcadeDrive(OldDrivetrain drivetrain, DoubleSupplier forward, DoubleSupplier rotation) {
     m_drive = drivetrain;
     m_forward = forward;
     m_rotation = rotation;

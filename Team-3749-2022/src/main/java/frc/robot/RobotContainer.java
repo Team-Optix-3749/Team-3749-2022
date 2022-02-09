@@ -40,6 +40,8 @@ public class RobotContainer {
   private final Intake m_intake = new Intake();
  
   private final Drivetrain m_drivetrain = new Drivetrain();
+
+  private final OldDrivetrain m_oldDrivetrain = new OldDrivetrain();
   
   private final Shooter m_shooter = new Shooter();
 
@@ -50,13 +52,21 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    m_drivetrain.setDefaultCommand(
-      new ArcadeDrive(
-        m_drivetrain, 
-        Xbox.leftJoystickY, 
-        Xbox.rightJoystickX
+    // m_drivetrain.setDefaultCommand(
+    //   new ArcadeDrive(
+    //     m_drivetrain, 
+    //     Xbox.leftJoystickY, 
+    //     Xbox.rightJoystickX
+    //   )
+    // );    
+
+    m_oldDrivetrain.setDefaultCommand(
+      new OldArcadeDrive(m_oldDrivetrain, 
+      Xbox.leftJoystickY, 
+      Xbox.rightJoystickX
       )
-    );    
+    );
+
     m_elevator.setDefaultCommand(
       new ElevatorCommand(
         m_elevator

@@ -95,7 +95,7 @@ public class Shooter extends SubsystemBase{
         }
         double input = x * Constants.Vision.kVisionP * multiplier;
         if (input>1){
-            m_turretMotor.set(0.8*input);
+            setTurretMotor(0.8*input);
         }
         System.out.println(m_turretEncoder.getPosition());
     }

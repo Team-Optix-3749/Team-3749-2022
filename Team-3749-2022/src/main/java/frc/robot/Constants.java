@@ -91,4 +91,7 @@ public final class Constants {
         public static final double kI = 0.5;
         public static final double kD = 0.0;
     }
+    public static final class LEDs {
+        public static final int LEDport = 9;
+    }
 }

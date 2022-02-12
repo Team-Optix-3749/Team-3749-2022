@@ -46,6 +46,8 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
 
   private final Elevator m_elevator = new Elevator();
+  
+  private final StatusLights m_statusLights = new StatusLights();
     
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -83,6 +85,11 @@ public class RobotContainer {
     m_intake.setDefaultCommand(
       new IntakeCommand(
         m_intake
+      )
+    );
+    m_statusLights.setDefaultCommand(
+      new ManualLED(
+        m_statusLights
       )
     );
 

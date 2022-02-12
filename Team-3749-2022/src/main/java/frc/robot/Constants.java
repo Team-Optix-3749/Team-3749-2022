@@ -5,6 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -41,6 +44,13 @@ public final class Constants {
         public static final double kRamseteZeta = 0.7;
         public static final double kWheelRadius = 0.0508;
         public static final int kEncoderResolution = 2048;
+
+        public static final NetworkTable m_limelight = NetworkTableInstance.getDefault().getTable("limelight");
+        public static final NetworkTableEntry tx = m_limelight.getEntry("tx");
+        public static final NetworkTableEntry ty = m_limelight.getEntry("ty");
+
+        public static final NetworkTable m_pi = NetworkTableInstance.getDefault().getTable("!ML");
+        public static final NetworkTableEntry coords = m_pi.getEntry("coordinates");
     }
     public final class Shooter{
         public static final int shintakeFront = 0; // FIND DEVICE ID

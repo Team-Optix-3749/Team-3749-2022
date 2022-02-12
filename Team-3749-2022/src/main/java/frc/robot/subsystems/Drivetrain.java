@@ -66,9 +66,9 @@ public class Drivetrain extends SubsystemBase {
   public void piAlign () {
      double[] xy = Auto.coords.getDoubleArray(new double[0]);
 
-     if (xy[1] >= .25 ) {
+     if (xy[1] <= .25 ) {
       arcadeDrive(0, .2);
-     } else if (xy[3] <= .75 ) {
+     } else if (xy[3] >= .75 ) {
       arcadeDrive(0, .2);
     }
   }

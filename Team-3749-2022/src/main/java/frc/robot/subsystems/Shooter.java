@@ -6,12 +6,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Auto;
 
 /**
  * @author Jadon Lee
@@ -29,9 +27,6 @@ public class Shooter extends SubsystemBase{
 
     private MotorControllerGroup m_shooterMotor = new MotorControllerGroup(m_leftShooterMotor, m_rightShooterMotor);
 
-    NetworkTable m_table = NetworkTableInstance.getDefault().getTable("limelight");
-    NetworkTableEntry tx = m_table.getEntry("tx");
-    NetworkTableEntry ty = m_table.getEntry("ty");
     private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD);
 
     public Shooter(){
@@ -82,7 +77,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void visionAlign(){
-        double x = tx.getDouble(0.0);
+        double x = Auto.tx.getDouble(0.0);
         double multiplier = 1;
         if (x<=5){
           multiplier = 5;
@@ -101,7 +96,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public double getDistance(){    
-        double y = ty.getDouble(0.0);    
+        double y = Auto.ty.getDouble(0.0);    
         return (Constants.Shooter.hubHeight - Constants.Shooter.shooterHeight)/Math.tan(Math.toRadians(Constants.Shooter.limelightAngle + y));
     }
     

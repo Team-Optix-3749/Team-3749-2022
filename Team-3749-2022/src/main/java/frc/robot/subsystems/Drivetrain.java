@@ -7,9 +7,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -17,12 +14,10 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Auto;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 public class Drivetrain extends SubsystemBase {
   // tracking by using Limelight 
-  NetworkTable m_table = NetworkTableInstance.getDefault().getTable("limelight");
-  NetworkTableEntry tx = m_table.getEntry("tx");
-  
 
   public WPI_TalonFX m_leftFront = new WPI_TalonFX(Constants.Drivetrain.leftFront);
   public WPI_TalonFX m_leftBack = new WPI_TalonFX(Constants.Drivetrain.leftBack);
@@ -63,11 +58,23 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double speed, double rotation) {
     m_drive.arcadeDrive(speed, rotation);
   }
+
   public void tankDrive(double leftSpeed, double rightSpeed) {
     m_drive.tankDrive(leftSpeed, rightSpeed);
   }
+
+  public void piAlign () {
+     double[] xy = Auto.coords.getDoubleArray(new double[0]);
+
+     if (xy[1] >= .25 ) {
+      arcadeDrive(0, .2);
+     } else if (xy[3] <= .75 ) {
+      arcadeDrive(0, .2);
+    }
+  }
+
   public void limeAlign () {
-    double x = tx.getDouble(0.0);
+    double x = Auto.tx.getDouble(0.0);
     double output = 0;
     output = x * Constants.Vision.kVisionP;
     output *= Constants.Vision.kVisionLimit;

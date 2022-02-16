@@ -1,9 +1,7 @@
 package frc.robot.subsystems;
 
-import java.util.function.DoubleSupplier;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.revrobotics.CANEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -24,7 +22,7 @@ public class Shooter extends SubsystemBase{
     private WPI_TalonFX m_motorRight = new WPI_TalonFX(Constants.Shooter.motorRight);
     
     private CANSparkMax m_turretMotor = new CANSparkMax(Constants.Shooter.turretMotor, MotorType.kBrushless);
-    private CANEncoder m_turretEncoder = m_turretMotor.getEncoder();
+    private RelativeEncoder m_turretEncoder = m_turretMotor.getEncoder();
 
 
     private MotorControllerGroup m_shooterMotor = new MotorControllerGroup(m_motorLeft, m_motorRight);

@@ -20,9 +20,9 @@ public class Elevator extends SubsystemBase {
     
     public CANSparkMax m_rightTilt;
     // public CANSparkMax m_leftTilt = new CANSparkMax(Constants.Elevator.leftTilt, MotorType.kBrushless);
-    private RelativeEncoder m_rightTiltEncoder;
+    private RelativeEncoder m_rightTiltEncoder = m_rightTilt.getEncoder();
     // private CANEncoder m_leftTiltEncoder = m_leftTilt.getEncoder();
-    private final PIDController m_tiltPIDController = new PIDController(Constants.Auto.kP, Constants.Auto.kI, Constants.Auto.kD);
+    private final PIDController m_tiltPIDController = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 
     // public CANSparkMax m_chain;
     // private final PIDController m_chainPIDContoller = new PIDController(Constants.Auto.kP, Constants.Auto.kI, Constants.Auto.kD);

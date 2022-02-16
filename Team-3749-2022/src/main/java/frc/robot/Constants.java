@@ -54,9 +54,7 @@ public final class Constants {
         public static final double gearRatio = 1;
         public static final int maxRPM = 3000;
         public static final int maxVoltage = 10;
-        public static final double kP = 1.0;
-        public static final double kI = 0.5;
-        public static final double kD = 0.0;
+
     } 
 
     public static final class Vision{
@@ -93,6 +91,8 @@ public final class Constants {
         public static final int chain = 0; // FIND CAN ID
         public static final double chainMPR = 0.0; // FMD SPROCKET DIAMETER
         public static final double chainGR = 0.0; // FIND GEAR RATIO ON MOTOR
-
+        public static final double kP = 1.0;
+        public static final double kI = 0.5;
+        public static final double kD = 0.0;
     }
 }

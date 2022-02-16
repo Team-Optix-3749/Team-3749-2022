@@ -12,6 +12,8 @@ import frc.robot.subsystems.Shooter;
 public class Shoot extends CommandBase{
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     
+    private boolean visionToggle = true;
+
     private final Shooter m_shooter;
 
     public Shoot(Shooter shooter){
@@ -31,8 +33,8 @@ public class Shoot extends CommandBase{
             m_shooter.setShintake(Constants.Intake.kIntakeSpeed); 
             m_shooter.setShooter();
         }
-        
-        m_shooter.visionAlign();
+        if(Xbox.XBOX_X.getAsBoolean()) visionToggle = !visionToggle;
+        m_shooter.visionAlign(visionToggle);
     }
 
     @Override

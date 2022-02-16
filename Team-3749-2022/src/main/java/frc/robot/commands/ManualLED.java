@@ -18,6 +18,7 @@ public class ManualLED extends CommandBase{
 
     public ManualLED(StatusLights statusLights){
         m_statusLights = statusLights;
+        addRequirements(statusLights);
     }
     
     @Override

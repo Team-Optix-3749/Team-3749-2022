@@ -12,6 +12,7 @@ package frc.robot;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
@@ -78,7 +79,7 @@ public class RobotContainer {
 
     m_shooter.setDefaultCommand(
       new Shoot(
-        m_shooter
+        m_shooter, Xbox.leftTriggerValue
       )
     );
 

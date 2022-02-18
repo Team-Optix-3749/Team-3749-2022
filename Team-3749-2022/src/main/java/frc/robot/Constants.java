@@ -61,7 +61,7 @@ public final class Constants {
         public static final int leftShooterMotor = 0;
 
         public static final double kShootSpeed = 0; // https://docs.limelightvision.io/en/latest/cs_estimating_distance.html
-        public static final double gearRatio = 1;
+        public static final double gearRatio = 12.0/775.0;
         public static final double kShintakeSpeed = 0.5;
         public static final double kP = 1.0;
         public static final double kI = 0.0;

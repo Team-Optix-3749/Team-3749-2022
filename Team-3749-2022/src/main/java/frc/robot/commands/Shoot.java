@@ -17,11 +17,9 @@ public class Shoot extends CommandBase{
     private boolean visionToggle = true;
 
     private final Shooter m_shooter;
-    private final DoubleSupplier m_triggerInput;
 
-    public Shoot(Shooter shooter, DoubleSupplier triggerInput){
+    public Shoot(Shooter shooter){
         m_shooter = shooter;
-        m_triggerInput = triggerInput;
         addRequirements(shooter);
     }
     
@@ -33,18 +31,23 @@ public class Shoot extends CommandBase{
     @Override
     public void execute() {
         // CALCULATE SPEEDS BASED ON DIST FROM HUB
-        if(Xbox.rightTriggerValue.getAsDouble() > 0){
+        if(Xbox.rightTriggerValue.getAsDouble() > 0 && !Xbox.XBOX_A.get()){
             m_shooter.setShintake(Constants.Intake.kIntakeSpeed); 
             m_shooter.setShooter();
         }
         if(Xbox.XBOX_X.getAsBoolean()) visionToggle = !visionToggle;
         m_shooter.visionAlign(visionToggle);
 
-        if(m_triggerInput.getAsDouble() > 0){
-            m_shooter.setTurretMotor(-m_triggerInput.getAsDouble()*0.2);
-        }
-        if(Xbox.XBOX_X.getAsBoolean() == true){
-            m_shooter.setTurretMotor(0.2);
+        // if(Xbox.leftTriggerValue.getAsDouble() > 0){
+        //     m_shooter.setTurretMotor(-0.2);
+        // }
+        // if(Xbox.XBOX_A.getAsBoolean() == true){
+        //     m_shooter.setTurretMotor(0.2);
+        // }
+
+        if(Xbox.XBOX_A.get()){   //Manual control for turret while pressing A, mainly for troubleshooting
+            if(Xbox.rightTriggerValue.getAsDouble() > 0) m_shooter.setTurretMotor(Xbox.rightTriggerValue.getAsDouble() * 0.2);
+            if(Xbox.leftTriggerValue.getAsDouble() > 0) m_shooter.setTurretMotor(-Xbox.leftTriggerValue.getAsDouble() * 0.2);
         }
     }
 

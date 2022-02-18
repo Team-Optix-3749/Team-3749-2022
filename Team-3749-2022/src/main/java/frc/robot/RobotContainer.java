@@ -79,7 +79,7 @@ public class RobotContainer {
 
     m_shooter.setDefaultCommand(
       new Shoot(
-        m_shooter, Xbox.leftTriggerValue
+        m_shooter
       )
     );
 

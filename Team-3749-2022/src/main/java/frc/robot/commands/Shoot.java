@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Xbox;
@@ -48,6 +49,9 @@ public class Shoot extends CommandBase{
             if(Xbox.rightTriggerValue.getAsDouble() > 0) m_shooter.setTurretMotor(Xbox.rightTriggerValue.getAsDouble() * 0.2);
             if(Xbox.leftTriggerValue.getAsDouble() > 0) m_shooter.setTurretMotor(-Xbox.leftTriggerValue.getAsDouble() * 0.2);
         }
+
+        SmartDashboard.putNumber("Hub Distance: ", m_shooter.getDistance());
+
     }
 
     @Override

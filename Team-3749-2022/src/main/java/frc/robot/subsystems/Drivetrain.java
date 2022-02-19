@@ -29,7 +29,6 @@ public class Drivetrain extends SubsystemBase {
 
   public DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
 
-  
   public final Encoder m_leftEncoder = new Encoder(0, 1);
   public final Encoder m_rightEncoder = new Encoder(2, 3);
 

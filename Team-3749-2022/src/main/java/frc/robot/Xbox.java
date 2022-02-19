@@ -15,8 +15,7 @@ public class Xbox{
     public static final JoystickButton XBOX_L = new JoystickButton(XBOX_CONTROLLER, Button.kLeftBumper.value);
     public static final JoystickButton XBOX_R = new JoystickButton(XBOX_CONTROLLER, Button.kRightBumper.value);
     public static final JoystickButton XBOX_LS = new JoystickButton(XBOX_CONTROLLER, Button.kLeftStick.value);
-    public static final JoystickButton XBOX_RS = new JoystickButton(XBOX_CONTROLLER, Button.kRightStick.value);
-    
+    public static final JoystickButton XBOX_RS = new JoystickButton(XBOX_CONTROLLER, Button.kRightStick.value);  
 
     public static final DoubleSupplier leftJoystickX = XBOX_CONTROLLER::getLeftX;
     public static final DoubleSupplier leftJoystickY = XBOX_CONTROLLER::getLeftY;

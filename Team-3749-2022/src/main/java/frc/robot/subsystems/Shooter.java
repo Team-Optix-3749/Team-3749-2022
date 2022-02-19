@@ -51,7 +51,7 @@ public class Shooter extends SubsystemBase{
         m_turretMotor.set(0);
     }
 
-    public void setShooter(){
+    public void setShooter(double speed){
         m_shooterMotor.set(Constants.Shooter.kShootSpeed);
     }
 

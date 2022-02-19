@@ -33,7 +33,8 @@ public class Shoot extends CommandBase{
         // CALCULATE SPEEDS BASED ON DIST FROM HUB
         if(Xbox.rightTriggerValue.getAsDouble() > 0 && !Xbox.XBOX_A.get()){
             m_shooter.setShintake(Constants.Intake.kIntakeSpeed); 
-            m_shooter.setShooter();
+            double shootSpeed = m_shooter.getDistance() * 5600;
+            m_shooter.setShooter(shootSpeed);
         }
         if(Xbox.XBOX_X.getAsBoolean()) visionToggle = !visionToggle;
         m_shooter.visionAlign(visionToggle);

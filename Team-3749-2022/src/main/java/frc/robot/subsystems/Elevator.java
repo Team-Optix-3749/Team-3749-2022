@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot.subsystems;
 
-import com.revrobotics.CANEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -22,8 +22,8 @@ public class Elevator extends SubsystemBase {
     public CANSparkMax m_rightTilt;
     public CANSparkMax m_leftTilt;
 
-    private CANEncoder m_rightTiltEncoder = m_rightTilt.getEncoder();
-    private CANEncoder m_leftTiltEncoder = m_leftTilt.getEncoder();
+    private RelativeEncoder m_rightTiltEncoder = m_rightTilt.getEncoder();
+    private RelativeEncoder m_leftTiltEncoder = m_leftTilt.getEncoder();
 
     private final PIDController m_tiltPIDController = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 

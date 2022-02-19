@@ -35,7 +35,7 @@ public class Intake extends SubsystemBase {
         for (int i = 0; i<2; i++) {
             m_doubleSolenoid.set(i,new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Pneumatics.kSolenoidForwardChannel[i], Pneumatics.kSolenoidReverseChannel[i]));
         }
-        m_intakeMotor = new CANSparkMax(Constants.Shooter.shintakeFront, MotorType.kBrushless);
+        m_intakeMotor = new CANSparkMax(Constants.Intake.intakeMotor, MotorType.kBrushless);
     }
 
     public void setIntake(int dir){

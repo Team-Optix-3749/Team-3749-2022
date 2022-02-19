@@ -53,9 +53,9 @@ public final class Constants {
         public static final NetworkTableEntry coords = m_pi.getEntry("coordinates");
     }
     public final class Shooter{
-        public static final int shintakeFront = 0; // FIND DEVICE ID
-        public static final int shintakeBack = 0;
-        public static final int turretMotor = 0;
+        public static final int shintakeFront = 23; // FIND DEVICE ID
+        public static final int shintakeBack = 24;
+        public static final int turretMotor = 22;
         public static final int rightShooterMotor = 0;
         public static final int leftShooterMotor = 0;
 

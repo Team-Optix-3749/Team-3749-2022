@@ -14,8 +14,8 @@ public class IntakeCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake m_intake;
 
-    private double intakeNum = 1;
-    private double pnuematicNum = 1;
+    private boolean intakeDir;
+    private boolean pistonDir;
 
     /**
      * Creates a new ExampleCommand.
@@ -38,11 +38,11 @@ public class IntakeCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {        
-        if(Xbox.XBOX_L.get() && (intakeNum % 2 == 1)) m_intake.setIntake(1); intakeNum++;
-        if(Xbox.XBOX_R.get() && (intakeNum % 2 == 0)) m_intake.setIntake(-1); intakeNum++;
+        if(Xbox.XBOX_L.get() && (intakeDir)) m_intake.setIntake(1); intakeDir = !intakeDir;
+        if(Xbox.XBOX_R.get() && (intakeDir == false)) m_intake.setIntake(-1); intakeDir = !intakeDir;
 
-        if(Xbox.XBOX_B.get() && (pnuematicNum % 2 == 1)) m_intake.intakePneumatics(kReverse); pnuematicNum++;
-        if (Xbox.XBOX_B.get() && (pnuematicNum % 2 == 0)) m_intake.intakePneumatics(kForward); pnuematicNum++;
+        if(Xbox.XBOX_B.get() && (pistonDir)) m_intake.intakePneumatics(kReverse); pistonDir = !pistonDir;
+        if (Xbox.XBOX_B.get() && (pistonDir == false)) m_intake.intakePneumatics(kForward); pistonDir =!pistonDir;
     }
 
     // Called once the command ends or is interrupted.

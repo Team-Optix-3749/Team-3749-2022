@@ -42,7 +42,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setShintake (double dir) {
-        m_shintakeFront.set(dir*Constants.Shooter.kShintakeSpeed);
+        m_shintakeFront.set(dir*-Constants.Shooter.kShintakeSpeed);
         m_shintakeBack.set(dir*Constants.Shooter.kShintakeSpeed);
     }
 
@@ -52,7 +52,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setShooter(double speed){
-        m_shooterMotor.set(Constants.Shooter.kShootSpeed);
+        m_shooterMotor.set(speed);
     }
 
     public void setTurretMotor(double speed){

@@ -6,16 +6,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Xbox;
-import frc.robot.subsystems.StatusLights;
+import frc.robot.subsystems.Lights;
 
 /**
  * @author Toby Leeder
  */
-public class ManualLED extends CommandBase{
+public class LightCommand extends CommandBase{
     
-    private final StatusLights m_statusLights;
+    private final Lights m_statusLights;
 
-    public ManualLED(StatusLights statusLights){
+    public LightCommand(Lights statusLights){
         m_statusLights = statusLights;
         addRequirements(statusLights);
     }

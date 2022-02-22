@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.Xbox;
 import frc.robot.subsystems.Shooter;
 
@@ -13,7 +12,8 @@ import frc.robot.subsystems.Shooter;
 public class Shoot extends CommandBase{
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     
-    private boolean visionToggle = true;
+    private boolean visionToggle;
+    private boolean dir;
 
     private final Shooter m_shooter;
 
@@ -29,29 +29,27 @@ public class Shoot extends CommandBase{
 
     @Override
     public void execute() {
-        // CALCULATE SPEEDS BASED ON DIST FROM HUB
+        // runs shooter w/calcuated speed and shintake when right trig is held down
         if(Xbox.rightTriggerValue.getAsDouble() > 0 && !Xbox.XBOX_A.get()){
-            m_shooter.setShintake(Constants.Intake.kIntakeSpeed); 
             double shootSpeed = m_shooter.getDistance() * 5600;
             m_shooter.setShooter(shootSpeed);
+            m_shooter.setShintake(1.0); 
         }
-        if(Xbox.XBOX_X.getAsBoolean()) visionToggle = !visionToggle;
+
+        // turns off vision align when pressed && allows for manual control of turret
+        if(Xbox.XBOX_A.get()) visionToggle = !visionToggle;
         m_shooter.visionAlign(visionToggle);
+        
 
-        // if(Xbox.leftTriggerValue.getAsDouble() > 0){
-        //     m_shooter.setTurretMotor(-0.2);
-        // }
-        // if(Xbox.XBOX_A.getAsBoolean() == true){
-        //     m_shooter.setTurretMotor(0.2);
-        // }
-
-        if(Xbox.XBOX_A.get()){   //Manual control for turret while pressing A, mainly for troubleshooting
-            if(Xbox.rightTriggerValue.getAsDouble() > 0) m_shooter.setTurretMotor(Xbox.rightTriggerValue.getAsDouble() * 0.2);
-            if(Xbox.leftTriggerValue.getAsDouble() > 0) m_shooter.setTurretMotor(-Xbox.leftTriggerValue.getAsDouble() * 0.2);
+        // toggles neg or pos speed of turret when left trigger is held
+        if(Xbox.XBOX_Y.get()) dir = !dir;   
+        if (visionToggle == false) {
+            if((Xbox.leftTriggerValue.getAsDouble() > 0) && (dir == false)) m_shooter.setTurretMotor(Xbox.leftTriggerValue.getAsDouble());
+            else if (Xbox.leftTriggerValue.getAsDouble() > 0 && (dir == true)) m_shooter.setTurretMotor(-Xbox.leftTriggerValue.getAsDouble());
         }
 
+        // displays dist from hub on smart dashboard
         SmartDashboard.putNumber("Hub Distance: ", m_shooter.getDistance());
-
     }
 
     @Override

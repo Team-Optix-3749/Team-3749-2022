@@ -14,7 +14,7 @@ public class Shoot extends CommandBase{
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     
     private boolean visionToggle;
-    private boolean dir;
+    private int dir = 1;
 
     private final Shooter m_shooter;
 
@@ -31,21 +31,21 @@ public class Shoot extends CommandBase{
     @Override
     public void execute() {
         // runs shooter w/calcuated speed and shintake when right trig is held down
-        if(Xbox.rightTriggerValue.getAsDouble() > 0 && !Xbox.XBOX_A.get()){
+        if (Xbox.rightTriggerValue.getAsDouble() > 0 && !Xbox.XBOX_A.get()){
             m_shooter.setShintake(Constants.Intake.kIntakeSpeed); 
             m_shooter.setShooter();
         }
 
         // turns off vision align when pressed && allows for manual control of turret
-        if(Xbox.XBOX_A.get()) visionToggle = !visionToggle;
+        if (Xbox.XBOX_A.get()) visionToggle = !visionToggle;
         m_shooter.visionAlign(visionToggle);
         
 
         // toggles neg or pos speed of turret when left trigger is held
-        if(Xbox.XBOX_X.get()) dir = !dir;   
+        if (Xbox.XBOX_X.get()) dir = -dir;   
+        
         if (visionToggle == false) {
-            if((Xbox.leftTriggerValue.getAsDouble() > 0) && (dir == false)) m_shooter.setTurretMotor(Xbox.leftTriggerValue.getAsDouble());
-            else if (Xbox.leftTriggerValue.getAsDouble() > 0 && (dir == true)) m_shooter.setTurretMotor(-Xbox.leftTriggerValue.getAsDouble());
+            if (Xbox.leftTriggerValue.getAsDouble() > 0) m_shooter.setTurretMotor(dir*Xbox.leftTriggerValue.getAsDouble());
         }
 
         // displays dist from hub on smart dashboard

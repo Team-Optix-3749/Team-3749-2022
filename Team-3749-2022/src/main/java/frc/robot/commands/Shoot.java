@@ -42,7 +42,7 @@ public class Shoot extends CommandBase{
         
 
         // toggles neg or pos speed of turret when left trigger is held
-        if(Xbox.XBOX_Y.get()) dir = !dir;   
+        if(Xbox.XBOX_X.get()) dir = !dir;   
         if (visionToggle == false) {
             if((Xbox.leftTriggerValue.getAsDouble() > 0) && (dir == false)) m_shooter.setTurretMotor(Xbox.leftTriggerValue.getAsDouble());
             else if (Xbox.leftTriggerValue.getAsDouble() > 0 && (dir == true)) m_shooter.setTurretMotor(-Xbox.leftTriggerValue.getAsDouble());

@@ -28,13 +28,13 @@ import java.util.ArrayList;
 public class Intake extends SubsystemBase {
     public CANSparkMax m_intakeMotor;
 
-    private final Compressor m_comp = new Compressor(0, PneumaticsModuleType.CTREPCM);
-    private final ArrayList<DoubleSolenoid> m_doubleSolenoid = new ArrayList<DoubleSolenoid>(2);
+    // private final Compressor m_comp = new Compressor(0, PneumaticsModuleType.CTREPCM);
+    // private final ArrayList<DoubleSolenoid> m_doubleSolenoid = new ArrayList<DoubleSolenoid>(2);
 
     public Intake(){
-        for (int i = 0; i<2; i++) {
-            m_doubleSolenoid.set(i,new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Pneumatics.kSolenoidForwardChannel[i], Pneumatics.kSolenoidReverseChannel[i]));
-        }
+        // for (int i = 0; i<2; i++) {
+        //     m_doubleSolenoid.set(i,new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Pneumatics.kSolenoidForwardChannel[i], Pneumatics.kSolenoidReverseChannel[i]));
+        // }
         m_intakeMotor = new CANSparkMax(Constants.Intake.intakeMotor, MotorType.kBrushless);
     }
 
@@ -43,14 +43,14 @@ public class Intake extends SubsystemBase {
     }
 
     public void loopControl(){
-        m_comp.enableDigital();
+        // m_comp.enableDigital();
     }
 
     public void disableLoopControl() {
-        m_comp.disable();
+        // m_comp.disable();
     }
 
     public void intakePneumatics(DoubleSolenoid.Value val){
-        for (var i : m_doubleSolenoid) i.set(val);
+        // for (var i : m_doubleSolenoid) i.set(val);
     }
 }

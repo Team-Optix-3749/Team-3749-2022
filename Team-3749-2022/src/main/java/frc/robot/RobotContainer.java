@@ -41,13 +41,13 @@ public class RobotContainer {
  
   private final Drivetrain m_drivetrain = new Drivetrain();
 
-  private final OldDrivetrain m_oldDrivetrain = new OldDrivetrain();
+  // private final OldDrivetrain m_oldDrivetrain = new OldDrivetrain();
   
-  private final Shooter m_shooter = new Shooter();
+  // private final Shooter m_shooter = new Shooter();
 
-  private final Elevator m_elevator = new Elevator();
+  // private final Elevator m_elevator = new Elevator();
   
-  private final Lights m_lights = new Lights();
+  // private final Lights m_lights = new Lights();
     
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -62,36 +62,36 @@ public class RobotContainer {
     //   )
     // );    
 
-    m_oldDrivetrain.setDefaultCommand(
-      new OldArcadeDrive(m_oldDrivetrain, 
-      Xbox.leftJoystickY, 
-      Xbox.rightJoystickX
-      )
-    );
+    // m_oldDrivetrain.setDefaultCommand(
+    //   new OldArcadeDrive(m_oldDrivetrain, 
+    //   Xbox.leftJoystickY, 
+    //   Xbox.rightJoystickX
+    //   )
+    // );
 
-    m_elevator.setDefaultCommand(
-      new ElevatorCommand(
-        m_elevator
-      )
-    );
+    // m_elevator.setDefaultCommand(
+    //   new ElevatorCommand(
+    //     m_elevator
+    //   )
+    // );
     
 
-    m_shooter.setDefaultCommand(
-      new Shoot(
-        m_shooter
-      )
-    );
+    // m_shooter.setDefaultCommand(
+    //   new Shoot(
+    //     m_shooter
+    //   )
+    // );
 
     m_intake.setDefaultCommand(
       new IntakeCommand(
         m_intake
       )
     );
-    m_lights.setDefaultCommand(
-      new LightCommand(
-        m_lights
-      )
-    );
+    // m_lights.setDefaultCommand(
+    //   new LightCommand(
+    //     m_lights
+    //   )
+    // );
 
   }
  

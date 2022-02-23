@@ -56,8 +56,8 @@ public final class Constants {
         public static final int shintakeFront = 23; // FIND DEVICE ID
         public static final int shintakeBack = 24;
         public static final int turretMotor = 22;
-        public static final int rightShooterMotor = 0;
-        public static final int leftShooterMotor = 0;
+        public static final int rightShooterMotor = 15;
+        public static final int leftShooterMotor = 16;
 
         public static final double gearRatio = 12.0/775.0;
         public static final double kShintakeSpeed = 0.5;
@@ -77,7 +77,7 @@ public final class Constants {
   
     public static final class Intake {
         public static final int intakeMotor = 21;
-        public static final int intakePiston = 0; // FIND DEVICE ID
+        public static final int intakePiston = 1; // FIND DEVICE ID
         public static final double kIntakeSpeed = 1.0;
     }
 
@@ -94,7 +94,7 @@ public final class Constants {
     public static final class Elevator {
         public static final int leftTilt = 26; // FIND CAN ID
         public static final int rightTilt = 25; // FIND CAN ID
-        public static final int chain = 0; // FIND CAN ID
+        // public static final int chain = 0; // FIND CAN ID
         public static final double chainMPR = 0.0; // FMD SPROCKET DIAMETER
         public static final double chainGR = 0.0; // FIND GEAR RATIO ON MOTOR
         public static final double kP = 1.0;

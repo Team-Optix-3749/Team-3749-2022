@@ -78,7 +78,7 @@ public final class Constants {
     public static final class Intake {
         public static final int intakeMotor = 21;
         public static final int intakePiston = 1; // FIND DEVICE ID
-        public static final double kIntakeSpeed = 1.0;
+        public static final double kIntakeSpeed = 0.8;
     }
 
     public static class Pneumatics {

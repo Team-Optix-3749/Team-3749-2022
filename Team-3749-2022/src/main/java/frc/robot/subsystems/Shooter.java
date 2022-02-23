@@ -52,16 +52,16 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setShooter(){
-        double hubY = Constants.Shooter.shooterHeight - Constants.Shooter.hubHeight;
-        double hubX = getDistance()+0.61;
-        double A = Math.toRadians(Constants.Shooter.shooterAngle);
+        // double hubY = Constants.Shooter.shooterHeight - Constants.Shooter.hubHeight;
+        // double hubX = getDistance()+0.61;
+        // double A = Math.toRadians(Constants.Shooter.shooterAngle);
 
-        double velocity = Math.sqrt(
-            ((4.9*hubX*hubX)/(Math.cos(A)*Math.cos(A)))
-            *(1/(hubY+(Math.tan(A)*hubX))));
-            System.out.println(velocity*12);
+        // double velocity = Math.sqrt(
+        //     ((4.9*hubX*hubX)/(Math.cos(A)*Math.cos(A)))
+        //     *(1/(hubY+(Math.tan(A)*hubX))));
+        //     System.out.println(velocity*12);
             
-        m_shooterMotor.set(velocity);
+        m_shooterMotor.set(.2);
     }
 
     public void setTurretMotor(double speed){

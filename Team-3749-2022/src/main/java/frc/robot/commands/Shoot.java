@@ -32,24 +32,24 @@ public class Shoot extends CommandBase{
     public void execute() {
         // runs shooter w/calcuated speed and shintake when right trig is held down
         if (Xbox.rightTriggerValue.getAsDouble() > 0 && !Xbox.XBOX_A.get()){
-            m_shooter.setShintake(Constants.Intake.kIntakeSpeed); 
+            // m_shooter.setShintake(Constants.Intake.kIntakeSpeed); 
             m_shooter.setShooter();
         }
 
-        // turns off vision align when pressed && allows for manual control of turret
-        if (Xbox.XBOX_A.get()) visionToggle = !visionToggle;
-        m_shooter.visionAlign(visionToggle);
+        // // turns off vision align when pressed && allows for manual control of turret
+        // if (Xbox.XBOX_A.get()) visionToggle = !visionToggle;
+        // m_shooter.visionAlign(visionToggle);
         
 
-        // toggles neg or pos speed of turret when left trigger is held
-        if (Xbox.XBOX_X.get()) dir = -dir;   
+        // // toggles neg or pos speed of turret when left trigger is held
+        // if (Xbox.XBOX_X.get()) dir = -dir;   
         
-        if (visionToggle == false) {
-            if (Xbox.leftTriggerValue.getAsDouble() > 0) m_shooter.setTurretMotor(dir*Xbox.leftTriggerValue.getAsDouble());
-        }
+        // if (visionToggle == false) {
+        //     if (Xbox.leftTriggerValue.getAsDouble() > 0) m_shooter.setTurretMotor(dir*Xbox.leftTriggerValue.getAsDouble());
+        // }
 
-        // displays dist from hub on smart dashboard
-        SmartDashboard.putNumber("Hub Distance: ", m_shooter.getDistance());
+        // // displays dist from hub on smart dashboard
+        // SmartDashboard.putNumber("Hub Distance: ", m_shooter.getDistance());
     }
 
     @Override

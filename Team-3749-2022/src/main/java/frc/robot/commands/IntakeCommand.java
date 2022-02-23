@@ -14,8 +14,8 @@ public class IntakeCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake m_intake;
 
-    private boolean intakeDir;
-    private boolean pistonDir;
+    // private boolean intakeDir;
+    // private boolean pistonDir;
 
     /**
      * Creates a new ExampleCommand.
@@ -32,23 +32,27 @@ public class IntakeCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_intake.intakePneumatics(kForward);
+        //m_intake.intakePneumatics(kForward);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {        
-        if(Xbox.XBOX_L.get() && (intakeDir)) {System.out.println("a");m_intake.setIntake(1); intakeDir = !intakeDir;}
-        if(Xbox.XBOX_R.get() && (intakeDir == false)) {System.out.println("b");m_intake.setIntake(-1); intakeDir = !intakeDir;}
+        // if(Xbox.XBOX_B.get() == true){
+        // m_intake.setIntake(1);
+        // System.out.println("a");}
+        if(Xbox.XBOX_L.get()) {System.out.println("a");m_intake.setIntake(1);}
+        else if(Xbox.XBOX_R.get()) {System.out.println("b");m_intake.setIntake(-1);}
+        else {m_intake.setIntake(0);}
 
-        if(Xbox.XBOX_B.get() && (pistonDir)) {m_intake.intakePneumatics(kReverse); pistonDir = !pistonDir;}
-        if (Xbox.XBOX_B.get() && (pistonDir == false)) {m_intake.intakePneumatics(kForward); pistonDir =!pistonDir;}
+        // if(Xbox.XBOX_B.get() && (pistonDir)) {System.out.println("c");m_intake.intakePneumatics(kReverse); pistonDir = !pistonDir;}
+        // if (Xbox.XBOX_B.get() && (pistonDir == false)) {m_intake.intakePneumatics(kForward); pistonDir =!pistonDir;}
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_intake.intakePneumatics(kReverse);
+        //m_intake.intakePneumatics(kReverse);
     }
 
     // Returns true when the command should end.

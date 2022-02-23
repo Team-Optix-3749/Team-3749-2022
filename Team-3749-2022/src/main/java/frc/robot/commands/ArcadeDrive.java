@@ -38,10 +38,10 @@ public class ArcadeDrive extends CommandBase {
 
   @Override
   public void execute() {
-    m_drive.arcadeDrive(-m_forward.getAsDouble()*.9, m_rotation.getAsDouble()*.75);
+    if (speedToggle) m_drive.arcadeDrive(-m_forward.getAsDouble()*.9, m_rotation.getAsDouble()*.75);
+    else m_drive.arcadeDrive(-m_forward.getAsDouble(), m_rotation.getAsDouble()*.75);
 
     if (Xbox.XBOX_LS.get()) speedToggle = !speedToggle;
-    if (Xbox.XBOX_LS.get() && (speedToggle)) m_drive.arcadeDrive(-m_forward.getAsDouble(), m_rotation.getAsDouble()*.75);
   }
 
   @Override

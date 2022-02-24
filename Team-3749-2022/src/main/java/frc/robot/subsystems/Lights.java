@@ -11,12 +11,12 @@ import frc.robot.utilities.Constants;
 public class Lights extends SubsystemBase{
     
     public AddressableLED m_led = new AddressableLED(Constants.LEDs.LEDport);
-    public AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(60);
+    public AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(Constants.LEDs.bufferLength);
     
     public Lights(){
-    m_led.setLength(m_ledBuffer.getLength());
-    m_led.setData(m_ledBuffer);
-    m_led.start();
+        m_led.setLength(m_ledBuffer.getLength());
+        m_led.setData(m_ledBuffer);
+        m_led.start();
     }
     
     public void setLight(int Red, int Blue, int Green){

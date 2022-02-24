@@ -104,5 +104,6 @@ public final class Constants {
     }
     public static final class LEDs {
         public static final int LEDport = 9;
+        public static final int bufferLength = 60; // Length of LED Strips in Pixels 
     }
 }

@@ -24,6 +24,7 @@ public class StatusLights extends SubsystemBase{
             m_ledBuffer.setRGB(i, Red, Blue, Green);
         }
     }
+
     public void setOptixColors(){
         for(int i = 0; i < m_ledBuffer.getLength(); i++){
             if (i > m_ledBuffer.getLength()*3/10 && i < m_ledBuffer.getLength()*4/10) m_ledBuffer.setRGB(i, 0, 0, 0);
@@ -31,6 +32,7 @@ public class StatusLights extends SubsystemBase{
             else m_ledBuffer.setRGB(i, 178, 242, 24);
         }
     }
+
     public void setOff(){
         for(int i = 0; i < m_ledBuffer.getLength(); i++) m_ledBuffer.setRGB(i, 0, 0, 0);
     }

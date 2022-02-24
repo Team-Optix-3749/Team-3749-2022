@@ -18,39 +18,43 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.utilities.Constants;
 import edu.wpi.first.wpilibj.Compressor;
-import frc.robot.Constants.Pneumatics;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import java.util.ArrayList;
 
 public class Intake extends SubsystemBase {
     public CANSparkMax m_intakeMotor;
 
     private final Compressor m_comp = new Compressor(0, PneumaticsModuleType.CTREPCM);
-    private final ArrayList<DoubleSolenoid> m_doubleSolenoid = new ArrayList<DoubleSolenoid>(2);
+    private final DoubleSolenoid m_rightPiston;
+    private final DoubleSolenoid m_leftPiston;
 
     public Intake(){
-        for (int i = 0; i<2; i++) {
-            m_doubleSolenoid.set(i,new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Pneumatics.kSolenoidForwardChannel[i], Pneumatics.kSolenoidReverseChannel[i]));
-        }
+        m_rightPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Intake.kSolenoidForwardChannel[0], Constants.Intake.kSolenoidReverseChannel[0]);
+        m_leftPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Intake.kSolenoidForwardChannel[1], Constants.Intake.kSolenoidReverseChannel[1]);
+
         m_intakeMotor = new CANSparkMax(Constants.Intake.intakeMotor, MotorType.kBrushless);
+    }
+
+    public void stopMotors() {
+        m_intakeMotor.set(0);
     }
 
     public void setIntake(int dir){
         m_intakeMotor.set(dir*Constants.Intake.kIntakeSpeed);
     }
 
-    public void loopControl(){
+    public void startCompressor(){
         m_comp.enableDigital();
     }
 
-    public void disableLoopControl() {
+    public void stopCompressor() {
         m_comp.disable();
     }
 
     public void intakePneumatics(DoubleSolenoid.Value val){
-        for (var i : m_doubleSolenoid) i.set(val);
+        m_rightPiston.set(val);
+        m_leftPiston.set(val);
     }
 }

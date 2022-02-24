@@ -5,17 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Xbox;
-import frc.robot.subsystems.StatusLights;
+import frc.robot.subsystems.Lights;
+import frc.robot.utilities.Xbox;
 
 /**
  * @author Toby Leeder
  */
-public class ManualLED extends CommandBase{
+public class LightCommand extends CommandBase{
     
-    private final StatusLights m_statusLights;
+    private final Lights m_statusLights;
 
-    public ManualLED(StatusLights statusLights){
+    public LightCommand(Lights statusLights){
         m_statusLights = statusLights;
         addRequirements(statusLights);
     }
@@ -27,7 +27,7 @@ public class ManualLED extends CommandBase{
 
     @Override
     public void execute() {
-        if (Xbox.XBOX_Y.get()) m_statusLights.setOptixColors();
+        if (Xbox.Pilot.x.get()) m_statusLights.setOptixColors();
     }
 
     @Override

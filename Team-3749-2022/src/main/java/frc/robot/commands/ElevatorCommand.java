@@ -6,8 +6,8 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.*;
+import frc.robot.utilities.Controls;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Xbox;
 
 /** An example command that uses an example subsystem. */
 public class ElevatorCommand extends CommandBase {
@@ -34,10 +34,10 @@ public class ElevatorCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(Xbox.XBOX_CONTROLLER.getPOV() == 0.0) m_elevator.extendClimber(10);
-        if(Xbox.XBOX_CONTROLLER.getPOV() == 90.0) m_elevator.tilt(0.1);
-        if(Xbox.XBOX_CONTROLLER.getPOV() == 180.0) m_elevator.extendClimber(0);
-        if(Xbox.XBOX_CONTROLLER.getPOV() == 270.0) m_elevator.tilt(-0.1);
+        if(Controls.Elevator.extendBtn.getAsBoolean()) m_elevator.extendClimber(10);
+        if(Controls.Elevator.extendBtn.getAsBoolean()) m_elevator.tilt(0.1);
+        if(Controls.Elevator.extendBtn.getAsBoolean()) m_elevator.extendClimber(0);
+        if(Controls.Elevator.extendBtn.getAsBoolean()) m_elevator.tilt(-0.1);
     }
 
     // Called once the command ends or is interrupted.

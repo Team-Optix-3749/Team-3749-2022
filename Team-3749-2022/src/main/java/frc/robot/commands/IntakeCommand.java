@@ -5,8 +5,9 @@
 package frc.robot.commands;
  
 import frc.robot.subsystems.Intake;
+import frc.robot.utilities.Controls;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Xbox;
+
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
  
 /** An example command that uses an example subsystem. */
@@ -14,8 +15,8 @@ public class IntakeCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake m_intake;
 
-    private double intakeNum = 1;
-    private double pnuematicNum = 1;
+    // private boolean intakeDir;
+    // private boolean pistonDir;
 
     /**
      * Creates a new ExampleCommand.
@@ -32,23 +33,27 @@ public class IntakeCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_intake.intakePneumatics(kForward);
+        m_intake.startCompressor();
+        m_intake.intakePneumatics(kReverse);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {        
-        if(Xbox.XBOX_L.get() && (intakeNum % 2 == 1)) m_intake.setIntake(1); intakeNum++;
-        if(Xbox.XBOX_R.get() && (intakeNum % 2 == 0)) m_intake.setIntake(-1); intakeNum++;
-
-        if(Xbox.XBOX_B.get() && (pnuematicNum % 2 == 1)) m_intake.intakePneumatics(kReverse); pnuematicNum++;
-        if (Xbox.XBOX_B.get() && (pnuematicNum % 2 == 0)) m_intake.intakePneumatics(kForward); pnuematicNum++;
+        if(Controls.Intake.intakeBtn.getAsBoolean()) {
+            m_intake.setIntake(1);
+            m_intake.intakePneumatics(kForward);
+        } else {
+            m_intake.stopMotors();
+            m_intake.intakePneumatics(kReverse);
+        }
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         m_intake.intakePneumatics(kReverse);
+        m_intake.stopCompressor();
     }
 
     // Returns true when the command should end.

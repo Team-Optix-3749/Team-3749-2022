@@ -1,6 +1,6 @@
 # Team-3749-2022
 
-## Controller 1 (Drivetrain)
+## Controller 1 (Pilot)
 ### Joysticks:
  - 🕹️ **Left Joystick Y:** Drives foward
  - 🕹️ **Left Joystick Button:** Toggle to activate and deactivate sprint (100% speed)
@@ -13,14 +13,14 @@
  - ❌ **X Button:** 
 
 ### D-Pad:
- - ⬆️ **Up:** Extends interior hooks upwards
- - ⬇️ **Down:** Retracts interior hooks back to original position
- - ➡️ **Right:** Tilts exterior hooks forwards towards the front of the robot
- - ⬅️ **Left:** Returns exterior hooks to original position
+ - ⬆️ **Up:** 
+ - ⬇️ **Down:** 
+ - ➡️ **Right:**
+ - ⬅️ **Left:** 
 
 ### Bumpers:
  - 🤛 **Left Bumper:** 
- - 🤜 **Right Bumper:** 
+ - 🤜 **Right Bumper:** Opens Intake, runs intake wheels inwards, and runs shintake inwards to the middle of the robot 
 
 ### Triggers:
  - 🔫 **Right Trigger:** 
@@ -33,16 +33,16 @@
  - 🕹️ **Right Joystick X:** 
 
 ### Buttons:
- - 🅰️ **A Button:** Shintake up + Shoot
- - 🅱️ **B Button:** Intake in + Shintake up
- - 🥔 **Y Button:** 
+ - 🅰️ **A Button:** 
+ - 🅱️ **B Button:** 
+ - 🥔 **Y Button:** Set Optix Lights
  - ❌ **X Button:** Toggle to set direction of turret motion 
 
 ### Bumpers:
- - 🤛 **Left Bumper:** Toggle to rotate intake wheels outward
- - 🤜 **Right Bumper:** Toggle to rotate intake wheels inward 
+ - 🤛 **Left Bumper:**
+ - 🤜 **Right Bumper:** 
 
 ### Triggers:
- - 🔫 **Right Trigger:** Runs Shintake and Shooter motor (Turret aligns autonomously)
+ - 🔫 **Right Trigger:** Runs Shintake and Shooter 
  - 🔫 **Left Trigger:** Manually controls speed of Turret
 

@@ -14,7 +14,7 @@ public class Controls {
     public static final class Shooter {
         public static final BooleanSupplier shootTrigger = () -> (Xbox.Operator.rt.getAsDouble() > 0);
         public static final DoubleSupplier turnTurretTrigger = () -> (Xbox.Operator.lt.getAsDouble());
-        public static final BooleanSupplier dirBtn = Xbox.Pilot.y;
+        public static final BooleanSupplier dirBtn = Xbox.Operator.y;
     }
 
     public static final class Intake {

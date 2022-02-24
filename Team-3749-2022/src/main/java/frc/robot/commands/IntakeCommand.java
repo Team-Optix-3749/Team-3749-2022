@@ -15,8 +15,7 @@ public class IntakeCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake m_intake;
 
-    // private boolean intakeDir;
-    // private boolean pistonDir;
+    private boolean comp;
 
     /**
      * Creates a new ExampleCommand.
@@ -47,6 +46,12 @@ public class IntakeCommand extends CommandBase {
             m_intake.stopMotors();
             m_intake.intakePneumatics(kReverse);
         }
+
+        if (Controls.Intake.compBtn.getAsBoolean()) comp = !comp;
+
+        if (comp) m_intake.startCompressor();
+        else m_intake.stopCompressor();
+
     }
 
     // Called once the command ends or is interrupted.

@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Controls;
+import frc.robot.utilities.Constants.Shintake.BallColor;;
 
 /**
  * @author Rohin Sood
@@ -24,7 +25,8 @@ public class ShintakeCommand extends CommandBase{
     @Override
     public void execute() {
         if (Controls.Shintake.intakeBtn.getAsBoolean() || Controls.Shintake.outakeBtn.getAsBoolean()) {
-            m_shintake.setShintake(1);
+            if (m_shintake.getColor() == BallColor.NULL) m_shintake.setShintake(1);
+            else m_shintake.stopMotors();
         }
     }
 

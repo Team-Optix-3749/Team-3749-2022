@@ -5,30 +5,18 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.*;
-
-import java.util.function.DoubleSupplier;
+import frc.robot.utilities.Controls;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-
-/**
- * @author Rohan Juneja
- * @author Rohin Sood
- */
-import frc.robot.Xbox;
 
 /** An example command that uses an example subsystem. */
 public class OldArcadeDrive extends CommandBase {
 
   private final OldDrivetrain m_drive;
-  private final DoubleSupplier m_forward;
-  private final DoubleSupplier m_rotation;
   private boolean speedToggle = false;
 
-  public OldArcadeDrive(OldDrivetrain drivetrain, DoubleSupplier forward, DoubleSupplier rotation) {
+  public OldArcadeDrive(OldDrivetrain drivetrain) {
     m_drive = drivetrain;
-    m_forward = forward;
-    m_rotation = rotation;
     addRequirements(drivetrain);
   }
 
@@ -37,10 +25,10 @@ public class OldArcadeDrive extends CommandBase {
 
   @Override
   public void execute() {
-    m_drive.arcadeDrive(-m_forward.getAsDouble()*.9, m_rotation.getAsDouble()*.75);
+    if (speedToggle) m_drive.arcadeDrive(-Controls.Drivetrain.forward.getAsDouble()*.9, Controls.Drivetrain.turn.getAsDouble()*.75);
+    else m_drive.arcadeDrive(-Controls.Drivetrain.forward.getAsDouble(), Controls.Drivetrain.turn.getAsDouble()*.75);
 
-    if (Xbox.XBOX_LS.get()) speedToggle = !speedToggle;
-    if (Xbox.XBOX_LS.get() && (speedToggle)) m_drive.arcadeDrive(-m_forward.getAsDouble(), m_rotation.getAsDouble()*.75);
+    if (Controls.Drivetrain.sprint.getAsBoolean()) speedToggle = !speedToggle;
   }
 
   @Override

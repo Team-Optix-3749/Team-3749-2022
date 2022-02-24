@@ -7,9 +7,10 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import frc.robot.Constants;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.utilities.Constants;
 
 /* COLOR SENSOR IMPS
 import com.revrobotics.ColorSensorV3;
@@ -27,7 +28,7 @@ public class Elevator extends SubsystemBase {
 
     private final PIDController m_tiltPIDController = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 
-    // public CANSparkMax m_chain;
+    public CANSparkMax m_chain;
 
     private final PIDController m_chainPIDContoller = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 
@@ -46,8 +47,8 @@ public class Elevator extends SubsystemBase {
         m_leftTilt = new CANSparkMax(Constants.Elevator.leftTilt, MotorType.kBrushless);
         m_leftTilt.setIdleMode(IdleMode.kBrake);
 
-        // m_chain = new CANSparkMax(Constants.Elevator.chain, MotorType.kBrushless);
-        // m_chain.setIdleMode(IdleMode.kBrake);  
+        m_chain = new CANSparkMax(Constants.Elevator.chain, MotorType.kBrushless);
+        m_chain.setIdleMode(IdleMode.kBrake);  
     }
 
     private void setTiltMotors(double dist) {
@@ -73,16 +74,16 @@ public class Elevator extends SubsystemBase {
     }
 
     public void extendUp () {
-        // m_chain.set(m_chainPIDContoller.calculate(getTiltEncoders(), 10));
+        m_chain.set(m_chainPIDContoller.calculate(getTiltEncoders(), 10));
     }
 
     public void extendClimber(double target) {
-        // m_chain.set(m_chainPIDContoller.calculate(getTiltEncoders(), target));
+        m_chain.set(m_chainPIDContoller.calculate(getTiltEncoders(), target));
     }
 
     public void stopMotors(){
         setTiltMotors(0.0);
-        // m_chain.set(0.0);
+        m_chain.set(0.0);
     }
 
     /*

@@ -5,8 +5,9 @@
 package frc.robot.commands;
  
 import frc.robot.subsystems.Intake;
+import frc.robot.utilities.Controls;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Xbox;
+
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
  
 /** An example command that uses an example subsystem. */
@@ -32,27 +33,27 @@ public class IntakeCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        //m_intake.intakePneumatics(kForward);
+        m_intake.startCompressor();
+        m_intake.intakePneumatics(kReverse);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {        
-        // if(Xbox.XBOX_B.get() == true){
-        // m_intake.setIntake(1);
-        // System.out.println("a");}
-        if(Xbox.XBOX_L.get()) {System.out.println("a");m_intake.setIntake(1);}
-        else if(Xbox.XBOX_R.get()) {System.out.println("b");m_intake.setIntake(-1);}
-        else {m_intake.setIntake(0);}
-
-        // if(Xbox.XBOX_B.get() && (pistonDir)) {System.out.println("c");m_intake.intakePneumatics(kReverse); pistonDir = !pistonDir;}
-        // if (Xbox.XBOX_B.get() && (pistonDir == false)) {m_intake.intakePneumatics(kForward); pistonDir =!pistonDir;}
+        if(Controls.Intake.intakeBtn.getAsBoolean()) {
+            m_intake.setIntake(1);
+            m_intake.intakePneumatics(kForward);
+        } else {
+            m_intake.stopMotors();
+            m_intake.intakePneumatics(kReverse);
+        }
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        //m_intake.intakePneumatics(kReverse);
+        m_intake.intakePneumatics(kReverse);
+        m_intake.stopCompressor();
     }
 
     // Returns true when the command should end.

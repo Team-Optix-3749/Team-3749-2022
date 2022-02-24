@@ -13,8 +13,9 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.Constants.Auto;
+import frc.robot.utilities.Constants;
+import frc.robot.utilities.Constants.Auto;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 public class Drivetrain extends SubsystemBase {
   // tracking by using Limelight 

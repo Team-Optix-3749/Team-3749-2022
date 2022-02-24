@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.utilities.Constants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
@@ -40,15 +41,15 @@ public class RobotContainer {
   private final Intake m_intake = new Intake();
  
   private final Drivetrain m_drivetrain = new Drivetrain();
-
-  // private final OldDrivetrain m_oldDrivetrain = new OldDrivetrain();
   
   private final Shooter m_shooter = new Shooter();
 
   private final Elevator m_elevator = new Elevator();
   
   // private final Lights m_lights = new Lights();
-    
+
+    // private final OldDrivetrain m_oldDrivetrain = new OldDrivetrain();
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -56,9 +57,7 @@ public class RobotContainer {
 
     m_drivetrain.setDefaultCommand(
       new ArcadeDrive(
-        m_drivetrain, 
-        Xbox.leftJoystickY, 
-        Xbox.rightJoystickX
+        m_drivetrain
       )
     );    
 
@@ -77,7 +76,7 @@ public class RobotContainer {
     
 
     m_shooter.setDefaultCommand(
-      new Shoot(
+      new ShootCommand(
         m_shooter
       )
     );
@@ -87,6 +86,7 @@ public class RobotContainer {
         m_intake
       )
     );
+
     // m_lights.setDefaultCommand(
     //   new LightCommand(
     //     m_lights

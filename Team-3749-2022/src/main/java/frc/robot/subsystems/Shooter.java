@@ -8,17 +8,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.Constants.Auto;
+import frc.robot.utilities.Constants;
+import frc.robot.utilities.Constants.Auto;
 
 /**
  * @author Jadon Lee
  * @author Rohin Sood
  */
 public class Shooter extends SubsystemBase{
-    public CANSparkMax m_shintakeFront;
-    public CANSparkMax m_shintakeBack; 
-
     private WPI_TalonFX m_leftShooterMotor = new WPI_TalonFX(Constants.Shooter.leftShooterMotor);
     private WPI_TalonFX m_rightShooterMotor = new WPI_TalonFX(Constants.Shooter.rightShooterMotor);
 
@@ -34,16 +31,7 @@ public class Shooter extends SubsystemBase{
 
         m_rightShooterMotor.setInverted(true);
         m_turretEncoder.setPositionConversionFactor(Constants.Shooter.gearRatio);
-
-        m_shintakeFront = new CANSparkMax(Constants.Shooter.shintakeFront, MotorType.kBrushless);
-        m_shintakeBack = new CANSparkMax(Constants.Shooter.shintakeBack, MotorType.kBrushless);
         
-        m_shintakeBack.setInverted(true);
-    }
-
-    public void setShintake (double dir) {
-        m_shintakeFront.set(dir*-Constants.Shooter.kShintakeSpeed);
-        m_shintakeBack.set(dir*Constants.Shooter.kShintakeSpeed);
     }
 
     public void stopMotors(){
@@ -77,25 +65,23 @@ public class Shooter extends SubsystemBase{
         }
     }
 
-    public void visionAlign(Boolean run){
+    public void visionAlign(){
         double x = Auto.tx.getDouble(0.0);
         double multiplier = 1;
-        if (run){
-            if (x<=5){
-            multiplier = 5;
-            }
-            else if (x>=5){
-            multiplier = 3;
-            }
-            else if (x>=10){
-            multiplier = 2;
-            }
-            double input = x * Constants.Vision.kVisionP * multiplier;
-            if (input>1){
-                setTurretMotor(0.8*input);
-            }
-            System.out.println(m_turretEncoder.getPosition());
+        if (x<=5){
+        multiplier = 5;
         }
+        else if (x>=5){
+        multiplier = 3;
+        }
+        else if (x>=10){
+        multiplier = 2;
+        }
+        double input = x * Constants.Vision.kVisionP * multiplier;
+        if (input>1){
+            setTurretMotor(0.8*input);
+        }
+        System.out.println(m_turretEncoder.getPosition());
     }
 
     public double getDistance(){    

@@ -26,7 +26,7 @@
  - 🔫 **Right Trigger:** 
  - 🔫 **Left Trigger:** 
 
-## Controller 2
+## Controller 2 (Operator)
 ### Joysticks:
  - 🕹️ **Left Joystick Y:** 
  - 🕹️ **Left Joystick Button:** 

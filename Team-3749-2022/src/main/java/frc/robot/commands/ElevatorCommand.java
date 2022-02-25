@@ -35,9 +35,9 @@ public class ElevatorCommand extends CommandBase {
     @Override
     public void execute() {
         if(Controls.Elevator.extendBtn.getAsBoolean()) m_elevator.extendClimber(10);
-        if(Controls.Elevator.extendBtn.getAsBoolean()) m_elevator.tilt(0.1);
-        if(Controls.Elevator.extendBtn.getAsBoolean()) m_elevator.extendClimber(0);
-        if(Controls.Elevator.extendBtn.getAsBoolean()) m_elevator.tilt(-0.1);
+        if(Controls.Elevator.tiltFwdBtn.getAsBoolean()) m_elevator.tiltIncrement(0.1);
+        if(Controls.Elevator.returnBtn.getAsBoolean()) m_elevator.extendClimber(0);
+        if(Controls.Elevator.tiltBackBtn.getAsBoolean()) m_elevator.tiltIncrement(-0.1);
     }
 
     // Called once the command ends or is interrupted.

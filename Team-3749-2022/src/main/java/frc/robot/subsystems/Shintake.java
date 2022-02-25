@@ -29,8 +29,8 @@ public class Shintake extends SubsystemBase{
     }
 
     public void setShintake (double dir) {
-        m_shintakeFront.set(dir*Constants.Shooter.kShintakeSpeed);
-        m_shintakeBack.set(dir*-Constants.Shooter.kShintakeSpeed);
+        m_shintakeFront.set(dir*Constants.Shintake.kShintakeSpeed);
+        m_shintakeBack.set(dir*-Constants.Shintake.kShintakeSpeed);
     }
 
     public void stopMotors () {

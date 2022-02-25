@@ -28,6 +28,9 @@ public class ShintakeCommand extends CommandBase{
             if (m_shintake.getColor() == BallColor.NULL) m_shintake.setShintake(1);
             else m_shintake.stopMotors();
         }
+
+        if (Controls.Shintake.runBtn.getAsBoolean()) m_shintake.setShintake(1);
+        else m_shintake.stopMotors();
     }
 
     @Override

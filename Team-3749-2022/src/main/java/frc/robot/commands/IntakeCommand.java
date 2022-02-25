@@ -49,9 +49,13 @@ public class IntakeCommand extends CommandBase {
 
         if (Controls.Intake.compBtn.getAsBoolean()) comp = !comp;
 
+        if (Controls.Intake.runBtn.getAsBoolean()) m_intake.setIntake(1); 
+
         if (comp) m_intake.startCompressor();
         else m_intake.stopCompressor();
 
+        if(Controls.Intake.pistonBtn.getAsBoolean()) m_intake.intakePneumatics(kForward);
+        else m_intake.intakePneumatics(kReverse);
     }
 
     // Called once the command ends or is interrupted.

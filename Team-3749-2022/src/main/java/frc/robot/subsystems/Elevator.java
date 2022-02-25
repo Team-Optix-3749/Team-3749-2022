@@ -66,10 +66,10 @@ public class Elevator extends SubsystemBase {
     }
 
     public void tilt(double target) {
-        setTiltMotors(10);
+        setTiltMotors(target);
     }
 
-    public void tiltForwardIncrement(double dist) {
+    public void tiltIncrement(double dist) {
         setTiltMotors(getTiltEncoders() + dist);
     }
 

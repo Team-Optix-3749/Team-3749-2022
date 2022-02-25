@@ -34,10 +34,8 @@ public class ShootCommand extends CommandBase{
         }
 
         if (Controls.Shooter.dirBtn.getAsBoolean()) dir = -dir;   
-        if (Controls.Shooter.turnTurretTrigger.getAsDouble() > 0) visionToggle = false;
-        else visionToggle = true;
-        if (visionToggle) m_shooter.visionAlign();
-        else m_shooter.setTurretMotor(dir*Controls.Shooter.turnTurretTrigger.getAsDouble());
+        if (Controls.Shooter.turnTurretTrigger.getAsDouble() > 0) m_shooter.setTurretMotor(dir*Controls.Shooter.turnTurretTrigger.getAsDouble());
+        else m_shooter.visionAlign();
         
         // displays dist from hub on smart dashboard
         SmartDashboard.putNumber("Hub Distance: ", m_shooter.getDistance());

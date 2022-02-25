@@ -58,7 +58,6 @@ public final class Constants {
         public static final int leftShooterMotor = 16;
 
         public static final double gearRatio = 12.0/775.0;
-        public static final double kShintakeSpeed = 0.5;
         public static final double kP = 1.0;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
@@ -89,7 +88,9 @@ public final class Constants {
 
     public static class Shintake {
         public static final int shintakeFront = 23;
-        public static final int shintakeBack = 24;
+        public static final int shintakeBack = 1;
+        public static final double kShintakeSpeed = 0.5;
+
 
         public static enum BallColor {
             RED, BLUE, NULL

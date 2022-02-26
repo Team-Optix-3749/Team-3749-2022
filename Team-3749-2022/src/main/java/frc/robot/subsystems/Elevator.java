@@ -32,14 +32,6 @@ public class Elevator extends SubsystemBase {
 
     private final PIDController m_chainPIDContoller = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 
-    /* 
-        COLOR SENSOR VARS
-    
-    private final I2C.Port i2cPort = I2C.Port.kOnboard;
-    private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
-
-     */
-
     public Elevator() {
         m_rightTilt = new CANSparkMax(Constants.Elevator.rightTilt, MotorType.kBrushless);
         m_rightTilt.setIdleMode(IdleMode.kCoast);
@@ -85,22 +77,4 @@ public class Elevator extends SubsystemBase {
         setTiltMotors(0.0);
         m_chain.set(0.0);
     }
-
-    /*
-    COLOR SENSOR THING
-
-    public void getColor(){
-        Color detectedColor = m_colorSensor.getColor();      
-        double IR = m_colorSensor.getIR();
-
-        System.out.println("RED: " + detectedColor.red);
-        System.out.println("BLUE: " + detectedColor.blue);
-        System.out.println("GREEN: " + detectedColor.green );
-
-        if (detectedColor.red >= .52) System.out.println("RED BALL");
-        else if (detectedColor.blue >= .3) System.out.println("BLUE BALL");
-        else System.out.println("NO BALL");
-    }
-    */
-
 }

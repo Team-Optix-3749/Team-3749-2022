@@ -24,14 +24,12 @@ public class Controls {
         public static final BooleanSupplier intakeBtn = Xbox.Pilot.rb::get;
         public static final BooleanSupplier outakeBtn = () -> (Xbox.Operator.rt.getAsDouble() > 0);
         public static final BooleanSupplier runBtn = Xbox.Operator.lb::get;
-
     }
     public static final class Shooter {
         public static final BooleanSupplier shootTrigger = () -> (Xbox.Operator.rt.getAsDouble() > 0);
         public static final DoubleSupplier turnTurretTrigger = () -> (Xbox.Operator.lt.getAsDouble());
         public static final BooleanSupplier dirBtn = Xbox.Operator.y::get;
         public static final BooleanSupplier runBtn = Xbox.Operator.a::get;
-
     }
 
     public static final class Elevator {

@@ -48,7 +48,7 @@ public class RobotContainer {
   
   // private final Lights m_lights = new Lights();
 
-    // private final OldDrivetrain m_oldDrivetrain = new OldDrivetrain();
+  // private final OldDrivetrain m_oldDrivetrain = new OldDrivetrain();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -101,10 +101,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
-    // Xbox.XBOX_A.whenPressed(new RotateElevator(m_elevator,.5));
-    // Xbox.XBOX_L.whenPressed(new RotateElevator(m_elevator,.25));
-  }
+  private void configureButtonBindings() {}
  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -24,10 +24,13 @@ public class ShintakeCommand extends CommandBase{
 
     @Override
     public void execute() {
-        if (Controls.Shintake.intakeBtn.getAsBoolean() || Controls.Shintake.outakeBtn.getAsBoolean()) {
+        if (Controls.Shintake.intakeBtn.getAsBoolean()) {
             if (m_shintake.getColor() == BallColor.NULL) m_shintake.setShintake(1);
             else m_shintake.stopMotors();
         }
+
+        if(Controls.Shintake.outakeBtn.getAsBoolean()) m_shintake.setShintake(1);
+        
 
         if (Controls.Shintake.runBtn.getAsBoolean()) m_shintake.setShintake(1);
         else m_shintake.stopMotors();

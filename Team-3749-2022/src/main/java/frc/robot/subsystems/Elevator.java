@@ -12,12 +12,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
 
-/* COLOR SENSOR IMPS
-import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.util.Color;
-*/
-
 public class Elevator extends SubsystemBase {
     
     public CANSparkMax m_rightTilt;

@@ -29,11 +29,12 @@ public class ShintakeCommand extends CommandBase{
             else m_shintake.stopMotors();
         }
 
-        if(Controls.Shintake.outakeBtn.getAsBoolean()) m_shintake.setShintake(1);
+        if(Controls.Shintake.outakeBtn.getAsDouble() > 0) m_shintake.setShintake(1);
+        else m_shintake.setShintake(0);
         
 
         if (Controls.Shintake.runBtn.getAsBoolean()) m_shintake.setShintake(1);
-        else m_shintake.stopMotors();
+        // else m_shintake.stopMotors();
     }
 
     @Override

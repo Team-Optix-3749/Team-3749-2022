@@ -18,8 +18,8 @@ public class Shintake extends SubsystemBase{
     public CANSparkMax m_shintakeFront;
     public CANSparkMax m_shintakeBack; 
 
-    private final I2C.Port i2cPort = I2C.Port.kOnboard;
-    private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+    // private final I2C.Port i2cPort = I2C.Port.kOnboard;
+    // private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
     
     public Shintake(){
         m_shintakeFront = new CANSparkMax(Constants.Shintake.shintakeFront, MotorType.kBrushless);
@@ -38,9 +38,10 @@ public class Shintake extends SubsystemBase{
     }
 
     public BallColor getColor(){
-        Color detectedColor = m_colorSensor.getColor();      
-        if (detectedColor.red >= .52) return BallColor.RED;
-        else if (detectedColor.blue >= .3) return BallColor.BLUE;
-        else return BallColor.NULL;
+        // Color detectedColor = m_colorSensor.getColor();      
+        // if (detectedColor.red >= .52) return BallColor.RED;
+        // else if (detectedColor.blue >= .3) return BallColor.BLUE;
+        // else return BallColor.NULL;
+        return BallColor.NULL;
     }
 }

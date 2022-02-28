@@ -32,8 +32,8 @@ public class IntakeCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_intake.startCompressor();
-        m_intake.intakePneumatics(kReverse);
+        // m_intake.startCompressor();
+        // m_intake.intakePneumatics(kReverse);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

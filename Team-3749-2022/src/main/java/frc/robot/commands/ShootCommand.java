@@ -12,8 +12,6 @@ import frc.robot.utilities.Controls;
 public class ShootCommand extends CommandBase{
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     
-    private int dir = 1;
-
     private final Shooter m_shooter;
 
     public ShootCommand(Shooter shooter){

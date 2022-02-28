@@ -28,7 +28,6 @@ public class Controls {
     public static final class Shooter {
         public static final DoubleSupplier shootTrigger = Xbox.Operator.rt;
         public static final DoubleSupplier turretJoystick = Xbox.Operator.rightJoystickX;
-        public static final BooleanSupplier dirBtn = Xbox.Operator.y::get;
         public static final BooleanSupplier runBtn = Xbox.Operator.a::get;
     }
 

@@ -17,14 +17,14 @@ public class Elevator extends SubsystemBase {
     public CANSparkMax m_rightTilt;
     public CANSparkMax m_leftTilt;
 
-    private RelativeEncoder m_rightTiltEncoder = m_rightTilt.getEncoder();
-    private RelativeEncoder m_leftTiltEncoder = m_leftTilt.getEncoder();
+    // private RelativeEncoder m_rightTiltEncoder = m_rightTilt.getEncoder();
+    // private RelativeEncoder m_leftTiltEncoder = m_leftTilt.getEncoder();
 
-    private final PIDController m_tiltPIDController = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
+    // private final PIDController m_tiltPIDController = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 
     public CANSparkMax m_chain;
 
-    private final PIDController m_chainPIDContoller = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
+    // private final PIDController m_chainPIDContoller = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 
     public Elevator() {
         m_rightTilt = new CANSparkMax(Constants.Elevator.rightTilt, MotorType.kBrushless);
@@ -38,17 +38,18 @@ public class Elevator extends SubsystemBase {
     }
 
     private void setTiltMotors(double dist) {
-        m_rightTilt.set(m_tiltPIDController.calculate(getTiltEncoders(), dist));
-        m_leftTilt.set(m_tiltPIDController.calculate(getTiltEncoders(), dist));
+        // m_rightTilt.set(m_tiltPIDController.calculate(getTiltEncoders(), dist));
+        // m_leftTilt.set(m_tiltPIDController.calculate(getTiltEncoders(), dist));
     }
 
     public double getTiltEncoders() {
-        return (m_rightTiltEncoder.getPosition() + m_leftTiltEncoder.getPosition())/2;
+        // return (m_rightTiltEncoder.getPosition() + m_leftTiltEncoder.getPosition())/2;
+        return 0;
     }
     
     public void resetEncoders(){
-        m_rightTiltEncoder.setPosition(0.0);
-        m_leftTiltEncoder.setPosition(0.0);
+        // m_rightTiltEncoder.setPosition(0.0);
+        // m_leftTiltEncoder.setPosition(0.0);
     }
 
     public void tilt(double target) {
@@ -60,11 +61,11 @@ public class Elevator extends SubsystemBase {
     }
 
     public void extendUp () {
-        m_chain.set(m_chainPIDContoller.calculate(getTiltEncoders(), 10));
+        // m_chain.set(m_chainPIDContoller.calculate(getTiltEncoders(), 10));
     }
 
     public void extendClimber(double target) {
-        m_chain.set(m_chainPIDContoller.calculate(getTiltEncoders(), target));
+        // m_chain.set(m_chainPIDContoller.calculate(getTiltEncoders(), target));
     }
 
     public void stopMotors(){

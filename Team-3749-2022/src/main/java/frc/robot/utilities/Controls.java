@@ -5,6 +5,8 @@ import java.util.function.DoubleSupplier;
 
 public class Controls {
 
+    public static final BooleanSupplier testBtn = Xbox.Pilot.a::get;
+
     // PILOT CONTROLS 😁😁😁😁
     public static final class Drivetrain {
         public static final DoubleSupplier forward = Xbox.Pilot.leftJoystickY;
@@ -14,27 +16,24 @@ public class Controls {
 
     public static final class Intake {
         public static final BooleanSupplier intakeBtn = Xbox.Pilot.rb::get;
-        public static final BooleanSupplier runBtn = Xbox.Pilot.x::get;
-        public static final BooleanSupplier pistonBtn = Xbox.Pilot.b::get;
-        public static final BooleanSupplier compBtn = Xbox.Pilot.a::get;
+        public static final BooleanSupplier pistonBtn = Xbox.Pilot.y::get;
+        public static final BooleanSupplier compBtn = Xbox.Pilot.x::get;
     }
 
     // OPERATOR CONTROLS 💀💀💀💀
     public static final class Shintake {
         public static final BooleanSupplier intakeBtn = Xbox.Pilot.rb::get;
-        public static final DoubleSupplier outakeBtn = Xbox.Operator.rt;
-        public static final BooleanSupplier runBtn = Xbox.Operator.lb::get;
+        public static final DoubleSupplier outakeBtn = Xbox.Pilot.rt;
     }
     public static final class Shooter {
-        public static final DoubleSupplier shootTrigger = Xbox.Operator.rt;
-        public static final DoubleSupplier turretJoystick = Xbox.Operator.rightJoystickX;
-        public static final BooleanSupplier runBtn = Xbox.Operator.a::get;
+        public static final DoubleSupplier shootTrigger = Xbox.Pilot.rt;
+        public static final DoubleSupplier turretJoystick = Xbox.Pilot.leftJoystickX;
     }
 
     public static final class Elevator {
-        public static final BooleanSupplier extendBtn = () -> (Xbox.Operator.OpController.getPOV() == 0);
-        public static final BooleanSupplier returnBtn = () -> (Xbox.Operator.OpController.getPOV() == 90);
-        public static final BooleanSupplier tiltFwdBtn = () -> (Xbox.Operator.OpController.getPOV() == 180);
-        public static final BooleanSupplier tiltBackBtn = () -> (Xbox.Operator.OpController.getPOV() == 270);
+        public static final BooleanSupplier extendBtn = () -> (Xbox.Pilot.PilotController.getPOV() == 0);
+        public static final BooleanSupplier returnBtn = () -> (Xbox.Pilot.PilotController.getPOV() == 90);
+        public static final BooleanSupplier tiltFwdBtn = () -> (Xbox.Pilot.PilotController.getPOV() == 180);
+        public static final BooleanSupplier tiltBackBtn = () -> (Xbox.Pilot.PilotController.getPOV() == 270);
     }
 }

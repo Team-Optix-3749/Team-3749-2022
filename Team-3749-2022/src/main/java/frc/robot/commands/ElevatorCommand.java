@@ -34,10 +34,16 @@ public class ElevatorCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(Controls.Elevator.extendBtn.getAsBoolean()) m_elevator.extendClimber(10);
-        if(Controls.Elevator.tiltFwdBtn.getAsBoolean()) m_elevator.tiltIncrement(0.1);
-        if(Controls.Elevator.returnBtn.getAsBoolean()) m_elevator.extendClimber(0);
-        if(Controls.Elevator.tiltBackBtn.getAsBoolean()) m_elevator.tiltIncrement(-0.1);
+        if(Controls.Elevator.extendBtn.getAsBoolean()) m_elevator.climb(.5);
+        else if(Controls.Elevator.tiltFwdBtn.getAsBoolean()) m_elevator.tiltIncrement(0.1);
+        else if(Controls.Elevator.returnBtn.getAsBoolean()) m_elevator.climb(0);
+        else if(Controls.Elevator.tiltBackBtn.getAsBoolean()) m_elevator.tiltIncrement(-0.1);
+        else {
+            m_elevator.climb(0);
+            m_elevator.tilt(0);
+        }
+
+        // m_elevator.extendClimber(.5);
     }
 
     // Called once the command ends or is interrupted.

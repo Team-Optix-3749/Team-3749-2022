@@ -4,6 +4,9 @@
 
 package frc.robot.utilities;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -18,6 +21,12 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    public static double round(double input, int places) {
+        BigDecimal bd = new BigDecimal(Double.toString(input));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
     public static final class Drivetrain {
         public static final int leftFront = 11;
         public static final int leftBack = 12;
@@ -88,7 +97,7 @@ public final class Constants {
 
     public static class Shintake {
         public static final int shintakeFront = 23;
-        public static final int shintakeBack = 1;
+        public static final int shintakeBack = 24;
         public static final double kShintakeSpeed = 0.5;
 
 

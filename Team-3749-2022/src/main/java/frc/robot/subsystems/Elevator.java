@@ -34,6 +34,7 @@ public class Elevator extends SubsystemBase {
         m_leftTilt.setIdleMode(IdleMode.kBrake);
 
         m_chain = new CANSparkMax(Constants.Elevator.chain, MotorType.kBrushless);
+        m_chain.setInverted(true);
         m_chain.setIdleMode(IdleMode.kBrake);  
     }
 
@@ -60,11 +61,8 @@ public class Elevator extends SubsystemBase {
         setTiltMotors(getTiltEncoders() + dist);
     }
 
-    public void extendUp () {
-        // m_chain.set(m_chainPIDContoller.calculate(getTiltEncoders(), 10));
-    }
-
-    public void extendClimber(double target) {
+    public void climb(double target) {
+        m_chain.set(target);
         // m_chain.set(m_chainPIDContoller.calculate(getTiltEncoders(), target));
     }
 

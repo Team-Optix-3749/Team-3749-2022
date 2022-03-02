@@ -1,6 +1,7 @@
 package frc.robot.utilities;
 
 import java.util.function.DoubleSupplier;
+import java.util.function.IntSupplier;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -26,6 +27,8 @@ public class Xbox{
 
         public static final DoubleSupplier lt = PilotController::getLeftTriggerAxis;
         public static final DoubleSupplier rt = PilotController::getRightTriggerAxis;
+
+        public static final IntSupplier pov = PilotController::getPOV;
     }
 
     public static final class Operator {
@@ -46,5 +49,7 @@ public class Xbox{
 
         public static final DoubleSupplier lt = OpController::getLeftTriggerAxis;
         public static final DoubleSupplier rt = OpController::getRightTriggerAxis;
+        
+        public static final IntSupplier pov = OpController::getPOV;
     }
 }

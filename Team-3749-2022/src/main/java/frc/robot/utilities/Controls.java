@@ -31,9 +31,9 @@ public class Controls {
     }
 
     public static final class Elevator {
-        public static final BooleanSupplier extendBtn = () -> (Xbox.Pilot.PilotController.getPOV() == 0);
-        public static final BooleanSupplier returnBtn = () -> (Xbox.Pilot.PilotController.getPOV() == 90);
-        public static final BooleanSupplier tiltFwdBtn = () -> (Xbox.Pilot.PilotController.getPOV() == 180);
-        public static final BooleanSupplier tiltBackBtn = () -> (Xbox.Pilot.PilotController.getPOV() == 270);
+        public static final BooleanSupplier extendBtn = () -> (Xbox.Pilot.pov.getAsInt() == 0);
+        public static final BooleanSupplier returnBtn = () -> (Xbox.Pilot.pov.getAsInt() == 90);
+        public static final BooleanSupplier tiltFwdBtn = () -> (Xbox.Pilot.pov.getAsInt() == 180);
+        public static final BooleanSupplier tiltBackBtn = () -> (Xbox.Pilot.pov.getAsInt() == 270);
     }
 }

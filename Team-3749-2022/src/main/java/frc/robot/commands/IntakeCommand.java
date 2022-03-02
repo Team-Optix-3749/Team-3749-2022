@@ -41,12 +41,12 @@ public class IntakeCommand extends CommandBase {
     public void execute() {        
         if(Controls.Intake.intakeBtn.getAsBoolean()) {
             m_intake.setIntake(1);
-            m_intake.intakePneumatics(kForward);
+            // m_intake.intakePneumatics(kForward);
         } 
         // else if (Controls.testBtn.getAsBoolean()) m_intake.setIntake(1); 
         else {
             m_intake.stopMotors();
-            m_intake.intakePneumatics(kReverse);
+            // m_intake.intakePneumatics(kReverse);
         }
 
         if (Controls.Intake.compBtn.getAsBoolean()) comp = !comp;

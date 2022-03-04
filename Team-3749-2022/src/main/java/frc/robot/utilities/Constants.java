@@ -22,9 +22,9 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  */
 public final class Constants {
 
-    public static double round(double input, int places) {
+    public static double round(double input) {
         BigDecimal bd = new BigDecimal(Double.toString(input));
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
     public static final class Drivetrain {

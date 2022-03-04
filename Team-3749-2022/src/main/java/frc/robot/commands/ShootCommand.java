@@ -35,9 +35,7 @@ public class ShootCommand extends CommandBase{
 
         double turretControl = Constants.round(Controls.Shooter.turretJoystick.getAsDouble());
         if (turretControl < -.1 || turretControl > .1) m_shooter.setTurretMotor(.1*Controls.Shooter.turretJoystick.getAsDouble());
-        // else m_shooter.visionAlign();joystick
-
-        // System.out.println(Controls.Shooter.turretleftJoystickX.getAsDouble());
+        // else m_shooter.visionAlign();
         
         // displays dist from hub on smart dashboard
         // SmartDashboard.putNumber("Hub Distance: ", m_shooter.getDistance());

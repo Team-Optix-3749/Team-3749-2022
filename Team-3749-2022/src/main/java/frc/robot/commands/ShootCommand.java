@@ -29,8 +29,11 @@ public class ShootCommand extends CommandBase{
     @Override
     public void execute() {
         double shootCtrl = Constants.round(Controls.Shooter.shootTrigger.getAsDouble());
+        double otherShootCtrl = Constants.round(Controls.Shooter.otherShootTrigger.getAsDouble());
+
         if (shootCtrl > 0) m_shooter.setShooter();
         // else if(Controls.testBtn.getAsBoolean()) m_shooter.setShooter();
+        else if(otherShootCtrl > 0.1) m_shooter.setVelocity();
         else m_shooter.stopMotors();
 
         double turretControl = Constants.round(Controls.Shooter.turretJoystick.getAsDouble());

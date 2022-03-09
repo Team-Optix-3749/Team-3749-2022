@@ -27,6 +27,7 @@ public class Controls {
     }
     public static final class Shooter {
         public static final DoubleSupplier shootTrigger = Xbox.Pilot.rt;
+        public static final DoubleSupplier otherShootTrigger = Xbox.Pilot.lt;
         public static final DoubleSupplier turretJoystick = Xbox.Pilot.leftJoystickX;
     }
 

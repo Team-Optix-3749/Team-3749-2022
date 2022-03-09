@@ -28,17 +28,19 @@ public class ShootCommand extends CommandBase{
 
     @Override
     public void execute() {
+        // m_shooter.setShooter();
         double shootCtrl = Constants.round(Controls.Shooter.shootTrigger.getAsDouble());
         double otherShootCtrl = Constants.round(Controls.Shooter.otherShootTrigger.getAsDouble());
 
         if (shootCtrl > 0) m_shooter.setShooter();
         // else if(Controls.testBtn.getAsBoolean()) m_shooter.setShooter();
         else if(otherShootCtrl > 0.1) m_shooter.setVelocity();
+
         else m_shooter.stopMotors();
 
-        double turretControl = Constants.round(Controls.Shooter.turretJoystick.getAsDouble());
-        if (turretControl < -.1 || turretControl > .1) m_shooter.setTurretMotor(.1*Controls.Shooter.turretJoystick.getAsDouble());
-        // else m_shooter.visionAlign();
+        // double turretControl = Constants.round(Controls.Shooter.turretJoystick.getAsDouble());
+        // if (turretControl == 0.0) m_shooter.setTurretMotor(.1*Controls.Shooter.turretJoystick.getAsDouble());
+        // else m_shooter.setTurretMotor(0);// m_shooter.visionAlign();
         
         // displays dist from hub on smart dashboard
         // SmartDashboard.putNumber("Hub Distance: ", m_shooter.getDistance());

@@ -89,8 +89,8 @@ public final class Constants {
         public static enum SolenoidDirection {
             FORWARD, REVERSE, OFF, COMPRESSOR, TRIGGER
         }
-        public final static int[] kSolenoidForwardChannel = {2,4};
-        public final static int[] kSolenoidReverseChannel = {3,5};
+        public final static int[] kSolenoidForwardChannel = {2,5};
+        public final static int[] kSolenoidReverseChannel = {3,4};
         public final static double kPneumaticsSpeed = 0.5;
         public final static double kPneumaticsSpeedInverted = -0.5;
     }

@@ -5,7 +5,9 @@ import java.util.function.DoubleSupplier;
 
 public class Controls {
 
-    public static final BooleanSupplier testBtn = Xbox.Pilot.a::get;
+    public static final BooleanSupplier aTestBtn = Xbox.Pilot.a::get;
+    public static final BooleanSupplier bTestBtn = Xbox.Pilot.b::get;
+
 
     // PILOT CONTROLS 😁😁😁😁
     public static final class Drivetrain {

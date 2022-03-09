@@ -17,7 +17,7 @@ public class Controls {
     }
 
     public static final class Intake {
-        public static final BooleanSupplier intakeBtn = Xbox.Pilot.rb::get;
+        public static final DoubleSupplier intakeBtn = Xbox.Pilot.lt;
         public static final BooleanSupplier pistonBtn = Xbox.Pilot.y::get;
         public static final BooleanSupplier compBtn = Xbox.Pilot.x::get;
     }
@@ -29,7 +29,7 @@ public class Controls {
     }
     public static final class Shooter {
         public static final DoubleSupplier shootTrigger = Xbox.Pilot.rt;
-        public static final DoubleSupplier otherShootTrigger = Xbox.Pilot.lt;
+        // public static final DoubleSupplier otherShootTrigger = Xbox.Pilot.lt;
         public static final DoubleSupplier turretJoystick = Xbox.Pilot.leftJoystickX;
     }
 

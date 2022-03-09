@@ -15,7 +15,7 @@ public class IntakeCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake m_intake;
 
-    private boolean comp;
+    private boolean comp = false;
 
     /**
      * Creates a new ExampleCommand.
@@ -34,6 +34,7 @@ public class IntakeCommand extends CommandBase {
     public void initialize() {
         // m_intake.startCompressor();
         // m_intake.intakePneumatics(kReverse);
+        m_intake.stopCompressor();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -41,18 +42,18 @@ public class IntakeCommand extends CommandBase {
     public void execute() {        
         if(Controls.Intake.intakeBtn.getAsBoolean()) {
             m_intake.setIntake(1);
-            // m_intake.intakePneumatics(kForward);
+            m_intake.intakePneumatics(kForward);
         } 
-        // else if (Controls.testBtn.getAsBoolean()) m_intake.setIntake(1); 
+        if (Controls.aTestBtn.getAsBoolean()) m_intake.setIntake(1); 
         else {
             m_intake.stopMotors();
-            // m_intake.intakePneumatics(kReverse);
+            m_intake.intakePneumatics(kReverse);
         }
 
-        if (Controls.Intake.compBtn.getAsBoolean()) comp = !comp;
-
-        if (comp) m_intake.startCompressor();
-        else m_intake.stopCompressor();
+        if (Controls.Intake.compBtn.getAsBoolean()) {
+            if (comp) { m_intake.startCompressor(); comp = false; }
+            else if (comp == false) { m_intake.stopCompressor(); comp = true; }
+        } 
 
         if(Controls.Intake.pistonBtn.getAsBoolean()) m_intake.intakePneumatics(kForward);
         else m_intake.intakePneumatics(kReverse);

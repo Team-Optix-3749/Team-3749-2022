@@ -28,13 +28,20 @@ public class Shintake extends SubsystemBase{
         m_shintakeBack.setInverted(true);
     }
 
-    public void setShintake (double dir) {
-        m_shintakeFront.set(dir*Constants.Shintake.kShintakeSpeed);
-        m_shintakeBack.set(dir*-Constants.Shintake.kShintakeSpeed);
+    public void holdShintake () {
+        m_shintakeFront.set(Constants.Shintake.kShintakeSpeed);
+        m_shintakeBack.set(-Constants.Shintake.kShintakeSpeed);
+    }
+
+    public void runShintake () {
+        m_shintakeFront.set(Constants.Shintake.kShintakeSpeed);
+        m_shintakeBack.set(Constants.Shintake.kShintakeSpeed);
     }
 
     public void stopMotors () {
-        setShintake(0);
+        m_shintakeBack.set(0);
+        m_shintakeFront.set(0);
+
     }
 
     public BallColor getColor(){

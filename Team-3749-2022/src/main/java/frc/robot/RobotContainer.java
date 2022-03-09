@@ -44,6 +44,8 @@ public class RobotContainer {
   
   private final Shooter m_shooter = new Shooter();
 
+  private final Shintake m_shintake = new Shintake();
+
   private final Elevator m_elevator = new Elevator();
   
   // private final Lights m_lights = new Lights();
@@ -55,11 +57,11 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    // m_drivetrain.setDefaultCommand(
-    //   new ArcadeDrive(
-    //     m_drivetrain
-    //   )
-    // );    
+    m_drivetrain.setDefaultCommand(
+      new ArcadeDrive(
+        m_drivetrain
+      )
+    );    
 
     // m_oldDrivetrain.setDefaultCommand(
     //   new OldArcadeDrive(m_oldDrivetrain, 
@@ -68,16 +70,22 @@ public class RobotContainer {
     //   )
     // );
 
-    m_elevator.setDefaultCommand(
-      new ElevatorCommand(
-        m_elevator
-      )
-    );
+    // m_elevator.setDefaultCommand(
+    //   new ElevatorCommand(
+    //     m_elevator
+    //   )
+    // );
     
 
     m_shooter.setDefaultCommand(
       new ShootCommand(
         m_shooter
+      )
+    );
+
+    m_shintake.setDefaultCommand(
+      new ShintakeCommand(
+        m_shintake
       )
     );
 

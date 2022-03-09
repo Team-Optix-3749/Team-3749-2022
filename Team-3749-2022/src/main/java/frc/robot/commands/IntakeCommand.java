@@ -1,49 +1,35 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
- 
 package frc.robot.commands;
- 
+
+import java.util.concurrent.TimeUnit;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
 import frc.robot.utilities.Controls;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
- 
-/** An example command that uses an example subsystem. */
-public class IntakeCommand extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+
+/**
+ * @author Jadon Lee
+ * @author Rohin Sood
+ */
+public class IntakeCommand extends CommandBase{
+    @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+    
     private final Intake m_intake;
     private final Shintake m_shintake;
 
     private boolean comp = false;
 
-    /**
-     * Creates a new ExampleCommand.
-     *
-     * @param intake The subsystem used by this command.
-     * @param solenoid The subsystem used for solenoid
-     */
-    public IntakeCommand(Intake intake, Shintake shintake) {
+    public IntakeCommand(Intake intake, Shintake shintake){
         m_intake = intake;
         m_shintake = shintake;
-
-        // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(intake, shintake);
     }
-
-    // Called when the command is initially scheduled.
+    
     @Override
     public void initialize() {
-        // m_intake.startCompressor();
-        // m_intake.intakePneumatics(kReverse);
+        System.out.println("init intake");
         m_intake.stopCompressor();
-    }
-
-    // Called every time the scheduler runs while the command is scheduled.
-    @Override
-    public void execute() {
         if (Constants.round(Controls.Intake.intakeBtn.getAsDouble()) > 0) {
             // m_intake.intakePneumatics(kForward);
             m_intake.setIntake(1);
@@ -66,16 +52,20 @@ public class IntakeCommand extends CommandBase {
         else m_intake.intakePneumatics(kReverse);
     }
 
-    // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {
-        m_intake.intakePneumatics(kReverse);
-        m_intake.stopCompressor();
+    public void execute() {
+        System.out.println("intake");
+        
     }
 
-    // Returns true when the command should end.
     @Override
-    public boolean isFinished() {
+    public void end(boolean interrupted){
+
+    }
+
+    @Override
+    public boolean isFinished(){
         return false;
     }
+
 }

@@ -23,7 +23,7 @@ public class Shooter extends SubsystemBase{
     private CANSparkMax m_turretMotor = new CANSparkMax(Constants.Shooter.turretMotor, MotorType.kBrushless);
     private RelativeEncoder m_turretEncoder = m_turretMotor.getEncoder();
 
-    private MotorControllerGroup m_shooterMotor = new MotorControllerGroup(m_leftShooterMotor, m_rightShooterMotor);
+    private MotorControllerGroup m_shooterMotors = new MotorControllerGroup(m_leftShooterMotor, m_rightShooterMotor);
 
     private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD);
 
@@ -34,40 +34,38 @@ public class Shooter extends SubsystemBase{
         m_turretEncoder.setPositionConversionFactor(Constants.Shooter.gearRatio);
         m_leftShooterMotor.setNeutralMode(NeutralMode.Coast);
         m_rightShooterMotor.setNeutralMode(NeutralMode.Coast);
-
-        
     }
 
-    public void stopMotors(){
-        m_shooterMotor.set(0);
-        m_turretMotor.set(0);
+    public void stopShooterMotors(){
+        m_shooterMotors.set(0);    
+    }
+
+    public void stopTurretMotor(){
+        m_turretMotor.set(0);    
+    }
+
+    public void setShooterVolts(double voltage){
+        m_shooterMotors.setVoltage(voltage);
     }
 
     public void setShooter(){
-        // double hubY = Constants.Shooter.shooterHeight - Constants.Shooter.hubHeight;
-        // double hubX = getDistance()+0.61;
-        // double A = Math.toRadians(Constants.Shooter.shooterAngle);
-        // double velocity = Math.sqrt(
-        //     ((4.9*hubX*hubX)/(Math.cos(A)*Math.cos(A)))
-        //     *(1/(hubY+(Math.tan(A)*hubX))));
-        //     System.out.println(velocity*12);
-            
-        m_shooterMotor.set(-1);
+        m_shooterMotors.set(-1);
+    }
+
+    public double targetVelocity(){
+        double hubY = Constants.Shooter.shooterHeight - Constants.Shooter.hubHeight;
+        double hubX = getDistance()+0.61;
+        double A = Math.toRadians(Constants.Shooter.shooterAngle);
+        double velocity = Math.sqrt(
+            ((4.9 * hubX * hubX) / (Math.cos(A) * Math.cos(A))) * (1 / (hubY + (Math.tan(A) * hubX)))
+        );
+        
+        return velocity;
     }
 
     public void setTurretMotor(double speed){
-        // if (Math.abs(m_turretEncoder.getPosition()) <= .24){
-        //     m_turretMotor.set(m_pidController.calc ulate(speed));
-        // }
-        // else if (m_turretEncoder.getPosition() * speed < 0) { //Checks if speed and encoder position have opposite signs
-        //     m_turretMotor.set(m_pidController.calculate(speed));
-        // }
-        // else{
-        //     m_turretMotor.set(0);
-        //     System.out.println("don\'t care + didn\'t ask + cry about it + stay mad + get real + L + mald seethe cope harder + hoes mad + basic + skill issue + ratio + you fell off + the audacity + triggered + any askers + get a life + ok and? + cringe + touch grass + not based + your\'re probably white + not funny didn\'t laugh + grammar issue + go outside + get good + reported + ad hominem + GG! + ur mom + don\'t care + didn\'t ask + cry about it + stay mad + get real + L + mald seethe cope harder + hoes mad + basic + skill issue + ratio + you fell off + the audacity + triggered + any askers + redpilled + get a life + ok and? + cringe + touch grass + donowalled + not based + your\'re a full time discordian + not funny didn\'t laugh + you\'re* + grammar issue + go outside + get good + your gay + reported + ad hominem + GG! + ur mom + no + you thought you ate don\'t care + didn\'t ask + cry about it + stay mad + get real + L + mald seethe cope harder + hoes mad + basic + skill issue + ratio + you fell off + the audacity + triggered + L bozo");  
-        // }
-        if (getEncoder() < 36 || getEncoder() > 224) stopMotors(); 
-        else m_turretMotor.set(speed);
+        if (Math.abs(m_turretEncoder.getPosition()) <= .24) m_turretMotor.set(speed);
+        else m_turretMotor.set(0); 
     }
 
     public void visionAlign(){
@@ -89,12 +87,20 @@ public class Shooter extends SubsystemBase{
         // System.out.println(m_turretEncoder.getPosition());
     }
 
+    public void setRPM(double current, double target){
+        m_shooterMotors.setVoltage(m_pidController.calculate(current, target)*.0019);
+    }
+
+    public void setVelocity(){
+        setRPM(m_leftShooterMotor.getSelectedSensorVelocity(), targetVelocity()*60/.476);
+    }
+
     public double getDistance(){    
         double y = Auto.ty.getDouble(0.0);    
         return (Constants.Shooter.hubHeight - Constants.Shooter.shooterHeight)/Math.tan(Math.toRadians(Constants.Shooter.limelightAngle + y));
     }
     
-    public double getEncoder () {
+    public double getTurretEncoder () {
         return m_turretEncoder.getPosition();
     }
 

@@ -64,8 +64,15 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setTurretMotor(double speed){
-        if (Math.abs(m_turretEncoder.getPosition()) <= .24) m_turretMotor.set(speed);
-        else m_turretMotor.set(0); 
+        if (Math.abs(m_turretEncoder.getPosition()) <= .24){
+            m_turretMotor.set(speed);
+        }
+        else if (m_turretEncoder.getPosition() * speed < 0) { //Checks if speed and encoder position have opposite signs
+            m_turretMotor.set(speed);
+        }
+        else{
+            m_turretMotor.set(0);
+        }
     }
 
     public void visionAlign(){

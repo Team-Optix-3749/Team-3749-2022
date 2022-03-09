@@ -1,7 +1,10 @@
 package frc.robot.commands;
 
+import java.util.concurrent.TimeUnit;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Shintake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.utilities.Constants;
 import frc.robot.utilities.Controls;
@@ -15,10 +18,12 @@ public class ShootCommand extends CommandBase{
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     
     private final Shooter m_shooter;
+    private final Shintake m_shintake;
 
-    public ShootCommand(Shooter shooter){
+    public ShootCommand(Shooter shooter, Shintake shintake){
         m_shooter = shooter;
-        addRequirements(shooter);
+        m_shintake = shintake;
+        addRequirements(shooter, shintake);
     }
     
     @Override
@@ -30,13 +35,19 @@ public class ShootCommand extends CommandBase{
     public void execute() {
         // m_shooter.setShooter();
         double shootCtrl = Constants.round(Controls.Shooter.shootTrigger.getAsDouble());
-        double otherShootCtrl = Constants.round(Controls.Shooter.otherShootTrigger.getAsDouble());
+        // double otherShootCtrl = Constants.round(Controls.Shooter.otherShootTrigger.getAsDouble());
 
-        if (shootCtrl > 0) m_shooter.setShooter();
+        if (shootCtrl > 0) {
+            m_shooter.setShooter();
+            try { TimeUnit.SECONDS.sleep(3);} catch (Exception e) {} m_shintake.runShintake();
+        } 
         // else if(Controls.testBtn.getAsBoolean()) m_shooter.setShooter();
-        else if(otherShootCtrl > 0) m_shooter.setVelocity();
+        // else if(otherShootCtrl > 0) m_shooter.setVelocity();
 
-        else m_shooter.stopShooterMotors();
+        else {
+            m_shooter.stopShooterMotors();
+            m_shintake.stopMotors(); 
+        }
 
         // double turretControl = Constants.round(Controls.Shooter.turretJoystick.getAsDouble());
         // if (turretControl == 0.0) m_shooter.setTurretMotor(.1*Controls.Shooter.turretJoystick.getAsDouble());

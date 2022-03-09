@@ -27,10 +27,10 @@ public class ShintakeCommand extends CommandBase{
     @Override
     public void execute() {
         double outTakeCtrl = Constants.round(Controls.Shooter.shootTrigger.getAsDouble());
-        if (Controls.Shintake.intakeBtn.getAsBoolean()) m_shintake.holdShintake();
-        else if(outTakeCtrl > 0) { try { TimeUnit.SECONDS.sleep(3);} catch (Exception e) {} m_shintake.runShintake(); }
+        // if (Controls.Shintake.intakeBtn.getAsBoolean()) m_shintake.holdShintake();
+        // else if(outTakeCtrl > 0) { try { TimeUnit.SECONDS.sleep(3);} catch (Exception e) {} m_shintake.runShintake(); }
         // else if (Controls.testBtn.getAsBoolean()) m_shintake.setShintake(1);
-        else m_shintake.stopMotors();
+        // else m_shintake.stopMotors();
     }
 
     @Override

@@ -30,7 +30,7 @@ public class ShootCommand extends CommandBase{
     public void execute() {
         // m_shooter.setShooter();
         double shootCtrl = Constants.round(Controls.Shooter.shootTrigger.getAsDouble());
-        if (shootCtrl > 0) m_shooter.setShooter();
+        if (shootCtrl > 0) m_shooter.setShooterValue();
         // // else if(Controls.testBtn.getAsBoolean()) m_shooter.setShooter();
         else m_shooter.stopMotors();
 

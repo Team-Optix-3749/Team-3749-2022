@@ -43,32 +43,40 @@ public class Shooter extends SubsystemBase{
         m_turretMotor.set(0);
     }
 
-    public void setShooter(){
-        // double hubY = Constants.Shooter.shooterHeight - Constants.Shooter.hubHeight;
-        // double hubX = getDistance()+0.61;
-        // double A = Math.toRadians(Constants.Shooter.shooterAngle);
-        // double velocity = Math.sqrt(
-        //     ((4.9*hubX*hubX)/(Math.cos(A)*Math.cos(A)))
-        //     *(1/(hubY+(Math.tan(A)*hubX))));
-        //     System.out.println(velocity*12);
-            
+    public void setShooter(double voltage){
+        m_shooterMotor.setVoltage(voltage);
+    }
+
+    public void setShooterValue(){
+        // System.out.println(velocity*12);
         // m_shooterMotor.set(-5);
         // m_shooterMotor.setVoltage(-14);
         m_leftShooterMotor.set(-1);
         //m_rightShooterMotor.set(-1);
     }
 
+    public double targetVelocity(){
+        double hubY = Constants.Shooter.shooterHeight - Constants.Shooter.hubHeight;
+        double hubX = getDistance()+0.61;
+        double A = Math.toRadians(Constants.Shooter.shooterAngle);
+        double velocity = Math.sqrt(
+        ((4.9*hubX*hubX)/(Math.cos(A)*Math.cos(A)))
+        *(1/(hubY+(Math.tan(A)*hubX))));
+        
+        return velocity;
+    }
+
     public void setTurretMotor(double speed){
-        // if (Math.abs(m_turretEncoder.getPosition()) <= .24){
-        //     m_turretMotor.set(m_pidController.calc ulate(speed));
-        // }
-        // else if (m_turretEncoder.getPosition() * speed < 0) { //Checks if speed and encoder position have opposite signs
-        //     m_turretMotor.set(m_pidController.calculate(speed));
-        // }
-        // else{
-        //     m_turretMotor.set(0);
-        //     System.out.println("don\'t care + didn\'t ask + cry about it + stay mad + get real + L + mald seethe cope harder + hoes mad + basic + skill issue + ratio + you fell off + the audacity + triggered + any askers + get a life + ok and? + cringe + touch grass + not based + your\'re probably white + not funny didn\'t laugh + grammar issue + go outside + get good + reported + ad hominem + GG! + ur mom + don\'t care + didn\'t ask + cry about it + stay mad + get real + L + mald seethe cope harder + hoes mad + basic + skill issue + ratio + you fell off + the audacity + triggered + any askers + redpilled + get a life + ok and? + cringe + touch grass + donowalled + not based + your\'re a full time discordian + not funny didn\'t laugh + you\'re* + grammar issue + go outside + get good + your gay + reported + ad hominem + GG! + ur mom + no + you thought you ate don\'t care + didn\'t ask + cry about it + stay mad + get real + L + mald seethe cope harder + hoes mad + basic + skill issue + ratio + you fell off + the audacity + triggered + L bozo");  
-        // }
+        if (Math.abs(m_turretEncoder.getPosition()) <= .24){
+            m_turretMotor.set(speed);
+        }
+        else if (m_turretEncoder.getPosition() * speed < 0) { //Checks if speed and encoder position have opposite signs
+            m_turretMotor.set(speed);
+        }
+        else{
+            m_turretMotor.set(0);
+            System.out.println("don\'t care + didn\'t ask + cry about it + stay mad + get real + L + mald seethe cope harder + hoes mad + basic + skill issue + ratio + you fell off + the audacity + triggered + any askers + get a life + ok and? + cringe + touch grass + not based + your\'re probably white + not funny didn\'t laugh + grammar issue + go outside + get good + reported + ad hominem + GG! + ur mom + don\'t care + didn\'t ask + cry about it + stay mad + get real + L + mald seethe cope harder + hoes mad + basic + skill issue + ratio + you fell off + the audacity + triggered + any askers + redpilled + get a life + ok and? + cringe + touch grass + donowalled + not based + your\'re a full time discordian + not funny didn\'t laugh + you\'re* + grammar issue + go outside + get good + your gay + reported + ad hominem + GG! + ur mom + no + you thought you ate don\'t care + didn\'t ask + cry about it + stay mad + get real + L + mald seethe cope harder + hoes mad + basic + skill issue + ratio + you fell off + the audacity + triggered + L bozo");  
+        }
         if (getEncoder() < 36 || getEncoder() > 224) stopMotors(); 
         else m_turretMotor.set(speed);
     }
@@ -90,6 +98,13 @@ public class Shooter extends SubsystemBase{
             setTurretMotor(0.8*input);
         }
         // System.out.println(m_turretEncoder.getPosition());
+    }
+    public void setRPM(double current, double target){
+        m_shooterMotor.setVoltage(m_pidController.calculate(current, target)*.0019);
+    }
+
+    public void setVelocity(double current, double target){
+        setRPM(m_leftShooterMotor.getSelectedSensorVelocity(), targetVelocity()*60/.476);
     }
 
     public double getDistance(){    

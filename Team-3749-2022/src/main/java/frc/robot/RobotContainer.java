@@ -39,7 +39,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final Intake m_intake = new Intake();
- 
+
   private final Drivetrain m_drivetrain = new Drivetrain();
   
   private final Shooter m_shooter = new Shooter();
@@ -57,11 +57,11 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    // m_drivetrain.setDefaultCommand(
-    //   new ArcadeDrive(
-    //     m_drivetrain
-    //   )
-    // );    
+    m_drivetrain.setDefaultCommand(
+      new ArcadeDrive(
+        m_drivetrain
+      )
+    );    
 
     // m_oldDrivetrain.setDefaultCommand(
     //   new OldArcadeDrive(m_oldDrivetrain, 
@@ -79,19 +79,21 @@ public class RobotContainer {
 
     m_shooter.setDefaultCommand(
       new ShootCommand(
-        m_shooter
-      )
-    );
-
-    m_shintake.setDefaultCommand(
-      new ShintakeCommand(
+        m_shooter,
         m_shintake
       )
     );
 
+    // m_shintake.setDefaultCommand(
+    //   new ShintakeCommand(
+    //     m_shintake
+    //   )
+    // );
+
     m_intake.setDefaultCommand(
       new IntakeCommand(
-        m_intake
+        m_intake,
+        m_shintake
       )
     );
 

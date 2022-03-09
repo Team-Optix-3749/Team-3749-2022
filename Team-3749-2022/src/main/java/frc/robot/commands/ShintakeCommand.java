@@ -4,7 +4,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
 import frc.robot.utilities.Controls;
-import frc.robot.utilities.Constants.Shintake.BallColor;;
+import frc.robot.utilities.Constants.Shintake.BallColor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Rohin Sood
@@ -27,7 +28,7 @@ public class ShintakeCommand extends CommandBase{
     public void execute() {
         double outTakeCtrl = Constants.round(Controls.Shooter.shootTrigger.getAsDouble());
         if (Controls.Shintake.intakeBtn.getAsBoolean()) m_shintake.holdShintake();
-        else if(outTakeCtrl > 0) m_shintake.runShintake();
+        else if(outTakeCtrl > 0) { try { TimeUnit.SECONDS.sleep(3);} catch (Exception e) {} m_shintake.runShintake(); }
         // else if (Controls.testBtn.getAsBoolean()) m_shintake.setShintake(1);
         else m_shintake.stopMotors();
     }

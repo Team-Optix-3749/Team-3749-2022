@@ -52,10 +52,7 @@ public class Shooter extends SubsystemBase{
         //     *(1/(hubY+(Math.tan(A)*hubX))));
         //     System.out.println(velocity*12);
             
-        // m_shooterMotor.set(-5);
-        // m_shooterMotor.setVoltage(-14);
-        m_leftShooterMotor.set(-1);
-        //m_rightShooterMotor.set(-1);
+        m_shooterMotor.set(-1);
     }
 
     public void setTurretMotor(double speed){

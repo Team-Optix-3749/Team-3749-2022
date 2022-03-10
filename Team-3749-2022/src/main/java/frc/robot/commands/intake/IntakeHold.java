@@ -3,6 +3,8 @@ package frc.robot.commands.intake;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
 import java.util.function.BooleanSupplier;
@@ -12,10 +14,12 @@ public class IntakeHold extends CommandBase {
     
     private final Intake m_intake;
     private final BooleanSupplier m_trigger;
+    private final JoystickButton button;
 
-    public IntakeHold(Intake intake, BooleanSupplier trigger) {
+    public IntakeHold(Intake intake, BooleanSupplier trigger, JoystickButton btn) {
         m_intake = intake;
         m_trigger = trigger;
+        button = btn;
         addRequirements(intake);
     }
 
@@ -30,6 +34,15 @@ public class IntakeHold extends CommandBase {
             m_intake.intakeFwd();
             m_intake.setIntake(1);
             m_intake.holdShintake();
+            // System.out.println(m_intake.getShintake());
+        } 
+        else if (button.get()) { 
+            m_intake.runShintake();
+        }
+        else {
+            m_intake.intakeRev();
+            m_intake.stopIntake();
+            m_intake.stopShintake();
         }
     }
 

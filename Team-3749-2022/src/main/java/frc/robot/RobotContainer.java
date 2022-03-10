@@ -59,9 +59,6 @@ public class RobotContainer {
         Pilot = new Xbox(0);
         Operator = new Xbox(1);
         
-        Pilot.a().whenPressed(new InstantCommand(m_intake::runShintake))
-            .whenReleased(new InstantCommand(m_intake::stopShintake));
-
         Pilot.x().whenPressed(new InstantCommand(m_intake::startCompressor))
             .whenReleased(new InstantCommand(m_intake::stopCompressor));
 

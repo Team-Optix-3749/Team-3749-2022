@@ -5,15 +5,15 @@ import frc.robot.utilities.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
-import java.util.function.DoubleSupplier;
+import java.util.function.BooleanSupplier;
 
 public class IntakeHold extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     
     private final Intake m_intake;
-    private final DoubleSupplier m_trigger;
+    private final BooleanSupplier m_trigger;
 
-    public IntakeHold(Intake intake, DoubleSupplier trigger) {
+    public IntakeHold(Intake intake, BooleanSupplier trigger) {
         m_intake = intake;
         m_trigger = trigger;
         addRequirements(intake);
@@ -26,10 +26,8 @@ public class IntakeHold extends CommandBase {
 
     @Override
     public void execute() {
-        boolean intakeBtn = Constants.round(m_trigger.getAsDouble()) > 0;
-
-        if (intakeBtn) {
-            m_intake.intakePneumatics(kForward);
+        if (m_trigger.getAsBoolean()) {
+            m_intake.intakeFwd();
             m_intake.setIntake(1);
             m_intake.holdShintake();
         }
@@ -37,7 +35,7 @@ public class IntakeHold extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_intake.intakePneumatics(kReverse);
+        m_intake.intakeRev();
         m_intake.stopIntake();
         m_intake.stopShintake();
     }

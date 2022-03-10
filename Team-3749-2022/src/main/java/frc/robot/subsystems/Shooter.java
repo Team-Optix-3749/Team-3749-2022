@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
 import frc.robot.utilities.Constants.Auto;
@@ -27,7 +28,7 @@ public class Shooter extends SubsystemBase {
     private double m_turretAngle = 0;
 
     public Shooter() {
-        m_rightShooterMotor.setInverted(true);
+        m_leftShooterMotor.setInverted(true);
         m_turretEncoder.setPositionConversionFactor(Constants.Shooter.gearRatio);
         m_leftShooterMotor.setNeutralMode(NeutralMode.Coast);
         m_rightShooterMotor.setNeutralMode(NeutralMode.Coast);
@@ -42,6 +43,7 @@ public class Shooter extends SubsystemBase {
 
     public void setVelocity(double velocity) {
         setRPM(m_leftShooterMotor.getSelectedSensorVelocity(), velocity * 60 / .476);
+        SmartDashboard.putNumber("Velocity", m_leftShooterMotor.getSelectedSensorVelocity());
     }
 
     public void setTargetVelocity(){

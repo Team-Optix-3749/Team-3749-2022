@@ -17,26 +17,27 @@ import frc.robot.utilities.Constants;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class Drivetrain extends SubsystemBase {
-  public WPI_TalonFX m_leftFront = new WPI_TalonFX(Constants.Drivetrain.leftFront);
-  public WPI_TalonFX m_leftBack = new WPI_TalonFX(Constants.Drivetrain.leftBack);
-  public MotorControllerGroup m_left = new MotorControllerGroup(m_leftFront, m_leftBack);
+    private WPI_TalonFX m_leftFront;
+    private WPI_TalonFX m_leftBack = new WPI_TalonFX(Constants.Drivetrain.leftBack);
+    private MotorControllerGroup m_left = new MotorControllerGroup(m_leftFront, m_leftBack);
 
-  public WPI_TalonFX m_rightFront = new WPI_TalonFX(Constants.Drivetrain.rightFront);
-  public WPI_TalonFX m_rightBack = new WPI_TalonFX(Constants.Drivetrain.rightBack);
-  public MotorControllerGroup m_right = new MotorControllerGroup(m_rightFront, m_rightBack);
+    private WPI_TalonFX m_rightFront = new WPI_TalonFX(Constants.Drivetrain.rightFront);
+    private WPI_TalonFX m_rightBack = new WPI_TalonFX(Constants.Drivetrain.rightBack);
+    public MotorControllerGroup m_right = new MotorControllerGroup(m_rightFront, m_rightBack);
 
-  public DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
+    private DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
 
-  public final Encoder m_leftEncoder = new Encoder(0, 1);
-  public final Encoder m_rightEncoder = new Encoder(2, 3);
+    private final Encoder m_leftEncoder = new Encoder(0, 1);
+    private final Encoder m_rightEncoder = new Encoder(2, 3);
 
-  private final Gyro m_gyro = new AHRS();
+    private final Gyro m_gyro = new AHRS();
 
-  public Drivetrain() {
-    m_left.setInverted(true);
-  }
-  
-  public void arcadeDrive(double speed, double rotation) {
-    m_drive.arcadeDrive(speed, rotation);
-  }
+    public Drivetrain() {
+        m_leftFront = new WPI_TalonFX(Constants.Drivetrain.leftFront);
+        m_left.setInverted(true);
+    }
+
+    public void arcadeDrive(double speed, double rotation) {
+        m_drive.arcadeDrive(speed, rotation);
+    }
 }

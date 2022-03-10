@@ -37,17 +37,18 @@ public class Shooter extends SubsystemBase {
         m_turretAngle = m_turretEncoder.getPosition();
     }
 
-    public void setRPM(double current, double target) {
-        m_shooterMotors.setVoltage(m_pidController.calculate(current, target) * .0019);
+    public void setRPM(double target) {
+        m_shooterMotors.setVoltage(m_pidController.calculate(m_leftShooterMotor.getSelectedSensorVelocity(), target * 60) * .0019);
+        SmartDashboard.putNumber("Voltage", m_leftShooterMotor.getBusVoltage());
     }
 
     public void setVelocity(double velocity) {
-        setRPM(m_leftShooterMotor.getSelectedSensorVelocity(), velocity * 60 / .476);
+        setRPM(velocity * 60 / .476);
         SmartDashboard.putNumber("Velocity", m_leftShooterMotor.getSelectedSensorVelocity());
     }
 
     public void setTargetVelocity(){
-        setRPM(m_leftShooterMotor.getSelectedSensorVelocity(), targetVelocity() * 60);
+        setRPM(targetVelocity() * 60);
     }
 
     public void rawShoot(double speed) {

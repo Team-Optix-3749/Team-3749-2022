@@ -32,7 +32,7 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
         if (m_trigger.getAsBoolean())
-            m_shooter.setVelocity(1000);
+            m_shooter.setRPM(6300);
         else
             m_shooter.stopMotor();
 

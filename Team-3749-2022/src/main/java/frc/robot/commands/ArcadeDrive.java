@@ -5,15 +5,12 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.*;
-import frc.robot.utilities.Controls;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
 public class ArcadeDrive extends CommandBase {
-
   private final Drivetrain m_drive;
-  private boolean speedToggle = false;
 
   public ArcadeDrive(Drivetrain drivetrain) {
     m_drive = drivetrain;
@@ -25,10 +22,7 @@ public class ArcadeDrive extends CommandBase {
 
   @Override
   public void execute() {
-    if (speedToggle) m_drive.arcadeDrive(-Controls.Drivetrain.forward.getAsDouble()*.9, Controls.Drivetrain.turn.getAsDouble()*.75);
-    else m_drive.arcadeDrive(-Controls.Drivetrain.forward.getAsDouble(), Controls.Drivetrain.turn.getAsDouble()*.75);
 
-    if (Controls.Drivetrain.sprint.getAsBoolean()) speedToggle = !speedToggle;
   }
 
   @Override

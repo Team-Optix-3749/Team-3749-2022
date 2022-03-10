@@ -27,6 +27,7 @@ public final class Constants {
         bd = bd.setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
+    
     public static final class Drivetrain {
         public static final int leftFront = 11;
         public static final int leftBack = 12;
@@ -62,11 +63,12 @@ public final class Constants {
         public static final NetworkTableEntry coords = m_pi.getEntry("coordinates");
 
         public static final NetworkTable m_vision = NetworkTableInstance.getDefault().getTable("photovision");
-        public static final NetworkTableEntry visionTarget = m_vision.getEntry("hasTarget")
+        public static final NetworkTableEntry visionTarget = m_vision.getEntry("hasTarget");
         public static final NetworkTableEntry visionPitch = m_vision.getEntry("targetPitch");
         public static final NetworkTableEntry visionYaw = m_vision.getEntry("targetYaw");
 
     }
+
     public static final class Shooter{
         public static final int turretMotor = 22;
         public static final int rightShooterMotor = 15;
@@ -122,6 +124,7 @@ public final class Constants {
         public static final double kI = 0.5;
         public static final double kD = 0.0;
     }
+
     public static final class LEDs {
         public static final int LEDport = 9;
         public static final int bufferLength = 60; // Length of LED Strips in Pixels 

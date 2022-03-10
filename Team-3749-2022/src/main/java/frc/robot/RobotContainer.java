@@ -36,21 +36,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-
-  private final Intake m_intake = new Intake();
-
   private final Drivetrain m_drivetrain = new Drivetrain();
-  
-  private final Shooter m_shooter = new Shooter();
-
-  private final Shintake m_shintake = new Shintake();
-
-  private final Elevator m_elevator = new Elevator();
-  
-  // private final Lights m_lights = new Lights();
-
-  // private final OldDrivetrain m_oldDrivetrain = new OldDrivetrain();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -61,47 +47,7 @@ public class RobotContainer {
     //   new ArcadeDrive(
     //     m_drivetrain
     //   )
-    // );    
-
-    // m_oldDrivetrain.setDefaultCommand(
-    //   new OldArcadeDrive(m_oldDrivetrain, 
-    //   Xbox.leftJoystickY, 
-    //   Xbox.rightJoystickX
-    //   )
     // );
-
-    m_elevator.setDefaultCommand(
-      new ElevatorCommand(
-        m_elevator
-      )
-    );
-
-    m_shooter.setDefaultCommand(
-      new ShootCommand(
-        m_shooter,
-        m_shintake
-      )
-    );
-
-    // m_shintake.setDefaultCommand(
-    //   new ShintakeCommand(
-    //     m_shintake
-    //   )
-    // );
-
-    m_intake.setDefaultCommand(
-      new IntakeCommand(
-        m_intake,
-        m_shintake
-      )
-    );
-
-    // m_lights.setDefaultCommand(
-    //   new LightCommand(
-    //     m_lights
-    //   )
-    // );
-
   }
  
   /**
@@ -118,41 +64,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // return null;
-    // Create a voltage constraint to ensure we don't accelerate too fast
-
-    // An example trajectory to follow.  All units in meters.
-
-    Trajectory exampleTrajectory = new Trajectory();
-
-    try {
-      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("pathplanner/2m.path");
-      exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-   } catch (IOException ex) {
-      DriverStation.reportError("Unable to open trajectory", ex.getStackTrace());
-   }
-   
-    RamseteCommand ramseteCommand =
-        new RamseteCommand(
-            exampleTrajectory,
-            m_drivetrain::getPose,
-            new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
-            new SimpleMotorFeedforward(
-                Constants.Auto.ksVolts,
-                Constants.Auto.kvVoltSecondsPerMeter,
-                Constants.Auto.kaVoltSecondsSquaredPerMeter),
-            Constants.Auto.kDriveKinematics,
-            m_drivetrain::getWheelSpeeds,
-            new PIDController(Constants.Auto.kPDriveVel, 0, 0),
-            new PIDController(Constants.Auto.kPDriveVel, 0, 0),
-            // RamseteCommand passes volts to the callback
-            m_drivetrain::tankDriveVolts,
-            m_drivetrain);
-
-    // Reset odometry to the starting pose of the trajectory.
-    m_drivetrain.resetOdometry(exampleTrajectory.getInitialPose());
-
-    // Run path following command, then stop at the end.
-    return ramseteCommand.andThen(() -> m_drivetrain.tankDriveVolts(0, 0));
+    return null;
   }
 }

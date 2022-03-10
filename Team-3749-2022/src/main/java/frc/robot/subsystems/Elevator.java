@@ -36,6 +36,8 @@ public class Elevator extends SubsystemBase {
         m_leftTilt.setIdleMode(IdleMode.kBrake);
         m_leftTiltEncoder.setPositionConversionFactor(9);
 
+        m_leftTilt.setInverted(true);
+
         m_chain.setInverted(true);
         m_chain.setIdleMode(IdleMode.kBrake);
 
@@ -53,8 +55,20 @@ public class Elevator extends SubsystemBase {
         tilt.set(speed);
     }
 
+    public void rawTiltBack() {
+        tilt.set(0.2);
+    }
+
     public void rawClimb(double speed) {
         m_chain.set(speed);
+    }
+
+    public void rawClimbUp() {
+        m_chain.set(0.75);
+    }
+
+    public void rawClimbDown() {
+        m_chain.set(-0.75);
     }
 
     public void stopTilt() {
@@ -63,7 +77,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public void stopClimb() {
-        rawClimb(0);
+        m_chain.set(0.0);
     }
 
     public void extend() {

@@ -45,6 +45,8 @@ public class RobotContainer {
 
     private final Elevator m_elevator = new Elevator();
 
+    private final Base m_base = new Base();
+
     Xbox Pilot, Operator;
 
     /**
@@ -59,23 +61,26 @@ public class RobotContainer {
         Pilot = new Xbox(0);
         Operator = new Xbox(1);
         
-        Pilot.a().whenPressed(new InstantCommand(m_intake::runShintake))
-            .whenReleased(new InstantCommand(m_intake::stopShintake));
-
         Pilot.x().whenPressed(new InstantCommand(m_intake::startCompressor))
             .whenReleased(new InstantCommand(m_intake::stopCompressor));
 
-        Pilot.povUp().whenPressed(new Extend(m_elevator))
+        Pilot.y().whenPressed(new InstantCommand(m_elevator::rawClimbUp))
             .whenReleased(new InstantCommand(m_elevator::stopClimb));
 
-        Pilot.povDown().whenPressed(new Lift(m_elevator))
+        Pilot.b().whenPressed(new InstantCommand(m_elevator::rawClimbDown))
             .whenReleased(new InstantCommand(m_elevator::stopClimb));
 
-        Pilot.povLeft().whenPressed(new Untilt(m_elevator))
-            .whenReleased(new InstantCommand(m_elevator::stopTilt));
+        // Pilot.povUp().whenPressed(new Extend(m_elevator))
+        //     .whenReleased(new InstantCommand(m_elevator::stopClimb));
 
-        Pilot.povRight().whenPressed(new Tilt(m_elevator))
-            .whenReleased(new InstantCommand(m_elevator::stopTilt));
+        // Pilot.povDown().whenPressed(new Lift(m_elevator))
+        //     .whenReleased(new InstantCommand(m_elevator::stopClimb));
+
+        // Pilot.povLeft().whenPressed(new Untilt(m_elevator))
+        //     .whenReleased(new InstantCommand(m_elevator::stopTilt));
+
+        // Pilot.povRight().whenPressed(new Tilt(m_elevator))
+        //     .whenReleased(new InstantCommand(m_elevator::stopTilt));
 
         m_drivetrain.setDefaultCommand(
             new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
@@ -86,6 +91,11 @@ public class RobotContainer {
 
         m_intake.setDefaultCommand(
             new IntakeHold(m_intake, Pilot::getLeftTrigger, Pilot.a()));
+
+        m_base.setDefaultCommand(
+            new Controls(m_base));
+        
+        // m_elevator.setDefaultCommand(new Tilt(m_elevator));
     }
 
     /**

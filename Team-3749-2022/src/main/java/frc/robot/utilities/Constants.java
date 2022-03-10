@@ -73,9 +73,9 @@ public final class Constants {
         public static final int leftShooterMotor = 16;
 
         public static final double gearRatio = 12.0/775.0;
-        public static final double kP = 0.8;
-        public static final double kI = 0.4;
-        public static final double kD = 0.1;
+        public static final double kP = 0.3;
+        public static final double kI = 0.2;
+        public static final double kD = 0.0;
         public static final double shooterHeight = 1;
         public static final double hubHeight = 2;
         public static final double limelightAngle = 30;

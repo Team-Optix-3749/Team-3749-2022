@@ -1,13 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-/* 
-@authors
-@BING CHILLING
-@Rohin Kumar Sood
-@Dinesh K. Sahia
-
-*/
 package frc.robot;
 
 import java.io.IOException;
@@ -43,11 +33,11 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    // m_drivetrain.setDefaultCommand(
-    //   new ArcadeDrive(
-    //     m_drivetrain
-    //   )
-    // );
+    m_drivetrain.setDefaultCommand(
+      new ArcadeDrive(
+        m_drivetrain
+      )
+    );
   }
  
   /**

@@ -13,8 +13,10 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
+import frc.robot.commands.intake.IntakeHold;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
+import frc.robot.utilities.Xbox;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -29,6 +31,8 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+    public XboxController m_xboxController = new XboxController(0);
+
     private final Drivetrain m_drivetrain = new Drivetrain();
 
     private final Intake m_intake = new Intake();
@@ -57,7 +61,7 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-
+        Xbox.Pilot.rb.whenHeld(new IntakeHold(m_intake));
     }
 
     /**

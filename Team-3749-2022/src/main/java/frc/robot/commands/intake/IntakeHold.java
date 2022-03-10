@@ -22,7 +22,6 @@ public class IntakeHold extends CommandBase {
     @Override
     public void initialize() {
         m_intake.stopCompressor();
-        m_trigger.toString();
     }
 
     @Override

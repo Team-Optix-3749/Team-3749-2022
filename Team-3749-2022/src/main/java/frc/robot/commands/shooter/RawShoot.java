@@ -3,7 +3,7 @@ package frc.robot.commands.shooter;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
 
-import java.util.function.DoubleSupplier;
+import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -12,9 +12,9 @@ public class RawShoot extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
     private final Shooter m_shooter;
-    private final DoubleSupplier m_trigger;
+    private final BooleanSupplier m_trigger;
 
-    public RawShoot(Shooter shooter, DoubleSupplier trigger) {
+    public RawShoot(Shooter shooter, BooleanSupplier trigger) {
         m_shooter = shooter;
         m_trigger = trigger;
         addRequirements(shooter);
@@ -29,9 +29,7 @@ public class RawShoot extends CommandBase {
     public void execute() {
         System.out.println(m_shooter.getVelocity());
 
-        boolean shooterBtn = Constants.round(m_trigger.getAsDouble()) > 0;
-
-        if (shooterBtn)
+        if (m_trigger.getAsBoolean())
             m_shooter.rawShoot(Constants.Shooter.shooterSpeed);
     }
 

@@ -51,17 +51,17 @@ public final class Constants {
         public static final double kWheelRadius = 0.0508;
         public static final int kEncoderResolution = 2048;
 
-        public static final NetworkTable m_limelight = NetworkTableInstance.getDefault().getTable("limelight");
-        public static final NetworkTableEntry tx = m_limelight.getEntry("tx");
-        public static final NetworkTableEntry ty = m_limelight.getEntry("ty");
+        public static NetworkTable m_limelight = NetworkTableInstance.getDefault().getTable("limelight");
+        public static NetworkTableEntry tx = m_limelight.getEntry("tx");
+        public static NetworkTableEntry ty = m_limelight.getEntry("ty");
 
-        public static final NetworkTable m_pi = NetworkTableInstance.getDefault().getTable("!ML");
+        public static NetworkTable m_pi = NetworkTableInstance.getDefault().getTable("!ML");
         public static final NetworkTableEntry coords = m_pi.getEntry("coordinates");
 
-        public static final NetworkTable m_vision = NetworkTableInstance.getDefault().getTable("photovision");
-        public static final NetworkTableEntry visionTarget = m_vision.getEntry("hasTarget");
-        public static final NetworkTableEntry visionPitch = m_vision.getEntry("targetPitch");
-        public static final NetworkTableEntry visionYaw = m_vision.getEntry("targetYaw");
+        public static NetworkTable m_vision = NetworkTableInstance.getDefault().getTable("photovision");
+        public static NetworkTableEntry visionTarget = m_vision.getEntry("hasTarget");
+        public static NetworkTableEntry visionPitch = m_vision.getEntry("targetPitch");
+        public static NetworkTableEntry visionYaw = m_vision.getEntry("targetYaw");
 
     }
 
@@ -79,7 +79,7 @@ public final class Constants {
         public static final double shooterHeight = 1;
         public static final double hubHeight = 2;
         public static final double limelightAngle = 30;
-        public static final double shooterAngle = 70;
+        public static final double shooterAngle = (70);
     } 
 
     public static final class Vision{

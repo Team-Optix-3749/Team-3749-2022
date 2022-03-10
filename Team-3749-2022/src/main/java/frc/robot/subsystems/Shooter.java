@@ -27,6 +27,16 @@ public class Shooter extends SubsystemBase{
         m_turretEncoder.setPositionConversionFactor(Constants.Shooter.gearRatio);
         m_leftShooterMotor.setNeutralMode(NeutralMode.Coast);
         m_rightShooterMotor.setNeutralMode(NeutralMode.Coast);
+
+        m_leftShooterMotor.setSensorPhase(false);
+    }
+
+    public void setRPM(double current, double target){
+        m_shooterMotors.setVoltage(m_pidController.calculate(current, target)*.0019);
+    }
+
+    public void setVelocity(double velocity){
+        setRPM(m_leftShooterMotor.getSelectedSensorVelocity(), velocity*60/.476);
     }
 
     public void rawShoot(double speed) {

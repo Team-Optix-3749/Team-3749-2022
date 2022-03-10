@@ -1,6 +1,7 @@
 package frc.robot.commands.intake;
 
 import frc.robot.subsystems.*;
+import frc.robot.utilities.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
@@ -26,9 +27,11 @@ public class IntakeHold extends CommandBase {
 
     @Override
     public void execute() {
-        m_intake.intakePneumatics(kForward);
-        m_intake.setIntake(1);
-        m_intake.holdShintake();
+        if (Constants.round(m_trigger.getAsDouble()) > 0) {
+            m_intake.intakePneumatics(kForward);
+            m_intake.setIntake(1);
+            m_intake.holdShintake();
+        }
     }
 
     @Override

@@ -17,7 +17,7 @@ import frc.robot.utilities.Constants;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class Drivetrain extends SubsystemBase {
-    private WPI_TalonFX m_leftFront;
+    private WPI_TalonFX m_leftFront = new WPI_TalonFX(Constants.Drivetrain.leftFront);
     private WPI_TalonFX m_leftBack = new WPI_TalonFX(Constants.Drivetrain.leftBack);
     private MotorControllerGroup m_left = new MotorControllerGroup(m_leftFront, m_leftBack);
 
@@ -33,7 +33,6 @@ public class Drivetrain extends SubsystemBase {
     private final Gyro m_gyro = new AHRS();
 
     public Drivetrain() {
-        m_leftFront = new WPI_TalonFX(Constants.Drivetrain.leftFront);
         m_left.setInverted(true);
     }
 

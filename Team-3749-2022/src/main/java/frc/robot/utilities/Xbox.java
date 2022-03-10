@@ -1,55 +1,118 @@
 package frc.robot.utilities;
 
-import java.util.function.DoubleSupplier;
-import java.util.function.IntSupplier;
-
+import edu.wpi.first.hal.FRCNetComm.tResourceType;
+import edu.wpi.first.hal.HAL;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
-public class Xbox{
+public class Xbox extends GenericHID {
+	// reuses the Button and Axis enums from the original XboxController
 
-    public static final class Pilot {
-        public static final XboxController PilotController = new XboxController(0);
-        public static final JoystickButton x = new JoystickButton(PilotController, Button.kX.value);
-        public static final JoystickButton y = new JoystickButton(PilotController, Button.kY.value);
-        public static final JoystickButton a = new JoystickButton(PilotController, Button.kA.value);
-        public static final JoystickButton b = new JoystickButton(PilotController, Button.kB.value);
-        public static final JoystickButton lb = new JoystickButton(PilotController, Button.kLeftBumper.value);
-        public static final JoystickButton rb = new JoystickButton(PilotController, Button.kRightBumper.value);
-        public static final JoystickButton ls = new JoystickButton(PilotController, Button.kLeftStick.value);
-        public static final JoystickButton rs = new JoystickButton(PilotController, Button.kRightStick.value);  
+	private JoystickButton m_leftBumper;
+	private JoystickButton m_rightBumper;
+	private JoystickButton m_leftStick;
+	private JoystickButton m_rightStick;
+	private JoystickButton m_a;
+	private JoystickButton m_b;
+	private JoystickButton m_x;
+	private JoystickButton m_y;
 
-        public static final DoubleSupplier leftJoystickX = PilotController::getLeftX;
-        public static final DoubleSupplier leftJoystickY = PilotController::getLeftY;
-        public static final DoubleSupplier rightJoystickX = PilotController::getRightX;
-        public static final DoubleSupplier rightJoystickY = PilotController::getRightY;
+	private POVButton m_upButton;
+	private POVButton m_rightButton;
+	private POVButton m_downButton; 
+	private POVButton m_leftButton;
 
-        public static final DoubleSupplier lt = PilotController::getLeftTriggerAxis;
-        public static final DoubleSupplier rt = PilotController::getRightTriggerAxis;
+	public Xbox(final int port) {
+		super(port);
 
-        public static final IntSupplier dpad = PilotController::getPOV;
-    }
+		// XBOX controller buttons
+		m_leftBumper = new JoystickButton(this, XboxController.Button.kLeftBumper.value);
+		m_rightBumper = new JoystickButton(this, XboxController.Button.kRightBumper.value);
+		m_leftStick = new JoystickButton(this, XboxController.Button.kLeftStick.value);
+		m_rightStick = new JoystickButton(this, XboxController.Button.kRightStick.value);
+		m_a = new JoystickButton(this, XboxController.Button.kA.value);
+		m_b = new JoystickButton(this, XboxController.Button.kB.value);
+		m_x = new JoystickButton(this, XboxController.Button.kX.value);
+		m_y = new JoystickButton(this, XboxController.Button.kY.value);
 
-    public static final class Operator {
-        public static final XboxController OpController = new XboxController(0);
-        public static final JoystickButton x = new JoystickButton(OpController, Button.kX.value);
-        public static final JoystickButton y = new JoystickButton(OpController, Button.kY.value);
-        public static final JoystickButton a = new JoystickButton(OpController, Button.kA.value);
-        public static final JoystickButton b = new JoystickButton(OpController, Button.kB.value);
-        public static final JoystickButton lb = new JoystickButton(OpController, Button.kLeftBumper.value);
-        public static final JoystickButton rb = new JoystickButton(OpController, Button.kRightBumper.value);
-        public static final JoystickButton ls = new JoystickButton(OpController, Button.kLeftStick.value);
-        public static final JoystickButton rs = new JoystickButton(OpController, Button.kRightStick.value);  
+		// POV controller buttons
+		m_upButton = new POVButton(this, 0);
+		m_rightButton = new POVButton(this, 90);
+		m_downButton = new POVButton(this, 180);
+		m_leftButton = new POVButton(this, 270);
+	}
 
-        public static final DoubleSupplier leftJoystickX = OpController::getLeftX;
-        public static final DoubleSupplier leftJoystickY = OpController::getLeftY;
-        public static final DoubleSupplier rightJoystickX = OpController::getRightX;
-        public static final DoubleSupplier rightJoystickY = OpController::getRightY;
+	public JoystickButton leftBumper() {
+		return m_leftBumper;
+	}
 
-        public static final DoubleSupplier lt = OpController::getLeftTriggerAxis;
-        public static final DoubleSupplier rt = OpController::getRightTriggerAxis;
-        
-        public static final IntSupplier dpad = OpController::getPOV;
-    }
+	public JoystickButton rightBumper() {
+		return m_rightBumper;
+	}
+
+	public JoystickButton leftStick() {
+		return m_leftStick;
+	}
+
+	public JoystickButton rightStick() {
+		return m_rightStick;
+	}
+
+	public JoystickButton a() {
+		return m_a;
+	}
+
+	public JoystickButton b() {
+		return m_b;
+	}
+
+	public JoystickButton x() {
+		return m_x;
+	}
+
+	public JoystickButton y() {
+		return m_y;
+	}
+
+	public double getLeftX() {
+		return getRawAxis(XboxController.Axis.kLeftX.value);
+	}
+
+	public double getRightX() {
+		return getRawAxis(XboxController.Axis.kRightX.value);
+	}
+
+	public double getLeftY() {
+		return getRawAxis(XboxController.Axis.kLeftY.value);
+	}
+
+	public double getRightY() {
+		return getRawAxis(XboxController.Axis.kRightY.value);
+	}
+
+	public boolean getLeftTrigger() {
+		return getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1;
+	}
+
+	public boolean getRightTrigger() {
+		return getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1;
+	}
+
+	public POVButton povUp() {
+		return m_upButton;
+	}
+
+	public POVButton povRight() {
+		return m_rightButton;
+	}
+
+	public POVButton povDown() {
+		return m_downButton;
+	}
+
+	public POVButton povLeft() {
+		return m_leftButton;
+	}
 }

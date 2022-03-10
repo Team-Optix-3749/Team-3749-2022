@@ -46,4 +46,8 @@ public class Shooter extends SubsystemBase{
     public void stopMotor() {
         m_shooterMotors.set(0);
     }
+
+    public double getVelocity() {
+        return m_leftShooterMotor.getSelectedSensorVelocity();
+    }
 }

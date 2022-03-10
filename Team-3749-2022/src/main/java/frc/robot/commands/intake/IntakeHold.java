@@ -27,7 +27,9 @@ public class IntakeHold extends CommandBase {
 
     @Override
     public void execute() {
-        if (Constants.round(m_trigger.getAsDouble()) > 0) {
+        boolean intakeBtn = Constants.round(m_trigger.getAsDouble()) > 0;
+
+        if (intakeBtn) {
             m_intake.intakePneumatics(kForward);
             m_intake.setIntake(1);
             m_intake.holdShintake();

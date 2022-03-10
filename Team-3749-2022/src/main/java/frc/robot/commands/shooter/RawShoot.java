@@ -27,7 +27,9 @@ public class RawShoot extends CommandBase {
 
     @Override
     public void execute() {
-        if (Constants.round(m_trigger.getAsDouble()) > 0)
+        boolean shooterBtn = Constants.round(m_trigger.getAsDouble()) > 0;
+
+        if (shooterBtn)
             m_shooter.rawShoot(Constants.Shooter.shooterSpeed);
     }
 

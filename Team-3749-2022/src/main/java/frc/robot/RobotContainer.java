@@ -16,6 +16,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
  
@@ -27,6 +28,8 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
  */
 public class RobotContainer {
   private final Drivetrain m_drivetrain = new Drivetrain();
+
+  private final Intake m_intake = new Intake();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -37,6 +40,10 @@ public class RobotContainer {
       new ArcadeDrive(
         m_drivetrain
       )
+    );
+
+    m_intake.setDefaultCommand(
+      new InstantCommand(m_intake::stopCompressor)
     );
   }
  

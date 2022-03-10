@@ -3,6 +3,8 @@ package frc.robot;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import org.opencv.core.Point;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -56,6 +58,9 @@ public class RobotContainer {
     private void configureButtonBindings() {
         Pilot = new Xbox(0);
         Operator = new Xbox(1);
+        
+        Pilot.a().whenPressed(new InstantCommand(m_intake::runShintake))
+            .whenReleased(new InstantCommand(m_intake::stopShintake));
 
         Pilot.x().whenPressed(new InstantCommand(m_intake::startCompressor))
             .whenReleased(new InstantCommand(m_intake::stopCompressor));
@@ -76,10 +81,11 @@ public class RobotContainer {
             new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
 
         m_shooter.setDefaultCommand(
-            new RawShoot(m_shooter, Pilot::getRightTrigger));
+            new Shoot(m_shooter, Pilot::getRightTrigger));
+        
 
         m_intake.setDefaultCommand(
-            new IntakeHold(m_intake, Pilot::getLeftTrigger));
+            new IntakeHold(m_intake, Pilot::getLeftTrigger, Pilot.a()));
     }
 
     /**

@@ -36,8 +36,4 @@ public class Shooter extends SubsystemBase{
     public void stopShooter() {
         m_shooterMotors.set(0);
     }
-
-    public void velocityShoot() {
-       
-    }
 }

@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
@@ -62,8 +63,13 @@ public class Intake extends SubsystemBase {
         m_comp.disable();
     }
 
-    public void intakePneumatics(DoubleSolenoid.Value val) {
-        m_rightPiston.set(val);
-        m_leftPiston.set(val);
+    public void intakeFwd() {
+        m_rightPiston.set(DoubleSolenoid.Value.kForward);
+        m_leftPiston.set(DoubleSolenoid.Value.kForward);
+    }
+
+    public void intakeRev() {
+        m_rightPiston.set(DoubleSolenoid.Value.kReverse);
+        m_leftPiston.set(DoubleSolenoid.Value.kReverse);
     }
 }

@@ -31,6 +31,8 @@ public class RawShoot extends CommandBase {
 
         if (m_trigger.getAsBoolean())
             m_shooter.rawShoot(Constants.Shooter.shooterSpeed);
+        else
+            m_shooter.stopMotor();
     }
 
     @Override

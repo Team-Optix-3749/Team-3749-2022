@@ -35,8 +35,6 @@ public class Shoot extends CommandBase {
             m_shooter.setRPM(6300);
         else
             m_shooter.stopMotor();
-
-
     }
 
     @Override

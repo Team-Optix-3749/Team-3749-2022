@@ -36,10 +36,13 @@ public class ShootCommand extends CommandBase{
         // m_shooter.setShooter();
         double shootCtrl = Constants.round(Controls.Shooter.shootTrigger.getAsDouble());
         // double otherShootCtrl = Constants.round(Controls.Shooter.otherShootTrigger.getAsDouble());
-
+        m_shooter.setShooter();
+        
         if (shootCtrl > 0) {
-            m_shooter.setShooter();
-            try { TimeUnit.SECONDS.sleep(3);} catch (Exception e) {} m_shintake.runShintake();
+            System.out.println("hdasjhgdf");
+            // try { TimeUnit.SECONDS.sleep(2); } catch (Exception e) {}
+            // m_shintake.runShintake();
+            // m_shintake.runShintake();
         } 
         // else if(Controls.testBtn.getAsBoolean()) m_shooter.setShooter();
         // else if(otherShootCtrl > 0) m_shooter.setVelocity();

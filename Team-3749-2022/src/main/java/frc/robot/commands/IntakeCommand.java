@@ -28,19 +28,16 @@ public class IntakeCommand extends CommandBase{
     
     @Override
     public void initialize() {
-        System.out.println("init intake");
         m_intake.stopCompressor();
         if (Constants.round(Controls.Intake.intakeBtn.getAsDouble()) > 0) {
             // m_intake.intakePneumatics(kForward);
             m_intake.setIntake(1);
             m_shintake.holdShintake();
-            System.out.println("asdf");
         } 
         else if (Controls.aTestBtn.getAsBoolean()) m_intake.setIntake(1); 
         else {
             m_intake.stopMotors();
             m_shintake.stopMotors();
-            System.out.println("asdf1");
             // m_intake.intakePneumatics(kReverse);
         }
 

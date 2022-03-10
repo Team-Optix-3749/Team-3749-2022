@@ -38,6 +38,8 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
+  private final DummySubsystem m_dummy = new DummySubsystem();
+
   private final Intake m_intake = new Intake();
 
   private final Drivetrain m_drivetrain = new Drivetrain();
@@ -57,11 +59,11 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    // m_drivetrain.setDefaultCommand(
-    //   new ArcadeDrive(
-    //     m_drivetrain
-    //   )
-    // );    
+    m_drivetrain.setDefaultCommand(
+      new ArcadeDrive(
+        m_drivetrain
+      )
+    );    
 
     // m_oldDrivetrain.setDefaultCommand(
     //   new OldArcadeDrive(m_oldDrivetrain, 
@@ -69,6 +71,11 @@ public class RobotContainer {
     //   Xbox.rightJoystickX
     //   )
     // );
+
+    m_dummy.setDefaultCommand(
+      
+    new ControlsCommand(m_dummy)
+    );
 
     m_elevator.setDefaultCommand(
       new ElevatorCommand(

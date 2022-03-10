@@ -28,7 +28,7 @@ public class Elevator extends SubsystemBase {
             Constants.Elevator.kD);
 
     public Elevator() {
-        m_rightTilt.setIdleMode(IdleMode.kCoast);
+        m_rightTilt.setIdleMode(IdleMode.kBrake);
 
         m_leftTilt.setIdleMode(IdleMode.kBrake);
 
@@ -40,8 +40,16 @@ public class Elevator extends SubsystemBase {
         tilt.set(speed);
     }
 
-    public void stopMotors() {
+    public void rawClimb(double speed) {
+        m_chain.set(speed);
+    }
+
+    public void stopTilt() {
         rawTilt(0.0);
         m_chain.set(0.0);
+    }
+
+    public void stopClimb() {
+        rawClimb(0);
     }
 }

@@ -19,21 +19,33 @@ public class Elevator extends SubsystemBase {
     private RelativeEncoder m_rightTiltEncoder = m_rightTilt.getEncoder();
     private RelativeEncoder m_leftTiltEncoder = m_leftTilt.getEncoder();
 
-    private final PIDController m_tiltPIDController = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI,
+    private final PIDController m_tiltPID = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI,
             Constants.Elevator.kD);
 
     private CANSparkMax m_chain = new CANSparkMax(Constants.Elevator.chain, MotorType.kBrushless);
+
+    private RelativeEncoder m_chainEncoder = m_chain.getEncoder();
 
     private final PIDController m_chainPIDContoller = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI,
             Constants.Elevator.kD);
 
     public Elevator() {
         m_rightTilt.setIdleMode(IdleMode.kBrake);
+        m_rightTiltEncoder.setPositionConversionFactor(9);
 
         m_leftTilt.setIdleMode(IdleMode.kBrake);
+        m_leftTiltEncoder.setPositionConversionFactor(9);
 
         m_chain.setInverted(true);
         m_chain.setIdleMode(IdleMode.kBrake);
+    }
+
+    public double getTilt() {
+        return (m_rightTiltEncoder.getPosition() + m_leftTiltEncoder.getPosition())/2;
+    }
+
+    public double getChain() {
+        return m_chainEncoder.getPosition();
     }
 
     public void rawTilt(double speed) {
@@ -51,5 +63,24 @@ public class Elevator extends SubsystemBase {
 
     public void stopClimb() {
         rawClimb(0);
+    }
+
+    public void extend() {
+        // rawClimb(m_tiltPID.calculate(getChain(), 3000));
+        // Dhruv said 10 in 💀
+        // need to test encoder pos (https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html#cascade-elevator)
+    }
+
+    public void lift() {
+        rawClimb(m_tiltPID.calculate(getChain(), 0));
+    }
+
+    public void tilt() {
+        // rawClimb(m_tiltPID.calculate(getChain(), 3000));
+        // need to test encoder pos (https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html#cascade-elevator)
+    }
+
+    public void unTilt() {
+        rawTilt(m_tiltPID.calculate(getChain(), 0));
     }
 }

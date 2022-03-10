@@ -17,7 +17,7 @@ public class Tilt extends CommandBase {
 
     @Override
     public void execute() {
-        m_elevator.tilt();
+        m_elevator.rawTilt(0.2);
     }
 
     @Override

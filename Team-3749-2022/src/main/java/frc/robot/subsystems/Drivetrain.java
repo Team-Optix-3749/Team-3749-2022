@@ -73,6 +73,12 @@ public class Drivetrain extends SubsystemBase {
     }
   }
 
+  public void visionAlign(){
+    double x = Auto.visionYaw.getDouble(0.0);
+    if (Auto.visionTarget.getBoolean(false)){
+      arcadeDrive(0, x);
+    }
+  }
   public void limeAlign () {
     double x = Auto.tx.getDouble(0.0);
     double output = 0;

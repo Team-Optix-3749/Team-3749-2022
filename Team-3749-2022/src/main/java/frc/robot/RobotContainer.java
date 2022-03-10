@@ -16,7 +16,7 @@ import frc.robot.commands.*;
 import frc.robot.commands.intake.IntakeHold;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
-import frc.robot.utilities.Xbox;
+import frc.robot.utilities.Xbox.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -31,7 +31,6 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    public XboxController m_xboxController = new XboxController(0);
 
     private final Drivetrain m_drivetrain = new Drivetrain();
 
@@ -45,11 +44,9 @@ public class RobotContainer {
         configureButtonBindings();
 
         m_drivetrain.setDefaultCommand(
-                new ArcadeDrive(
-                        m_drivetrain));
+                new ArcadeDrive(m_drivetrain));
 
-        m_intake.setDefaultCommand(
-                new InstantCommand(m_intake::stopCompressor));
+        m_intake.setDefaultCommand(new IntakeHold(m_intake, Pilot.lt));
     }
 
     /**
@@ -61,7 +58,7 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        Xbox.Pilot.rb.whenHeld(new IntakeHold(m_intake));
+        // Pilot.rb.whenHeld(new IntakeHold(m_intake));
     }
 
     /**

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
 import frc.robot.commands.intake.IntakeHold;
+import frc.robot.commands.shooter.RawShoot;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
 import frc.robot.utilities.Xbox.*;
@@ -34,7 +35,11 @@ public class RobotContainer {
 
     private final Drivetrain m_drivetrain = new Drivetrain();
 
+    private final Shooter m_shooter = new Shooter();
+
     private final Intake m_intake = new Intake();
+
+    private final Elevator m_elevator = new Elevator();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -44,9 +49,14 @@ public class RobotContainer {
         configureButtonBindings();
 
         m_drivetrain.setDefaultCommand(
-                new ArcadeDrive(m_drivetrain));
+                new ArcadeDrive(m_drivetrain, Pilot.leftJoystickY, Pilot.rightJoystickX));
+        
+        m_shooter.setDefaultCommand(new RawShoot(m_shooter, Pilot.rt));
 
         m_intake.setDefaultCommand(new IntakeHold(m_intake, Pilot.lt));
+
+        m_elevator.setDefaultCommand(new Extend(m_intake, Pilot.lt));
+
     }
 
     /**
@@ -59,6 +69,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Pilot.rb.whenHeld(new IntakeHold(m_intake));
+
     }
 
     /**

@@ -29,7 +29,7 @@ public class Drivetrain extends SubsystemBase {
     private final Gyro m_gyro = new AHRS();
 
     public Drivetrain() {
-        m_left.setInverted(true);
+        m_right.setInverted(true);
     }
 
     public void arcadeDrive(double speed, double rotation) {

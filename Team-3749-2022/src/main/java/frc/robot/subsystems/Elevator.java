@@ -38,6 +38,7 @@ public class Elevator extends SubsystemBase {
 
         m_chain.setInverted(true);
         m_chain.setIdleMode(IdleMode.kBrake);
+
     }
 
     public double getTilt() {
@@ -66,7 +67,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public void extend() {
-        // rawClimb(m_tiltPID.calculate(getChain(), 3000));
+        rawClimb(m_tiltPID.calculate(getChain(), 10));
         // Dhruv said 10 in 💀
         // need to test encoder pos (https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html#cascade-elevator)
     }
@@ -76,11 +77,11 @@ public class Elevator extends SubsystemBase {
     }
 
     public void tilt() {
-        // rawClimb(m_tiltPID.calculate(getChain(), 3000));
+        rawClimb(m_tiltPID.calculate(getChain(), getChain()+.1));
         // need to test encoder pos (https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html#cascade-elevator)
     }
 
     public void untilt() {
-        rawTilt(m_tiltPID.calculate(getChain(), 0));
+        rawTilt(m_tiltPID.calculate(getChain(), getChain()-.1));
     }
 }

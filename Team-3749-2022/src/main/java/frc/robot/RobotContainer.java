@@ -13,14 +13,16 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
-import frc.robot.commands.intake.IntakeHold;
-import frc.robot.commands.shooter.RawShoot;
+import frc.robot.commands.intake.*;
+import frc.robot.commands.shooter.*;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
 import frc.robot.utilities.Xbox.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -55,8 +57,7 @@ public class RobotContainer {
 
         m_intake.setDefaultCommand(new IntakeHold(m_intake, Pilot.lt));
 
-        m_elevator.setDefaultCommand(new Extend(m_intake, Pilot.lt));
-
+        // m_elevator.setDefaultCommand(new Extend(m_intake, Pilot.lt));
     }
 
     /**
@@ -69,7 +70,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Pilot.rb.whenHeld(new IntakeHold(m_intake));
-
+        Pilot.x.whenHeld(new Compressor(m_intake));
     }
 
     /**

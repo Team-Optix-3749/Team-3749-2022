@@ -80,7 +80,7 @@ public class Elevator extends SubsystemBase {
         // need to test encoder pos (https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html#cascade-elevator)
     }
 
-    public void unTilt() {
+    public void untilt() {
         rawTilt(m_tiltPID.calculate(getChain(), 0));
     }
 }

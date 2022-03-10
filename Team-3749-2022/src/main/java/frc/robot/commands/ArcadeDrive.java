@@ -16,8 +16,8 @@ public class ArcadeDrive extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     
     private final Drivetrain m_drive;
-    DoubleSupplier y;
-    DoubleSupplier x;
+    private DoubleSupplier y;
+    private DoubleSupplier x;
 
 
     public ArcadeDrive(Drivetrain drivetrain, DoubleSupplier leftY, DoubleSupplier rightX) {

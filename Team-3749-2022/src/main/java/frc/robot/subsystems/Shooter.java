@@ -31,11 +31,11 @@ public class Shooter extends SubsystemBase{
         m_leftShooterMotor.setSensorPhase(false);
     }
 
-    public void setRPM(double current, double target){
+    public void setRPM(double current, double target) {
         m_shooterMotors.setVoltage(m_pidController.calculate(current, target)*.0019);
     }
 
-    public void setVelocity(double velocity){
+    public void setVelocity(double velocity) {
         setRPM(m_leftShooterMotor.getSelectedSensorVelocity(), velocity*60/.476);
     }
 

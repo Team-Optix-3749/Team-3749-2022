@@ -62,7 +62,7 @@ public final class Constants {
         public static final NetworkTableEntry coords = m_pi.getEntry("coordinates");
 
         public static final NetworkTable m_vision = NetworkTableInstance.getDefault().getTable("photovision");
-        public static final NetworkTableEntry visionTarget = m_vision.getEntry("hasTarget")
+        public static final NetworkTableEntry visionTarget = m_vision.getEntry("hasTarget");
         public static final NetworkTableEntry visionPitch = m_vision.getEntry("targetPitch");
         public static final NetworkTableEntry visionYaw = m_vision.getEntry("targetYaw");
 

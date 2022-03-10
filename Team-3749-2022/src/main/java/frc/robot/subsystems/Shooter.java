@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
 
-public class Shooter extends SubsystemBase{
+public class Shooter extends SubsystemBase {
     private WPI_TalonFX m_leftShooterMotor = new WPI_TalonFX(Constants.Shooter.leftShooterMotor);
     private WPI_TalonFX m_rightShooterMotor = new WPI_TalonFX(Constants.Shooter.rightShooterMotor);
 
@@ -20,7 +20,8 @@ public class Shooter extends SubsystemBase{
 
     private MotorControllerGroup m_shooterMotors = new MotorControllerGroup(m_leftShooterMotor, m_rightShooterMotor);
 
-    private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD);
+    private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI,
+            Constants.Shooter.kD);
 
     public Shooter() {
         m_rightShooterMotor.setInverted(true);
@@ -32,11 +33,11 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setRPM(double current, double target) {
-        m_shooterMotors.setVoltage(m_pidController.calculate(current, target)*.0019);
+        m_shooterMotors.setVoltage(m_pidController.calculate(current, target) * .0019);
     }
 
     public void setVelocity(double velocity) {
-        setRPM(m_leftShooterMotor.getSelectedSensorVelocity(), velocity*60/.476);
+        setRPM(m_leftShooterMotor.getSelectedSensorVelocity(), velocity * 60 / .476);
     }
 
     public void rawShoot(double speed) {
@@ -49,5 +50,9 @@ public class Shooter extends SubsystemBase{
 
     public double getVelocity() {
         return m_leftShooterMotor.getSelectedSensorVelocity();
+    }
+
+    public void setTurret(){
+        
     }
 }

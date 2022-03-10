@@ -29,11 +29,11 @@ public class Shooter extends SubsystemBase{
         m_rightShooterMotor.setNeutralMode(NeutralMode.Coast);
     }
 
-    public void setShooterRaw(double speed) {
+    public void rawShoot(double speed) {
         m_shooterMotors.set(speed);
     }
 
-    public void stopShooter() {
+    public void stopMotor() {
         m_shooterMotors.set(0);
     }
 }

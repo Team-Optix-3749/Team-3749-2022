@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.utilities;
 
 import java.math.BigDecimal;
@@ -27,7 +23,7 @@ public final class Constants {
         bd = bd.setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
-    
+
     public static final class Drivetrain {
         public static final int leftFront = 11;
         public static final int leftBack = 12;
@@ -70,6 +66,8 @@ public final class Constants {
     }
 
     public static final class Shooter{
+        public static final double shooterSpeed = 1.0;
+
         public static final int turretMotor = 22;
         public static final int rightShooterMotor = 15;
         public static final int leftShooterMotor = 16;
@@ -91,7 +89,7 @@ public final class Constants {
   
     public static final class Intake {
         public static final int intakeMotor = 21;
-        public static final int intakePiston = 1; // FIND DEVICE ID
+        public static final int intakePiston = 1;
         public static final double kIntakeSpeed = 0.8;
 
         public static enum SolenoidDirection {
@@ -115,11 +113,13 @@ public final class Constants {
     }
 
     public static final class Elevator {
-        public static final int leftTilt = 26; // FIND CAN ID
-        public static final int rightTilt = 27; // FIND CAN ID
-        public static final int chain = 25; // FIND CAN ID
+        public static final int leftTilt = 26;
+        public static final int rightTilt = 27;
+        public static final int chain = 25;
         public static final double chainMPR = 0.0; // FMD SPROCKET DIAMETER
         public static final double chainGR = 0.0; // FIND GEAR RATIO ON MOTOR
+
+        
         public static final double kP = 1.0;
         public static final double kI = 0.5;
         public static final double kD = 0.0;

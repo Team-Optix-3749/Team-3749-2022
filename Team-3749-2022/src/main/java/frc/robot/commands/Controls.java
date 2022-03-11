@@ -1,48 +1,54 @@
 package frc.robot.commands;
 
-import java.lang.reflect.Field;
-import java.math.BigDecimal;
+import java.lang.reflect.InvocationTargetException;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-import java.util.function.IntSupplier;
+import java.lang.reflect.Method;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
 import frc.robot.utilities.Xbox;
 import frc.robot.subsystems.Base;
-import frc.robot.utilities.Constants;
-
 
 public class Controls extends CommandBase {
-    public Controls (Base sub) {
+    private final Xbox Pilot;
+    private final Xbox Operator;
+
+
+    public Controls (Base sub, Xbox p, Xbox o) {
+        Operator = o;
+        Pilot = p;
         addRequirements(sub);
     }
 
     public void execute () {
-        //check controls class
-        Class<?>[] xbox = Xbox.class.getDeclaredClasses();
-        for (int i = 0; i<xbox.length; i++) {
-            Field[] fields = xbox[i].getDeclaredFields();
-            for (int j = 1; j<fields.length; j++) {
+        Method[] PilotMethods = Pilot.getClass().getMethods();
+
+        Method[] OpMethods = Pilot.getClass().getMethods();
+
+        for (Method method : PilotMethods) {
+            try{ 
+                SmartDashboard.putBoolean(method.getName(), ((BooleanSupplier)method.invoke(Pilot)).getAsBoolean());
+            } catch (IllegalAccessException | InvocationTargetException | ClassCastException e) {
                 try {
-                    boolean b = ((BooleanSupplier)fields[j].get(xbox[i])).getAsBoolean();
-                    SmartDashboard.putBoolean(xbox[i].getSimpleName() + "." + fields[j].getName(), b);
-                } catch (IllegalAccessException|ClassCastException e) {
-                    try {
-                        double t = Constants.round(((DoubleSupplier)fields[j].get(xbox[i])).getAsDouble());
-                        SmartDashboard.putNumber(xbox[i].getSimpleName() + "." + fields[j].getName(), t);
-                    } catch (IllegalAccessException|ClassCastException x) {
-                        try {
-                            int t = ((IntSupplier)fields[j].get(xbox[i])).getAsInt();
-                            SmartDashboard.putNumber(xbox[i].getSimpleName() + "." + fields[j].getName(), t);
-                        } catch (IllegalAccessException|ClassCastException y) {
-                            System.out.println("NOT GOOD NOT GOOD");
-                        }
-                    }
-                }
+                    SmartDashboard.putNumber(method.getName(), ((DoubleSupplier)method.invoke(Pilot)).getAsDouble());
+                } catch (IllegalAccessException | InvocationTargetException | ClassCastException z) {
+                    System.out.println("uh oh");
+                } 
             }
         }
-    }
+
+        for (Method method : OpMethods) {
+            try{ 
+                SmartDashboard.putBoolean(method.getName(), ((BooleanSupplier)method.invoke(Operator)).getAsBoolean());
+            } catch (IllegalAccessException | InvocationTargetException | ClassCastException e) {
+                try {
+                    SmartDashboard.putNumber(method.getName(), ((DoubleSupplier)method.invoke(Operator)).getAsDouble());
+                } catch (IllegalAccessException | InvocationTargetException | ClassCastException z) {
+                    System.out.println("uh oh");
+                } 
+            }
+        }
+    }        
 
 }

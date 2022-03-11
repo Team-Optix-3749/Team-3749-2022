@@ -2,12 +2,8 @@ package frc.robot.commands.shooter;
 
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
-import frc.robot.utilities.Xbox.*;
 
 import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
-import com.fasterxml.jackson.databind.ser.std.BooleanSerializer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -32,7 +28,7 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
         if (m_trigger.getAsBoolean())
-            m_shooter.setRPM(5000);
+            m_shooter.setRPM(Constants.Shooter.shooterRPM);
         else
             m_shooter.stopMotor();
             

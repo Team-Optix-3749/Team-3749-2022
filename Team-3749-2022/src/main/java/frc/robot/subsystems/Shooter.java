@@ -26,6 +26,7 @@ public class Shooter extends SubsystemBase {
             Constants.Shooter.kD);
 
     private double m_turretAngle = 0;
+    public boolean turretAtEdge = false;
 
     public Shooter() {
         m_leftShooterMotor.setInverted(true);
@@ -74,9 +75,7 @@ public class Shooter extends SubsystemBase {
     
     public void visionAlign(){
         double x = Auto.tx.getDouble(0.0);
-        if (x>1){
-            setTurretMotor(x/90);
-        }
+        setTurretMotor(x/29.8);
     }
 
     public void setTurretMotor(double speed){
@@ -88,6 +87,7 @@ public class Shooter extends SubsystemBase {
         }
         else{
             m_turretMotor.set(0);
+            turretAtEdge = true;
         }
     }
     

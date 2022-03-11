@@ -35,4 +35,8 @@ public class Drivetrain extends SubsystemBase {
     public void arcadeDrive(double speed, double rotation) {
         m_drive.arcadeDrive(speed, -rotation);
     }
+    
+    public void visionAlignDrivetrain(double x){
+        arcadeDrive(0, x/29.8);
+    }
 }

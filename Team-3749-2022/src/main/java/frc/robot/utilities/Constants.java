@@ -64,6 +64,8 @@ public final class Constants {
         public static NetworkTableEntry pitch = m_photon.getEntry("targetPitch");
         public static NetworkTableEntry yaw = m_photon.getEntry("targetYaw");
 
+        public static double cwheelMultiplier = (1/9.29)  * (1/2048) * 2 * Math.PI * Constants.Auto.kWheelRadius;
+
     }
 
     public static final class Shooter{

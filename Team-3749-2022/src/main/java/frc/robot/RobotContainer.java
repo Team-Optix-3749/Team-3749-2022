@@ -79,8 +79,8 @@ public class RobotContainer {
         m_intake.setDefaultCommand(
                 new IntakeHold(m_intake, Pilot::getLeftTrigger, Pilot.a()));
 
-        m_base.setDefaultCommand(
-                new Controls(m_base, Pilot, Operator));
+        // m_base.setDefaultCommand(
+        //         new Controls(m_base, Pilot, Operator));
 
         // m_elevator.setDefaultCommand(new Tilt(m_elevator));
     }
@@ -94,7 +94,7 @@ public class RobotContainer {
         Trajectory exampleTrajectory = new Trajectory();
 
         try {
-            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("pathplanner/2m.path");
+            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("paths/output/output/straight.wpilib.json");
             exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
         } catch (IOException ex) {
             DriverStation.reportError("Unable to open trajectory", ex.getStackTrace());
@@ -115,7 +115,6 @@ public class RobotContainer {
                 // RamseteCommand passes volts to the callback
                 m_drivetrain::tankDriveVolts,
                 m_drivetrain);
-
         // Reset odometry to the starting pose of the trajectory.
         m_drivetrain.resetOdometry(exampleTrajectory.getInitialPose());
 

@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.CANCoder;
 
 public class Drivetrain extends SubsystemBase {
     private WPI_TalonFX m_leftFront = new WPI_TalonFX(Constants.Drivetrain.leftFront);
@@ -28,6 +30,7 @@ public class Drivetrain extends SubsystemBase {
 
     private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
 
+
     public Drivetrain() {
         m_leftFront.setNeutralMode(NeutralMode.Coast);
         m_leftBack.setNeutralMode(NeutralMode.Coast);
@@ -37,7 +40,13 @@ public class Drivetrain extends SubsystemBase {
 
         m_right.setInverted(true);
         // resetEncoders();
+
+        m_leftFront.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        m_rightFront.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+
     }
+
+    
 
     public void arcadeDrive(double speed, double rotation) {
         m_drive.arcadeDrive(speed, -rotation * Constants.Drivetrain.rotationalSpeed);
@@ -72,8 +81,8 @@ public class Drivetrain extends SubsystemBase {
      * @return The current wheel speeds.
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-        return new DifferentialDriveWheelSpeeds(m_leftFront.getSelectedSensorVelocity(),
-                m_rightFront.getSelectedSensorVelocity());
+        return new DifferentialDriveWheelSpeeds(m_leftFront.getSelectedSensorVelocity()*Constants.Auto.wheelMultiplier,
+                m_rightFront.getSelectedSensorVelocity()*Constants.Auto.wheelMultiplier);
     }
 
     /**
@@ -93,9 +102,13 @@ public class Drivetrain extends SubsystemBase {
      * @param rightVolts the commanded right output
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
-        m_left.setVoltage(leftVolts);
-        m_right.setVoltage(rightVolts);
+        m_left.setVoltage(leftVolts/2);
+        m_right.setVoltage(rightVolts/2);
         m_drive.feed();
+        System.out.println("test");
+        System.out.println(getAverageEncoderDistance());
+        System.out.println(getAverageEncoderDistance()*Constants.Auto.wheelMultiplier);
+        System.out.println(Constants.Auto.wheelMultiplier);
     }
 
     /** Resets the drive encoders to currently read a position of 0. */
@@ -111,7 +124,7 @@ public class Drivetrain extends SubsystemBase {
      * @return the average of the two encoder readings
      */
     public double getAverageEncoderDistance() {
-        return (m_leftFront.getSelectedSensorPosition() + m_rightFront.getSelectedSensorPosition()) / 2.0;
+        return (m_leftFront.getSelectedSensorPosition() + -m_rightFront.getSelectedSensorPosition()) / 2.0;
     }
 
     /**

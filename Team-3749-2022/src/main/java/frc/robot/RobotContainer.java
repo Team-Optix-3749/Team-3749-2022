@@ -47,7 +47,8 @@ public class RobotContainer {
 
     private final Base m_base = new Base();
 
-    Xbox Pilot, Operator;
+    Xbox Pilot;
+    Xbox Operator;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -93,7 +94,7 @@ public class RobotContainer {
             new IntakeHold(m_intake, Pilot::getLeftTrigger, Pilot.a()));
 
         m_base.setDefaultCommand(
-            new Controls(m_base));
+            new Controls(m_base, Pilot, Operator));
         
         // m_elevator.setDefaultCommand(new Tilt(m_elevator));
     }

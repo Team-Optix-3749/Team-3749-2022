@@ -30,7 +30,7 @@ public class RawShoot extends CommandBase {
         System.out.println(m_shooter.getVelocity());
 
         if (m_trigger.getAsBoolean())
-            m_shooter.rawShoot(Constants.Shooter.shooterSpeed);
+            m_shooter.rawShoot(1.0);
         else
             m_shooter.stopMotor();
     }

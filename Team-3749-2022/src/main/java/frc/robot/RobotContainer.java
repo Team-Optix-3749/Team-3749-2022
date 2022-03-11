@@ -87,7 +87,7 @@ public class RobotContainer {
             new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
 
         m_shooter.setDefaultCommand(
-            new Shoot(m_shooter, Pilot::getRightTrigger));
+            new VisionShoot(m_shooter, Pilot::getRightTrigger));
         
 
         m_intake.setDefaultCommand(

@@ -48,23 +48,17 @@ public class RobotContainer {
         Pilot.x().whenPressed(new InstantCommand(m_intake::startCompressor))
             .whenReleased(new InstantCommand(m_intake::stopCompressor));
 
-        Pilot.y().whenPressed(new InstantCommand(m_elevator::rawClimbUp))
+        Pilot.povUp().whenPressed(new Extend(m_elevator))
             .whenReleased(new InstantCommand(m_elevator::stopClimb));
 
-        Pilot.b().whenPressed(new InstantCommand(m_elevator::rawClimbDown))
+        Pilot.povDown().whenPressed(new Lift(m_elevator))
             .whenReleased(new InstantCommand(m_elevator::stopClimb));
 
-        // Pilot.povUp().whenPressed(new Extend(m_elevator))
-        //     .whenReleased(new InstantCommand(m_elevator::stopClimb));
+        Pilot.povLeft().whenPressed(new Untilt(m_elevator))
+            .whenReleased(new InstantCommand(m_elevator::stopTilt));
 
-        // Pilot.povDown().whenPressed(new Lift(m_elevator))
-        //     .whenReleased(new InstantCommand(m_elevator::stopClimb));
-
-        // Pilot.povLeft().whenPressed(new Untilt(m_elevator))
-        //     .whenReleased(new InstantCommand(m_elevator::stopTilt));
-
-        // Pilot.povRight().whenPressed(new Tilt(m_elevator))
-        //     .whenReleased(new InstantCommand(m_elevator::stopTilt));
+        Pilot.povRight().whenPressed(new Tilt(m_elevator))
+            .whenReleased(new InstantCommand(m_elevator::stopTilt));
 
         m_drivetrain.setDefaultCommand(
             new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));

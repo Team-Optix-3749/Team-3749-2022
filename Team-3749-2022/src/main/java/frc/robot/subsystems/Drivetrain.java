@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class Drivetrain extends SubsystemBase {
@@ -29,6 +31,13 @@ public class Drivetrain extends SubsystemBase {
     private final Gyro m_gyro = new AHRS();
 
     public Drivetrain() {
+        m_leftFront.setNeutralMode(NeutralMode.Coast);
+        m_leftBack.setNeutralMode(NeutralMode.Coast);
+
+        m_rightBack.setNeutralMode(NeutralMode.Coast);
+        m_rightFront.setNeutralMode(NeutralMode.Coast);
+
+
         m_right.setInverted(true);
     }
 

@@ -27,9 +27,9 @@ public class VisionShoot extends CommandBase {
     @Override
     public void execute() {
         if (m_trigger.getAsBoolean())
-            m_shooter.setRPM(Constants.Shooter.shooterRPM);
+            m_shooter.visionAlign();
         else
-            m_shooter.stopMotor();
+            m_shooter.stopTurret();
     }
 
     @Override

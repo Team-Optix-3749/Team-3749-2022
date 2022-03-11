@@ -28,7 +28,7 @@ public class ShootCommand extends CommandBase{
     
     @Override
     public void initialize() {
-        m_shooter.resetEncoder();
+        m_shooter.resetTurretEncoder();
     }
 
     @Override

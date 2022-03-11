@@ -28,7 +28,7 @@ public class Shooter extends SubsystemBase{
     private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD);
 
     public Shooter(){
-        resetEncoder();
+        resetTurretEncoder();
 
         m_rightShooterMotor.setInverted(true);
         m_turretEncoder.setPositionConversionFactor(Constants.Shooter.gearRatio);
@@ -91,7 +91,7 @@ public class Shooter extends SubsystemBase{
         if (input>1){
             setTurretMotor(0.8*input);
         }
-        // System.out.println(m_turretEncoder.getPosition());
+        System.out.println(m_turretEncoder.getPosition());
     }
 
     public void setRPM(double current, double target){
@@ -111,7 +111,7 @@ public class Shooter extends SubsystemBase{
         return m_turretEncoder.getPosition();
     }
 
-    public void resetEncoder(){
+    public void resetTurretEncoder(){
         m_turretEncoder.setPosition(0);
     }
 }

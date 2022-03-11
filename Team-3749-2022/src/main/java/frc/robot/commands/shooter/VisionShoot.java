@@ -1,7 +1,6 @@
 package frc.robot.commands.shooter;
 
 import frc.robot.subsystems.*;
-import frc.robot.utilities.Constants;
 
 import java.util.function.BooleanSupplier;
 

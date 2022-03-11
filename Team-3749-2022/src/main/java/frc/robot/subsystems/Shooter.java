@@ -25,7 +25,6 @@ public class Shooter extends SubsystemBase {
     private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI,
             Constants.Shooter.kD);
 
-    private double m_turretAngle = 0;
     public boolean turretAtEdge = false;
 
     public Shooter() {
@@ -35,7 +34,6 @@ public class Shooter extends SubsystemBase {
         m_rightShooterMotor.setNeutralMode(NeutralMode.Coast);
 
         m_leftShooterMotor.setSensorPhase(false);
-        m_turretAngle = m_turretEncoder.getPosition();
     }
 
     public void setRPM(double target) {

@@ -26,8 +26,8 @@ public class Elevator extends SubsystemBase {
 
     private RelativeEncoder m_chainEncoder = m_chain.getEncoder();
 
-    private final PIDController m_chainPIDContoller = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI,
-            Constants.Elevator.kD);
+    // private final PIDController m_chainPIDContoller = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI,
+            // Constants.Elevator.kD);
 
     public Elevator() {
         m_rightTilt.setIdleMode(IdleMode.kBrake);
@@ -53,10 +53,6 @@ public class Elevator extends SubsystemBase {
 
     public void rawTilt(double speed) {
         tilt.set(speed);
-    }
-
-    public void rawTiltBack() {
-        tilt.set(0.2);
     }
 
     public void rawClimb(double speed) {
@@ -91,11 +87,11 @@ public class Elevator extends SubsystemBase {
     }
 
     public void tilt() {
-        rawClimb(m_tiltPID.calculate(getChain(), getChain()+.1));
+        rawClimb(m_tiltPID.calculate(getChain(), getChain()+1));
         // need to test encoder pos (https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html#cascade-elevator)
     }
 
     public void untilt() {
-        rawTilt(m_tiltPID.calculate(getChain(), getChain()-.1));
+        rawTilt(m_tiltPID.calculate(getChain(), getChain()-1));
     }
 }

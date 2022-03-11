@@ -7,7 +7,6 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
 public class Shoot extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
@@ -31,7 +30,6 @@ public class Shoot extends CommandBase {
             m_shooter.setRPM(Constants.Shooter.shooterRPM);
         else
             m_shooter.stopMotor();
-            
     }
 
     @Override
@@ -39,7 +37,6 @@ public class Shoot extends CommandBase {
         m_shooter.stopMotor();
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         return false;

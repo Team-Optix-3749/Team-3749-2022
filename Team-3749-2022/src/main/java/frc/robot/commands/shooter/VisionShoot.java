@@ -30,7 +30,6 @@ public class VisionShoot extends CommandBase {
             m_shooter.setRPM(Constants.Shooter.shooterRPM);
         else
             m_shooter.stopMotor();
-            
     }
 
     @Override

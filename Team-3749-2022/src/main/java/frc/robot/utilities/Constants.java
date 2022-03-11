@@ -29,6 +29,7 @@ public final class Constants {
         public static final int leftBack = 12;
         public static final int rightFront = 13;
         public static final int rightBack = 14;
+        public static final double rotationalSpeed = 0.7;
     }
 
     public static final class Auto {

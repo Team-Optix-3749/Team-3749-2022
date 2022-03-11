@@ -1,11 +1,8 @@
 package frc.robot.commands.intake;
 
 import frc.robot.subsystems.*;
-import frc.robot.utilities.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
 import java.util.function.BooleanSupplier;
 
@@ -34,7 +31,6 @@ public class IntakeHold extends CommandBase {
             m_intake.intakeFwd();
             m_intake.setIntake(1);
             m_intake.holdShintake();
-            // System.out.println(m_intake.getShintake());
         } 
         else if (button.get()) { 
             m_intake.runShintake();
@@ -53,7 +49,6 @@ public class IntakeHold extends CommandBase {
         m_intake.stopShintake();
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         return false;

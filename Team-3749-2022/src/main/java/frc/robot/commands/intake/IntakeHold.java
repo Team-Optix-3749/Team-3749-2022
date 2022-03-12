@@ -31,6 +31,7 @@ public class IntakeHold extends CommandBase {
             m_intake.intakeFwd();
             m_intake.setIntake(1);
             m_intake.holdShintake();
+            // System.out.println(m_intake.getShintake());
         } 
         else if (button.get()) { 
             m_intake.runShintake();
@@ -49,6 +50,7 @@ public class IntakeHold extends CommandBase {
         m_intake.stopShintake();
     }
 
+    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         return false;

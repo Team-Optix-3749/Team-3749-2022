@@ -17,7 +17,7 @@ public class Untilt extends CommandBase {
 
     @Override
     public void execute() {
-        m_elevator.rawTilt(-.2);
+        m_elevator.tilt();
     }
 
     @Override

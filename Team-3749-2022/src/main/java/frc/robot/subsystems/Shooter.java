@@ -25,8 +25,6 @@ public class Shooter extends SubsystemBase {
     private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI,
             Constants.Shooter.kD);
 
-    public boolean turretAtEdge = false;
-
     public Shooter() {
         m_leftShooterMotor.setInverted(true);
         m_turretEncoder.setPositionConversionFactor(Constants.Shooter.gearRatio);
@@ -37,8 +35,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setRPM(double target) {
-        m_shooterMotors.setVoltage(
-                m_pidController.calculate(m_leftShooterMotor.getSelectedSensorVelocity(), target * 60) * .0019);
+        m_shooterMotors.setVoltage(m_pidController.calculate(m_leftShooterMotor.getSelectedSensorVelocity(), target * 60) * .0019);
         SmartDashboard.putNumber("Voltage", m_leftShooterMotor.getBusVoltage());
     }
 
@@ -47,7 +44,7 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber("Velocity", m_leftShooterMotor.getSelectedSensorVelocity());
     }
 
-    public void setTargetVelocity() {
+    public void setTargetVelocity(){
         setRPM(targetVelocity() * 60);
     }
 
@@ -63,46 +60,44 @@ public class Shooter extends SubsystemBase {
         return m_leftShooterMotor.getSelectedSensorVelocity();
     }
 
-    public void setTurret(double position) {
-        if (m_turretEncoder.getPosition() + 0.1 > position || m_turretEncoder.getPosition() - 0.1 < position) {
-            m_turretMotor.set((Math.abs(m_turretEncoder.getPosition()) - Math.abs(position)) * 0.5);
-        } else {
+    public void setTurret(double position){
+        if(m_turretEncoder.getPosition() + 0.1 > position || m_turretEncoder.getPosition() - 0.1 < position) {
+            m_turretMotor.set((Math.abs(m_turretEncoder.getPosition()) - Math.abs(position))*0.5);
+        }
+        else{
             m_turretMotor.set(0);
         }
     }
-
-    public void stopTurret() {
-        m_turretMotor.stopMotor();
-    }
-
-    public void visionAlign() {
+    
+    public void visionAlign(){
         double x = Auto.tx.getDouble(0.0);
-        setTurretMotor(x / 29.8);
-    }
-
-    public void setTurretMotor(double speed) {
-        if (Math.abs(m_turretEncoder.getPosition()) <= .24) {
-            m_turretMotor.set(speed);
-        } else if (m_turretEncoder.getPosition() * speed < 0) { // Checks if speed & encoder position are opposite
-            m_turretMotor.set(speed);
-        } else {
-            m_turretMotor.set(0);
-            turretAtEdge = true;
+        if (x>1){
+            setTurretMotor(x/90);
         }
     }
 
-    public double targetVelocity() {
+    public void setTurretMotor(double speed){
+        if (Math.abs(m_turretEncoder.getPosition()) <= .24){
+            m_turretMotor.set(speed);
+        }
+        else if (m_turretEncoder.getPosition() * speed < 0) { //Checks if speed and encoder position have opposite signs
+            m_turretMotor.set(speed);
+        }
+        else{
+            m_turretMotor.set(0);
+        }
+    }
+    
+    public double targetVelocity(){
         double hubY = Constants.Shooter.shooterHeight - Constants.Shooter.hubHeight;
-        double hubX = getDistance() + 0.61;
+        double hubX = getDistance()+0.61;
         double A = Math.toRadians(Constants.Shooter.shooterAngle);
-        double velocity = Math
-                .sqrt(((4.9 * hubX * hubX) / (Math.cos(A) * Math.cos(A))) * (1 / (hubY + (Math.tan(A) * hubX))));
+        double velocity = Math.sqrt(((4.9 * hubX * hubX) / (Math.cos(A) * Math.cos(A))) * (1 / (hubY + (Math.tan(A) * hubX))));
         return velocity;
     }
-
-    public double getDistance() {
-        double y = Auto.ty.getDouble(0.0);
-        return (Constants.Shooter.hubHeight - Constants.Shooter.shooterHeight)
-                / Math.tan(Math.toRadians(Constants.Shooter.limelightAngle + y));
+     
+    public double getDistance(){    
+        double y = Auto.ty.getDouble(0.0);    
+        return (Constants.Shooter.hubHeight - Constants.Shooter.shooterHeight)/Math.tan(Math.toRadians(Constants.Shooter.limelightAngle + y));
     }
 }

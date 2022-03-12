@@ -11,6 +11,7 @@ public class VisionShoot extends CommandBase {
 
     private final Shooter m_shooter;
     private final BooleanSupplier m_trigger;
+    
 
     public VisionShoot(Shooter shooter, BooleanSupplier trigger) {
         m_shooter = shooter;

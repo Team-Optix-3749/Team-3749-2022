@@ -59,11 +59,11 @@ public final class Constants {
         public static NetworkTable m_pi = NetworkTableInstance.getDefault().getTable("!ML");
         public static final NetworkTableEntry coords = m_pi.getEntry("coordinates");
 
-        public static NetworkTable m_photon = NetworkTableInstance.getDefault().getTable("photovision");
-        public static NetworkTableEntry target = m_photon.getEntry("hasTarget");
-        public static NetworkTableEntry pitch = m_photon.getEntry("targetPitch");
-        public static NetworkTableEntry yaw = m_photon.getEntry("targetYaw");
-
+        public static NetworkTable m_vision = NetworkTableInstance.getDefault().getTable("photovision");
+        public static NetworkTableEntry visionTarget = m_vision.getEntry("hasTarget");
+        public static NetworkTableEntry visionPitch = m_vision.getEntry("targetPitch");
+        public static NetworkTableEntry visionYaw = m_vision.getEntry("targetYaw");
+        public static double wheelMult = 2048 * 9.29 / (2*Math.PI*kWheelRadius);
     }
 
     public static final class Shooter{
@@ -120,6 +120,7 @@ public final class Constants {
         public static final double chainMPR = 0.0; // FMD SPROCKET DIAMETER
         public static final double chainGR = 0.0; // FIND GEAR RATIO ON MOTOR
 
+        
         public static final double kP = 1.0;
         public static final double kI = 0.5;
         public static final double kD = 0.0;

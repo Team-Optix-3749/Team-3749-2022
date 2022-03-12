@@ -105,7 +105,8 @@ public class RobotContainer {
         Trajectory exampleTrajectory = new Trajectory();
         System.out.println("asdfljasd;flkjsad;lgkj;lksjdg;laskjdggl;jksadg;ljksa;lkgj;lasdjgk;lsjkdg;lajsdg;ljas;dlgjkas;dlkjg;lsakjfg;lakjfsg;ljagkf");
 
-        // PathPlannerTrajectory examplePath = PathPlanner.loadPath("bottomBlueCargo", 1, 1);
+        PathPlannerTrajectory examplePath = PathPlanner.loadPath("bottomBlueCargo", 1, 1);
+
 
         m_drivetrain.setBrakeMode();
 

@@ -3,6 +3,9 @@ package frc.robot;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -101,6 +104,8 @@ public class RobotContainer {
         // return null;
         Trajectory exampleTrajectory = new Trajectory();
         System.out.println("asdfljasd;flkjsad;lgkj;lksjdg;laskjdggl;jksadg;ljksa;lkgj;lasdjgk;lsjkdg;lajsdg;ljas;dlgjkas;dlkjg;lsakjfg;lakjfsg;ljagkf");
+
+        // PathPlannerTrajectory examplePath = PathPlanner.loadPath("bottomBlueCargo", 1, 1);
 
         m_drivetrain.setBrakeMode();
 

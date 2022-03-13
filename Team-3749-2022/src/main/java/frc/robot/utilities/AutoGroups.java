@@ -14,9 +14,11 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.ResetDrivetrain;
 import frc.robot.commands.intake.ContinousIntake;
 import frc.robot.commands.shooter.VisionAlign;
 import frc.robot.subsystems.Drivetrain;
@@ -37,14 +39,14 @@ public class AutoGroups {
         m_shooter = shoot;
     }
 
-    public Command getRamsete (String name) {
+    public Command getRamseteName (String name) {
         PathPlannerTrajectory path = PathPlanner.loadPath(name, 1, 1);
 
         Trajectory exampleTrajectory = new Trajectory();
 
         exampleTrajectory = path;
 
-        m_drivetrain.setBrakeMode();
+        m_drivetrain.setBrake();
 
         RamseteCommand ramseteCommand =
             new RamseteCommand(
@@ -62,31 +64,63 @@ public class AutoGroups {
                 m_drivetrain::tankDriveVolts,
                 m_drivetrain);
         
-        m_drivetrain.resetOdometry(exampleTrajectory.getInitialPose());
+        return new SequentialCommandGroup(
+            new ResetDrivetrain(m_drivetrain, exampleTrajectory.getInitialPose()),
+            ramseteCommand
+        );
+    }
+    public Command getRamsetepath (String path) {
+        Trajectory exampleTrajectory = new Trajectory();
+
+        m_drivetrain.setBrake();
+
+        try {
+            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(path);
+            exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+        } catch (IOException ex) {
+            DriverStation.reportError("Unable to open trajectory", ex.getStackTrace());
+        }
+
+        RamseteCommand ramseteCommand =
+            new RamseteCommand(
+                exampleTrajectory,
+                m_drivetrain::getPose,
+                new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
+                new SimpleMotorFeedforward(
+                    Constants.Auto.ksVolts,
+                    Constants.Auto.kvVoltSecondsPerMeter,
+                    Constants.Auto.kaVoltSecondsSquaredPerMeter),
+                Constants.Auto.kDriveKinematics,
+                m_drivetrain::getWheelSpeeds,
+                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
+                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
+                m_drivetrain::tankDriveVolts,
+                m_drivetrain);
         
-        return ramseteCommand;
+        return new SequentialCommandGroup(
+            new ResetDrivetrain(m_drivetrain, exampleTrajectory.getInitialPose()),
+            ramseteCommand
+        );
     }
 
     public Command getOneBlue () {
 
         return new SequentialCommandGroup(
             new ParallelRaceGroup(
-                getRamsete("1BlueIntake"), 
+                getRamseteName("1BlueIntake"), 
                 new ContinousIntake(m_intake)
             ),
-            getRamsete("1BlueReverse")
-            // new VisionAlign(m_shooter),
-            // new AutoShoot(m_shooter)
+            getRamseteName("1BlueReverse")
         );
     }
 
     public Command getTwoBlue () {
         return new SequentialCommandGroup(
             new ParallelRaceGroup(
-                getRamsete("2BlueIntake"), 
+                getRamseteName("2BlueIntake"), 
                 new ContinousIntake(m_intake)
             ),
-            getRamsete("2BlueReverse"),
+            getRamseteName("2BlueReverse"),
             new VisionAlign(m_shooter),
             new AutoShoot(m_shooter)
         );
@@ -95,10 +129,10 @@ public class AutoGroups {
     public Command getTwoSevenBlue () {
         return new SequentialCommandGroup(
             new ParallelRaceGroup(
-                getRamsete("1BlueIntake"), 
+                getRamseteName("1BlueIntake"), 
                 new ContinousIntake(m_intake)
             ),
-            getRamsete("1BlueReverse"),
+            getRamseteName("1BlueReverse"),
             new VisionAlign(m_shooter),
             new AutoShoot(m_shooter)
         );

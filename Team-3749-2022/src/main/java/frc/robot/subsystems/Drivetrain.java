@@ -33,22 +33,26 @@ public class Drivetrain extends SubsystemBase {
 
 
     public Drivetrain() {
-        m_leftFront.setNeutralMode(NeutralMode.Coast);
-        m_leftBack.setNeutralMode(NeutralMode.Coast);
-
-        m_rightBack.setNeutralMode(NeutralMode.Coast);
-        m_rightFront.setNeutralMode(NeutralMode.Coast);
+        setCoast();
 
         m_right.setInverted(true);
     }
 
-    public void setBrakeMode() {
+    public void setBrake() {
         m_leftFront.setNeutralMode(NeutralMode.Brake);
         m_leftBack.setNeutralMode(NeutralMode.Brake);
 
         m_rightBack.setNeutralMode(NeutralMode.Brake);
         m_rightFront.setNeutralMode(NeutralMode.Brake);
     }
+
+    public void setCoast() {
+      m_leftFront.setNeutralMode(NeutralMode.Coast);
+      m_leftBack.setNeutralMode(NeutralMode.Coast);
+
+      m_rightBack.setNeutralMode(NeutralMode.Coast);
+      m_rightFront.setNeutralMode(NeutralMode.Coast);
+  }
 
     public void arcadeDrive(double speed, double rotation) {
         m_drive.arcadeDrive(speed, -rotation * Constants.Drivetrain.rotationalSpeed);
@@ -86,7 +90,7 @@ public class Drivetrain extends SubsystemBase {
    * @param pose The pose to which to set the odometry.
    */
   public void resetOdometry(Pose2d pose) {
-    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+    m_odometry.resetPosition(new Pose2d(), m_gyro.getRotation2d());
   }
   /**
    * Controls the left and right sides of the drive directly with voltages.

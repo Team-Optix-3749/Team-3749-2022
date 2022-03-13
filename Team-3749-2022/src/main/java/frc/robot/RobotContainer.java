@@ -111,41 +111,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        Trajectory exampleTrajectory = new Trajectory();
-
-        PathPlannerTrajectory examplePath = PathPlanner.loadPath("bottomBlueCargo", 1, 1);
-
-
-        m_drivetrain.setBrakeMode();
-
-        try {
-            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("pathsplanner/generatedJSON/1BlueIntake.wpilib.json");
-            exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-        } catch (IOException ex) {
-            DriverStation.reportError("Unable to open trajectory", ex.getStackTrace());
-        }
-        
-        RamseteCommand ramseteCommand =
-            new RamseteCommand(
-                exampleTrajectory,
-                m_drivetrain::getPose,
-                new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
-                new SimpleMotorFeedforward(
-                    Constants.Auto.ksVolts,
-                    Constants.Auto.kvVoltSecondsPerMeter,
-                    Constants.Auto.kaVoltSecondsSquaredPerMeter),
-                Constants.Auto.kDriveKinematics,
-                m_drivetrain::getWheelSpeeds,
-                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
-                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
-                // RamseteCommand passes volts to the callback
-                m_drivetrain::tankDriveVolts,
-                m_drivetrain);
-    
-        // Reset odometry to the starting pose of the trajectory.
-        m_drivetrain.resetOdometry(exampleTrajectory.getInitialPose());
-    
-        // Run path following command, then stop at the end.
-        return ramseteCommand.andThen(() -> m_drivetrain.tankDriveVolts(0, 0));
+        AutoGroups autoGrp = new AutoGroups(m_drivetrain, m_intake, m_shooter);
+        return autoGrp.getOneBlue();
     }
 }

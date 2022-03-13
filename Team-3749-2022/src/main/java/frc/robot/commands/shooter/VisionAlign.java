@@ -24,7 +24,7 @@ public class VisionAlign extends CommandBase {
 
     @Override
     public void execute() {
-        finished = m_shooter.visionAlign();
+        m_shooter.visionAlign();
     }
 
     @Override

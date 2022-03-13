@@ -65,43 +65,43 @@ public class RobotContainer {
     private void configureButtonBindings() {
         Pilot = new Xbox(0);
         Operator = new Xbox(1);
-        
+
         Pilot.x().whenPressed(new InstantCommand(m_intake::startCompressor))
-            .whenReleased(new InstantCommand(m_intake::stopCompressor));
+                .whenReleased(new InstantCommand(m_intake::stopCompressor));
 
         Operator.y().whenPressed(new Tilt(m_elevator))
-            .whenReleased(new StopTilt(m_elevator));
+                .whenReleased(new StopTilt(m_elevator));
 
         Operator.b().whenPressed(new Untilt(m_elevator))
-            .whenReleased(new InstantCommand(m_elevator::stopTilt));
+                .whenReleased(new InstantCommand(m_elevator::stopTilt));
 
         Pilot.a().whenPressed(new VisionAlign(m_shooter))
-            .whenReleased(new InstantCommand(m_shooter::stopMotor));
+                .whenReleased(new InstantCommand(m_shooter::stopMotor));
 
         // Pilot.povUp().whenPressed(new Extend(m_elevator))
-        //     .whenReleased(new InstantCommand(m_elevator::stopClimb));
+        // .whenReleased(new InstantCommand(m_elevator::stopClimb));
 
         // Pilot.povDown().whenPressed(new Lift(m_elevator))
-        //     .whenReleased(new InstantCommand(m_elevator::stopClimb));
+        // .whenReleased(new InstantCommand(m_elevator::stopClimb));
 
         // Pilot.povLeft().whenPressed(new Untilt(m_elevator))
-        //     .whenReleased(new InstantCommand(m_elevator::stopTilt));
+        // .whenReleased(new InstantCommand(m_elevator::stopTilt));
 
         // Pilot.povRight().whenPressed(new Tilt(m_elevator))
-        //     .whenReleased(new InstantCommand(m_elevator::stopTilt));
+        // .whenReleased(new InstantCommand(m_elevator::stopTilt));
 
         m_drivetrain.setDefaultCommand(
-            new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
+                new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
 
         m_shooter.setDefaultCommand(
-            new Shoot(m_shooter, Operator::getRightTrigger));
-        
+                new Shoot(m_shooter, Operator::getRightTrigger));
+
         m_intake.setDefaultCommand(
-            new IntakeHold(m_intake, Pilot::getLeftTrigger, Operator.a()));
+                new IntakeHold(m_intake, Pilot::getLeftTrigger, Operator.a()));
 
         // m_base.setDefaultCommand(
-        //     new Controls(m_base, Pilot, Operator));
-        
+        // new Controls(m_base, Pilot, Operator));
+
         // m_elevator.setDefaultCommand(new Tilt(m_elevator));
     }
 
@@ -112,6 +112,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         AutoGroups autoGrp = new AutoGroups(m_drivetrain, m_intake, m_shooter);
-        return autoGrp.getOneBlue();
+        return autoGrp.getTwoSevenBlue();
     }
 }

@@ -48,7 +48,7 @@ public class Intake extends SubsystemBase {
         m_shintakeBack.set(-Constants.Shintake.kShintakeSpeed);
     }
 
-    public void runShintake() {
+    public void setShintake() {
         m_shintakeFront.set(Constants.Shintake.kShintakeSpeed);
         m_shintakeBack.set(Constants.Shintake.kShintakeSpeed);
     }

@@ -29,6 +29,11 @@ public class ResetDrivetrain extends CommandBase {
     }
 
     @Override
+    public void end(boolean interrupted) {
+        t.reset();
+    }
+
+    @Override
     public boolean isFinished () {
         return t.get() > .2;
     }

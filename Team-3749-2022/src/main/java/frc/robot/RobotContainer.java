@@ -23,6 +23,7 @@ import frc.robot.subsystems.*;
 import frc.robot.utilities.AutoGroups;
 import frc.robot.utilities.Constants;
 import frc.robot.utilities.Xbox;
+import frc.robot.utilities.AutoGroups.Blue;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -97,7 +98,7 @@ public class RobotContainer {
             new Shoot(m_shooter, Operator::getRightTrigger));
         
         m_intake.setDefaultCommand(
-            new IntakeHold(m_intake, Pilot::getLeftTrigger, Operator.a()));
+            new Input(m_intake, Pilot::getLeftTrigger, Operator.a()));
 
         // m_base.setDefaultCommand(
         //     new Controls(m_base, Pilot, Operator));
@@ -111,7 +112,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        AutoGroups autoGrp = new AutoGroups(m_drivetrain, m_intake, m_shooter);
-        return autoGrp.getOneBlue();
+        return AutoGroups.Blue.TwoCargo.getOneBlue();
     }
 }

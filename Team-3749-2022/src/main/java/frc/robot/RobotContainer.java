@@ -76,7 +76,7 @@ public class RobotContainer {
                 .whenReleased(new InstantCommand(m_elevator::stopTilt));
 
         Pilot.a().whenPressed(new VisionAlign(m_shooter))
-                .whenReleased(new InstantCommand(m_shooter::stopMotor));
+                .whenReleased(new InstantCommand(m_shooter::stopTurret));
 
         // Pilot.povUp().whenPressed(new Extend(m_elevator))
         // .whenReleased(new InstantCommand(m_elevator::stopClimb));

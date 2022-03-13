@@ -7,6 +7,9 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,8 +28,14 @@ public class Shooter extends SubsystemBase {
     private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI,
             Constants.Shooter.kD);
 
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTableEntry tx = table.getEntry("tx");
+    NetworkTableEntry ty = table.getEntry("ty");
+    NetworkTableEntry ta = table.getEntry("ta");
+
     public Shooter() {
         m_leftShooterMotor.setInverted(true);
+        m_turretMotor.setInverted(true);
         m_turretEncoder.setPositionConversionFactor(Constants.Shooter.gearRatio);
         m_leftShooterMotor.setNeutralMode(NeutralMode.Coast);
         m_rightShooterMotor.setNeutralMode(NeutralMode.Coast);
@@ -69,17 +78,16 @@ public class Shooter extends SubsystemBase {
         }
     }
 
+    public void setTurretRaw(double speed) {
+        m_turretMotor.set(speed * 0.05);
+    }
+
     public void stopTurret() {
         m_turretMotor.stopMotor();
     }
     
-    public boolean visionAlign(){
-        double x = Auto.tx.getDouble(0.0);
-        if (x>1){
-            setTurretMotor(x/90);
-            return false;
-        }
-        return true;
+    public void visionAlign(){
+        m_turretMotor.set(tx.getDouble(0.0)*0.01);
     }
 
     public void setTurretMotor(double speed){

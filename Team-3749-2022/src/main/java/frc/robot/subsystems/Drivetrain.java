@@ -25,6 +25,8 @@ public class Drivetrain extends SubsystemBase {
 
     private DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
 
+    Pose2d zeroPose2d = new Pose2d();
+
     private final Gyro m_gyro = new AHRS();
 
     private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
@@ -65,7 +67,7 @@ public class Drivetrain extends SubsystemBase {
    * @return The pose.
    */
   public Pose2d getPose() {
-    System.out.println(m_odometry.getPoseMeters().getX() + " " + m_odometry.getPoseMeters().getY());
+    // System.out.println(m_odometry.getPoseMeters().getX() + " " + m_odometry.getPoseMeters().getY());
     return m_odometry.getPoseMeters();
   }
 
@@ -93,9 +95,11 @@ public class Drivetrain extends SubsystemBase {
    * @param rightVolts the commanded right output
    */
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    m_left.setVoltage(-leftVolts*0.3);
-    m_right.setVoltage(-rightVolts*0.3);
+    m_left.setVoltage(leftVolts*0.3);
+    m_right.setVoltage(rightVolts*0.3);
     m_drive.feed();
+    System.out.println(getHeading());
+
   }
 
 //   /** Resets the drive encoders to currently read a position of 0. */

@@ -29,7 +29,7 @@ public class IntakeHold extends CommandBase {
     public void execute() {
         if (m_trigger.getAsBoolean()) {
             m_intake.intakeFwd();
-            m_intake.setIntake(1);
+            m_intake.setIntake();
             m_intake.holdShintake();
             // System.out.println(m_intake.getShintake());
         } 

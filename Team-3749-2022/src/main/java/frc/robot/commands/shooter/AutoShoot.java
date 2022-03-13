@@ -6,30 +6,24 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class VisionShoot extends CommandBase {
+public class AutoShoot extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
     private final Shooter m_shooter;
-    private final BooleanSupplier m_trigger;
-    
 
-    public VisionShoot(Shooter shooter, BooleanSupplier trigger) {
+    public AutoShoot(Shooter shooter) {
         m_shooter = shooter;
-        m_trigger = trigger;
         addRequirements(shooter);
     }
 
     @Override
     public void initialize() {
-        m_shooter.stopMotor();
     }
 
     @Override
     public void execute() {
-        if (m_trigger.getAsBoolean())
-            m_shooter.visionAlign();
-        else
-            m_shooter.stopTurret();
+        // m_shooter.setVelocity(m_shooter.targetVelocity());
+        m_shooter.setRPM(4000);
     }
 
     @Override
@@ -39,6 +33,6 @@ public class VisionShoot extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }

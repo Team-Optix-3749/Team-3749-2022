@@ -6,31 +6,25 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
-public class RawShoot extends CommandBase {
+public class VisionAlign extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
     private final Shooter m_shooter;
-    private final BooleanSupplier m_trigger;
+    private boolean finished = false;
+    
 
-    public RawShoot(Shooter shooter, BooleanSupplier trigger) {
+    public VisionAlign(Shooter shooter) {
         m_shooter = shooter;
-        m_trigger = trigger;
         addRequirements(shooter);
     }
 
     @Override
     public void initialize() {
-        m_shooter.stopMotor();
     }
 
     @Override
     public void execute() {
-
-        if (m_trigger.getAsBoolean())
-            m_shooter.rawShoot(1.0);
-        else
-            m_shooter.stopMotor();
+        finished = m_shooter.visionAlign();
     }
 
     @Override
@@ -38,9 +32,8 @@ public class RawShoot extends CommandBase {
         m_shooter.stopMotor();
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return finished;
     }
 }

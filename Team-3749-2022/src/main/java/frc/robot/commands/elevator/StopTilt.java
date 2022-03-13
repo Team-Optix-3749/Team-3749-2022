@@ -3,10 +3,10 @@ package frc.robot.commands.elevator;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Tilt extends CommandBase {
+public class StopTilt extends CommandBase {
     private final Elevator m_elevator;
 
-    public Tilt(Elevator elevator) {
+    public StopTilt(Elevator elevator) {
         m_elevator = elevator;
         addRequirements(elevator);
     }
@@ -17,7 +17,7 @@ public class Tilt extends CommandBase {
 
     @Override
     public void execute() {
-        m_elevator.rawTilt(0.2);
+        m_elevator.stopTilt();
     }
 
     @Override

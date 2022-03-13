@@ -75,8 +75,8 @@ public class Elevator extends SubsystemBase {
     }
 
     public void stopTilt() {
-        rawTilt(0.0);
-        m_chain.set(0.0);
+        tilt.stopMotor();
+        // m_chain.set(0.0);
     }
 
     public void stopClimb() {

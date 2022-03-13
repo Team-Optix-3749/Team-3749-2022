@@ -73,11 +73,13 @@ public class Shooter extends SubsystemBase {
         m_turretMotor.stopMotor();
     }
     
-    public void visionAlign(){
+    public boolean visionAlign(){
         double x = Auto.tx.getDouble(0.0);
         if (x>1){
             setTurretMotor(x/90);
+            return false;
         }
+        return true;
     }
 
     public void setTurretMotor(double speed){

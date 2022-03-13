@@ -17,12 +17,12 @@ public class Untilt extends CommandBase {
 
     @Override
     public void execute() {
-        m_elevator.tilt();
+        m_elevator.rawTilt(-5);
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_elevator.stopClimb();
+        m_elevator.stopTilt();
     }
 
     // Returns true when the command should end.
@@ -31,3 +31,4 @@ public class Untilt extends CommandBase {
         return false;
     }
 }
+

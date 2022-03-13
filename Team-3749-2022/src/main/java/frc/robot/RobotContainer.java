@@ -9,19 +9,26 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
+import frc.robot.commands.elevator.*;
 import frc.robot.subsystems.*;
+import frc.robot.utilities.AutoGroups;
 import frc.robot.utilities.Constants;
 import frc.robot.utilities.Xbox;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -59,14 +66,17 @@ public class RobotContainer {
         Pilot = new Xbox(0);
         Operator = new Xbox(1);
         
-        Operator.x().whenPressed(new InstantCommand(m_intake::startCompressor))
+        Pilot.x().whenPressed(new InstantCommand(m_intake::startCompressor))
             .whenReleased(new InstantCommand(m_intake::stopCompressor));
 
-        Operator.y().whenPressed(new InstantCommand(m_elevator::rawClimbUp))
-            .whenReleased(new InstantCommand(m_elevator::stopClimb));
+        Operator.y().whenPressed(new Tilt(m_elevator))
+            .whenReleased(new StopTilt(m_elevator));
 
-        Operator.b().whenPressed(new InstantCommand(m_elevator::rawClimbDown))
-            .whenReleased(new InstantCommand(m_elevator::stopClimb));
+        Operator.b().whenPressed(new Untilt(m_elevator))
+            .whenReleased(new InstantCommand(m_elevator::stopTilt));
+
+        Pilot.a().whenPressed(new VisionAlign(m_shooter))
+            .whenReleased(new InstantCommand(m_shooter::stopMotor));
 
         // Pilot.povUp().whenPressed(new Extend(m_elevator))
         //     .whenReleased(new InstantCommand(m_elevator::stopClimb));
@@ -89,8 +99,8 @@ public class RobotContainer {
         m_intake.setDefaultCommand(
             new IntakeHold(m_intake, Pilot::getLeftTrigger, Operator.a()));
 
-        m_base.setDefaultCommand(
-            new Controls(m_base));
+        // m_base.setDefaultCommand(
+        //     new Controls(m_base, Pilot, Operator));
         
         // m_elevator.setDefaultCommand(new Tilt(m_elevator));
     }
@@ -101,9 +111,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // return null;
         Trajectory exampleTrajectory = new Trajectory();
-        System.out.println("asdfljasd;flkjsad;lgkj;lksjdg;laskjdggl;jksadg;ljksa;lkgj;lasdjgk;lsjkdg;lajsdg;ljas;dlgjkas;dlkjg;lsakjfg;lakjfsg;ljagkf");
 
         PathPlannerTrajectory examplePath = PathPlanner.loadPath("bottomBlueCargo", 1, 1);
 
@@ -111,12 +119,12 @@ public class RobotContainer {
         m_drivetrain.setBrakeMode();
 
         try {
-          Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("paths/output/Unnamed.wpilib.json");
-          exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-       } catch (IOException ex) {
-          DriverStation.reportError("Unable to open trajectory", ex.getStackTrace());
-       }
-       
+            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("pathsplanner/generatedJSON/1BlueIntake.wpilib.json");
+            exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+        } catch (IOException ex) {
+            DriverStation.reportError("Unable to open trajectory", ex.getStackTrace());
+        }
+        
         RamseteCommand ramseteCommand =
             new RamseteCommand(
                 exampleTrajectory,
@@ -139,6 +147,5 @@ public class RobotContainer {
     
         // Run path following command, then stop at the end.
         return ramseteCommand.andThen(() -> m_drivetrain.tankDriveVolts(0, 0));
-        // return new Print(m_drivetrain);
     }
 }

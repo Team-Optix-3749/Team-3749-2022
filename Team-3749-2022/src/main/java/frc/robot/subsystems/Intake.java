@@ -31,8 +31,12 @@ public class Intake extends SubsystemBase {
         m_shintakeBack.setIdleMode(IdleMode.kBrake);
     }
 
-    public void setIntake(int dir) {
-        m_intakeMotor.set(dir * Constants.Intake.kIntakeSpeed);
+    public void setIntake() {
+        m_intakeMotor.set(Constants.Intake.kIntakeSpeed);
+    }
+
+    public void stopMotors() {
+        m_intakeMotor.set(0);
     }
 
     public void stopIntake() {

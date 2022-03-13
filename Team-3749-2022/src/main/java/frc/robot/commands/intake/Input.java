@@ -6,14 +6,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import java.util.function.BooleanSupplier;
 
-public class IntakeHold extends CommandBase {
+public class Input extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     
     private final Intake m_intake;
     private final BooleanSupplier m_trigger;
     private final JoystickButton button;
 
-    public IntakeHold(Intake intake, BooleanSupplier trigger, JoystickButton btn) {
+    public Input(Intake intake, BooleanSupplier trigger, JoystickButton btn) {
         m_intake = intake;
         m_trigger = trigger;
         button = btn;
@@ -34,7 +34,7 @@ public class IntakeHold extends CommandBase {
             // System.out.println(m_intake.getShintake());
         } 
         else if (button.get()) { 
-            m_intake.runShintake();
+            m_intake.setShintake();
         }
         else {
             m_intake.intakeRev();

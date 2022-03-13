@@ -4,6 +4,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -11,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -27,13 +30,17 @@ public class Drivetrain extends SubsystemBase {
 
     Pose2d zeroPose2d = new Pose2d();
 
-    private final Gyro m_gyro = new AHRS();
+    private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
     private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
 
 
     public Drivetrain() {
         setCoast();
+
+        // m_rightFront.setSensorPhase(true);
+        m_rightFront.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        m_leftFront.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
         m_right.setInverted(true);
     }
@@ -90,7 +97,8 @@ public class Drivetrain extends SubsystemBase {
    * @param pose The pose to which to set the odometry.
    */
   public void resetOdometry(Pose2d pose) {
-    m_odometry.resetPosition(new Pose2d(), m_gyro.getRotation2d());
+    resetEncoders();
+    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
   }
   /**
    * Controls the left and right sides of the drive directly with voltages.
@@ -99,9 +107,10 @@ public class Drivetrain extends SubsystemBase {
    * @param rightVolts the commanded right output
    */
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    m_left.setVoltage(leftVolts*0.3);
-    m_right.setVoltage(rightVolts*0.3);
+    m_left.setVoltage(-leftVolts*0.3);
+    m_right.setVoltage(-rightVolts*0.3);
     m_drive.feed();
+    SmartDashboard.putNumber("heading", getHeading());
     System.out.println(getHeading());
 
   }

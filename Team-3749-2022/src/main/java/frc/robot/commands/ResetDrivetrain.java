@@ -8,7 +8,7 @@ import frc.robot.subsystems.Drivetrain;
 public class ResetDrivetrain extends CommandBase {
     private final Drivetrain m_drive;
     private final Pose2d pose;
-    private final Timer t = new Timer();
+    // private final Timer t = new Timer();
 
     public ResetDrivetrain (Drivetrain base, Pose2d p) {
         pose = p;
@@ -18,23 +18,26 @@ public class ResetDrivetrain extends CommandBase {
 
     @Override
     public void initialize () {
-        t.start();
+        // t.start();
+        // m_drive.resetEncoders();
+        m_drive.resetOdometry(pose);
+        // System.out.println("RESET");
+        // m_drive.zeroHeading();
     }
-
+    
     @Override    
     public void execute () {
-        m_drive.resetEncoders();
-        m_drive.zeroHeading();
-        if (t.get() > .1) m_drive.resetOdometry(pose);
+        // if (t.get() > .1) m_drive.resetOdometry(pose);
     }
 
     @Override
     public void end(boolean interrupted) {
-        t.reset();
+        // t.reset();
     }
 
     @Override
     public boolean isFinished () {
-        return t.get() > .2;
+        // return t.get() >= .1;
+        return false;
     }
 }

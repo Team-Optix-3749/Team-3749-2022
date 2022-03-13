@@ -26,7 +26,7 @@ public class ContinousShintake extends CommandBase {
 
     @Override
     public void execute() {
-        if (t.get() > 2) m_intake.setShintake();
+        m_intake.setShintake();
     }
 
     @Override

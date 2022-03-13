@@ -113,6 +113,41 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return AutoGroups.Blue.TwoCargo.getOneBlue();
+        // AutoGroups autoGrp = new AutoGroups(m_drivetrain, m_intake, m_shooter);
+        // return autoGrp.getRamsete("S");
+        PathPlannerTrajectory path = PathPlanner.loadPath("1BlueIntake", .5, .5);
+
+        Trajectory traj = new Trajectory();
+
+        traj = path;
+
+        m_drivetrain.setBrake();
+
+        RamseteCommand ramseteCommand =
+            new RamseteCommand(
+                traj,
+                m_drivetrain::getPose,
+                new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
+                new SimpleMotorFeedforward(
+                    Constants.Auto.ksVolts,
+                    Constants.Auto.kvVoltSecondsPerMeter,
+                    Constants.Auto.kaVoltSecondsSquaredPerMeter),
+                Constants.Auto.kDriveKinematics,
+                m_drivetrain::getWheelSpeeds,
+                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
+                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
+                m_drivetrain::tankDriveVolts,
+                m_drivetrain);
+
+                // m_drivetrain.resetEncoders();
+                // m_drivetrain.zeroHeading();
+                m_drivetrain.resetOdometry(traj.getInitialPose());
+                
+                return ramseteCommand;
+        
+        // return new SequentialCommandGroup(
+        //     new ResetDrivetrain(m_drivetrain, traj.getInitialPose()),
+        //     ramseteCommand
+        // );
     }
 }

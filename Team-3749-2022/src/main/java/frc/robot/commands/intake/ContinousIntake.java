@@ -24,6 +24,7 @@ public class ContinousIntake extends CommandBase {
     @Override
     public void execute() {
         m_intake.setIntake();
+        m_intake.holdShintake();
     }
 
     @Override

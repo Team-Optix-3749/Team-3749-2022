@@ -125,7 +125,7 @@ public final class AutoGroups {
 
     public final Command getAutoCommand() {
         return new SequentialCommandGroup(
-            intake("Auto3"),
+            intake("Auto1"),
             getRamsete("Auto2"),
             shoot()
         );

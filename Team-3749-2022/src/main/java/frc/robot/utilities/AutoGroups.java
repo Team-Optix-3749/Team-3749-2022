@@ -74,7 +74,7 @@ public final class AutoGroups {
     }
 
     public final static Command getRamsete(String name) {
-        PathPlannerTrajectory path = PathPlanner.loadPath(name, .5, .5);
+        PathPlannerTrajectory path = PathPlanner.loadPath(name, 2, 1.67);
 
         Trajectory traj = new Trajectory();
 

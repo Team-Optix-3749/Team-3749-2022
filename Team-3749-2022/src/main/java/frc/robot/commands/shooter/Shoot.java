@@ -31,7 +31,7 @@ public class Shoot extends CommandBase {
             m_shooter.setRPM(Constants.Shooter.shooterRPM);
         else
             m_shooter.stopMotor();
-            
+        m_shooter.visionAlign();
     }
 
     @Override

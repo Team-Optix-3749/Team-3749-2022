@@ -98,8 +98,6 @@ public final class AutoGroups {
                 m_drivetrain::tankDriveVolts,
                 m_drivetrain);
 
-                // m_drivetrain.resetEncoders();
-                // m_drivetrain.zeroHeading();
                 m_drivetrain.resetOdometry(traj.getInitialPose());
                 
                 return ramseteCommand;
@@ -114,11 +112,11 @@ public final class AutoGroups {
 
     public final static Command shoot() {
         return new SequentialCommandGroup(
-            // new VisionAlign(m_shooter),
             new ParallelRaceGroup(
-                new ShootNew(m_shooter),
-                new ContinousShintake(m_intake),
-                new WaitCommand(2)
+                // new VisionAlign(m_shooter),
+                new AutoShoot(m_shooter, m_intake),
+                new WaitCommand(4)
+                // new ContinousShintake(m_intake)
             )
         );
     }
@@ -187,7 +185,7 @@ public final class AutoGroups {
     public static final class Blue {
 
         public static final Command shootOne() {
-            return new AutoShoot(m_shooter);
+            return new ShootNew(m_shooter);
         }
 
         // public static final class TwoCargo {

@@ -48,6 +48,10 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber("Voltage", m_leftShooterMotor.getBusVoltage());
     }
 
+    public double getRPM() {
+        return m_leftShooterMotor.getSelectedSensorVelocity() * 0.034;
+    }
+
     public void setVelocity(double velocity) {
         setRPM(velocity * 60 / .476);
         SmartDashboard.putNumber("Velocity", m_leftShooterMotor.getSelectedSensorVelocity());
@@ -88,6 +92,7 @@ public class Shooter extends SubsystemBase {
     
     public void visionAlign(){
         m_turretMotor.set(tx.getDouble(0.0)*0.01);
+        System.out.println(tx.getDouble(0.0));
     }
 
     public void setTurretMotor(double speed){

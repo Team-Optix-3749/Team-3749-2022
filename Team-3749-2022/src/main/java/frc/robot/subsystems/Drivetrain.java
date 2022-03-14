@@ -115,6 +115,15 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
+  public void tankDriveVoltsBackwards(double leftVolts, double rightVolts) {
+    m_left.setVoltage(leftVolts*0.3);
+    m_right.setVoltage(rightVolts*0.3);
+    m_drive.feed();
+    SmartDashboard.putNumber("heading", getHeading());
+    System.out.println(getHeading());
+
+  }
+
 //   /** Resets the drive encoders to currently read a position of 0. */
 //   public void resetEncoders() {
 //     m_leftEncoder.reset();

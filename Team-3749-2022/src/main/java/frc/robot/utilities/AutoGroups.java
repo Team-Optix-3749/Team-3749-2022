@@ -99,14 +99,10 @@ public final class AutoGroups {
                 m_drivetrain);
 
                 // m_drivetrain.resetEncoders();
-                // m_drivetrain.resetOdometry(m_drivetrain.getPose());
+                // m_drivetrain.zeroHeading();
+                m_drivetrain.resetOdometry(traj.getInitialPose());
                 
-                // return ramseteCommand;
-        
-        return new SequentialCommandGroup(
-            new ResetDrivetrain(m_drivetrain, traj.getInitialPose()),
-            ramseteCommand
-        );
+                return ramseteCommand;
     }
 
     public final static Command intake(String name) {
@@ -127,10 +123,18 @@ public final class AutoGroups {
         );
     }
 
+    public final Command getAutoCommand() {
+        return new SequentialCommandGroup(
+            intake("Auto3"),
+            getRamsete("Auto2"),
+            shoot()
+        );
+    }
+
     public final Command getOneBlue () {
         return new SequentialCommandGroup(
             intake("1BlueIntake"),
-            getRamsete("1BlueReverse"),
+            getRamsete("Auto2"),
             shoot()
         );
     }

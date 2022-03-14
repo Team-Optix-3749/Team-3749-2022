@@ -113,41 +113,17 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // AutoGroups autoGrp = new AutoGroups(m_drivetrain, m_intake, m_shooter);
-        // return autoGrp.getRamsete("S");
-        PathPlannerTrajectory path = PathPlanner.loadPath("1BlueIntake", .5, .5);
+        AutoGroups autoGrp = new AutoGroups(m_drivetrain, m_intake, m_shooter);
+        // AutoGroups autoGrp1 = new AutoGroups(m_drivetrain, m_intake, m_shooter);
 
-        Trajectory traj = new Trajectory();
+        // // return autoGrp.getRamsete("Auto1");
+        // ParallelRaceGroup race1 = new ParallelRaceGroup(autoGrp.getRamsete("Auto1"), new ContinousIntake(m_intake));
+        // ParallelRaceGroup race2 = new ParallelRaceGroup(autoGrp1.getRamsete("Auto2"), new ShootNew(m_shooter));
+        // SequentialCommandGroup seq = new SequentialCommandGroup(race1, race2);
 
-        traj = path;
+        return autoGrp.getOneBlue();
+        // return new SequentialCommandGroup(new ParallelRaceGroup(autoGrp.getRamsete("Auto1"), new ContinousIntake(m_intake)), autoGrp.getRamsete("Auto2"));
 
-        m_drivetrain.setBrake();
-
-        RamseteCommand ramseteCommand =
-            new RamseteCommand(
-                traj,
-                m_drivetrain::getPose,
-                new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
-                new SimpleMotorFeedforward(
-                    Constants.Auto.ksVolts,
-                    Constants.Auto.kvVoltSecondsPerMeter,
-                    Constants.Auto.kaVoltSecondsSquaredPerMeter),
-                Constants.Auto.kDriveKinematics,
-                m_drivetrain::getWheelSpeeds,
-                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
-                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
-                m_drivetrain::tankDriveVolts,
-                m_drivetrain);
-
-                // m_drivetrain.resetEncoders();
-                // m_drivetrain.zeroHeading();
-                m_drivetrain.resetOdometry(traj.getInitialPose());
-                
-                return ramseteCommand;
-        
-        // return new SequentialCommandGroup(
-        //     new ResetDrivetrain(m_drivetrain, traj.getInitialPose()),
-        //     ramseteCommand
-        // );
+        // return new SequentialCommandGroup(autoGrp.getRamsete("Auto1"), autoGrp.getRamsete("Auto2"), new ShootNew(m_shooter));
     }
 }

@@ -14,14 +14,11 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.ResetDrivetrain;
 import frc.robot.commands.intake.ContinousIntake;
-import frc.robot.commands.intake.ContinousShintake;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -32,7 +29,6 @@ public final class AutoGroups {
     static Drivetrain m_drivetrain;
     static Intake m_intake;
     static Shooter m_shooter;
-
 
     public AutoGroups(Drivetrain drive, Intake intake, Shooter shoot) {
         m_drivetrain = drive;
@@ -51,26 +47,24 @@ public final class AutoGroups {
         }
         m_drivetrain.setBrake();
 
-        RamseteCommand ramseteCommand =
-            new RamseteCommand(
+        RamseteCommand ramseteCommand = new RamseteCommand(
                 traj,
                 m_drivetrain::getPose,
                 new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
                 new SimpleMotorFeedforward(
-                    Constants.Auto.ksVolts,
-                    Constants.Auto.kvVoltSecondsPerMeter,
-                    Constants.Auto.kaVoltSecondsSquaredPerMeter),
+                        Constants.Auto.ksVolts,
+                        Constants.Auto.kvVoltSecondsPerMeter,
+                        Constants.Auto.kaVoltSecondsSquaredPerMeter),
                 Constants.Auto.kDriveKinematics,
                 m_drivetrain::getWheelSpeeds,
                 new PIDController(Constants.Auto.kPDriveVel, 0, 0),
                 new PIDController(Constants.Auto.kPDriveVel, 0, 0),
                 m_drivetrain::tankDriveVolts,
                 m_drivetrain);
-        
-        return new SequentialCommandGroup(
-            new ResetDrivetrain(m_drivetrain, traj.getInitialPose()),
-            ramseteCommand
-        );
+
+        m_drivetrain.resetOdometry(traj.getInitialPose());
+
+        return ramseteCommand;
     }
 
     public final static Command getRamsete(String name) {
@@ -82,15 +76,14 @@ public final class AutoGroups {
 
         m_drivetrain.setBrake();
 
-        RamseteCommand ramseteCommand =
-            new RamseteCommand(
+        RamseteCommand ramseteCommand = new RamseteCommand(
                 traj,
                 m_drivetrain::getPose,
                 new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
                 new SimpleMotorFeedforward(
-                    Constants.Auto.ksVolts,
-                    Constants.Auto.kvVoltSecondsPerMeter,
-                    Constants.Auto.kaVoltSecondsSquaredPerMeter),
+                        Constants.Auto.ksVolts,
+                        Constants.Auto.kvVoltSecondsPerMeter,
+                        Constants.Auto.kaVoltSecondsSquaredPerMeter),
                 Constants.Auto.kDriveKinematics,
                 m_drivetrain::getWheelSpeeds,
                 new PIDController(Constants.Auto.kPDriveVel, 0, 0),
@@ -98,172 +91,76 @@ public final class AutoGroups {
                 m_drivetrain::tankDriveVolts,
                 m_drivetrain);
 
-                m_drivetrain.resetOdometry(traj.getInitialPose());
-                
-                return ramseteCommand;
+        m_drivetrain.resetOdometry(traj.getInitialPose());
+
+        return ramseteCommand;
     }
 
     public final static Command intake(String name) {
         return new ParallelRaceGroup(
-            getRamsete(name), 
-            new ContinousIntake(m_intake)
-        );
+                getRamsete(name),
+                new ContinousIntake(m_intake));
     }
 
     public final static Command shoot() {
         return new SequentialCommandGroup(
-            new ParallelRaceGroup(
-                // new VisionAlign(m_shooter),
-                new AutoShoot(m_shooter, m_intake),
-                new WaitCommand(4)
-                // new ContinousShintake(m_intake)
-            )
-        );
+                new ParallelRaceGroup(
+                        new AutoShoot(m_shooter, m_intake),
+                        new WaitCommand(4)));
     }
 
     public final Command getAutoCommand() {
         return new SequentialCommandGroup(
-            intake("Auto1"),
-            getRamsete("Auto2"),
-            shoot()
-        );
+                intake("Auto1"),
+                getRamsete("Auto2"),
+                shoot());
     }
 
-    public final Command getOneBlue () {
+    public final Command getOneBlue() {
         return new SequentialCommandGroup(
-            intake("1BlueIntake"),
-            getRamsete("Auto2"),
-            shoot()
-        );
+                intake("1BlueIntake"),
+                getRamsete("Auto2"),
+                shoot());
     }
-    
-    public final Command getTwoBlue () {
+
+    public final Command getTwoBlue() {
         return new SequentialCommandGroup(
-            intake("2BlueIntake"),
-            getRamsete("2BlueReverse"),
-            shoot()
-        );
+                intake("2BlueIntake"),
+                getRamsete("2BlueReverse"),
+                shoot());
     }
 
-    public final Command getThreeBlue () {
+    public final Command getThreeBlue() {
         return new SequentialCommandGroup(
-            intake("3BlueIntake"),
-            getRamsete("3BlueReverse"),
-            shoot()
-        );
+                intake("3BlueIntake"),
+                getRamsete("3BlueReverse"),
+                shoot());
     }
 
-    public final Command getOneTwoBlue () {
+    public final Command getOneTwoBlue() {
         return new SequentialCommandGroup(
-            intake("1BlueIntake"),
-            getRamsete("1BlueReverse"),
-            intake("12BlueIntake"),
-            getRamsete("12BlueReverse"),
-            shoot()
-        );
+                intake("1BlueIntake"),
+                getRamsete("1BlueReverse"),
+                intake("12BlueIntake"),
+                getRamsete("12BlueReverse"),
+                shoot());
     }
 
-    public final Command getTwoSevenBlue () {
+    public final Command getTwoSevenBlue() {
         return new SequentialCommandGroup(
-            intake("2BlueIntake"),
-            getRamsete("2BlueReverse"),
-            intake("27BlueIntake"),
-            getRamsete("27BlueReverse")
-        );
+                intake("2BlueIntake"),
+                getRamsete("2BlueReverse"),
+                intake("27BlueIntake"),
+                getRamsete("27BlueReverse"));
     }
 
-    public final Command getOneTwoSevenBlue () {
+    public final Command getOneTwoSevenBlue() {
         return new SequentialCommandGroup(
-            intake("1BlueIntake"),
-            getRamsete("1BlueReverse"),
-            intake("127BlueIntake"),
-            getRamsete("127BlueReverse"),
-            shoot()
-        );
+                intake("1BlueIntake"),
+                getRamsete("1BlueReverse"),
+                intake("127BlueIntake"),
+                getRamsete("127BlueReverse"),
+                shoot());
     }
 
-    public static final class Blue {
-
-        public static final Command shootOne() {
-            return new ShootNew(m_shooter);
-        }
-
-        // public static final class TwoCargo {
-        //     public static final Command getOneBlue () {
-        //         return new SequentialCommandGroup(
-        //             intake("1BlueIntake"),
-        //             getRamsete("1BlueReverse"),
-        //             shoot()
-        //         );
-        //     }
-
-        //     public static final Command getTwoBlue () {
-        //         return new SequentialCommandGroup(
-        //             intake("2BlueIntake"),
-        //             getRamsete("2BlueReverse"),
-        //             shoot()
-        //         );
-        //     }
-
-        //     public static final Command getThreeBlue () {
-        //         return new SequentialCommandGroup(
-        //             intake("3BlueIntake"),
-        //             getRamsete("3BlueReverse"),
-        //             shoot()
-        //         );
-        //     }
-        // }
-
-        // public final static class ThreeCargo {
-        //     public static final Command getOneTwoBlue () {
-        //         return new SequentialCommandGroup(
-        //             intake("1BlueIntake"),
-        //             getRamsete("1BlueReverse"),
-        //             intake("12BlueIntake"),
-        //             getRamsete("12BlueReverse"),
-        //             shoot()
-        //         );
-        //     }
-
-        //     public static final Command getTwoSevenBlue () {
-        //         return new SequentialCommandGroup(
-        //             intake("2BlueIntake"),
-        //             getRamsete("2BlueReverse"),
-        //             intake("27BlueIntake"),
-        //             getRamsete("27BlueReverse")
-        //         );
-        //     }
-        // }
-
-        // public final static class FourCargo {
-        //     public static final Command getOneTwoSevenBlue () {
-        //         return new SequentialCommandGroup(
-        //             intake("1BlueIntake"),
-        //             getRamsete("1BlueReverse"),
-        //             intake("127BlueIntake"),
-        //             getRamsete("127BlueReverse"),
-        //             shoot()
-        //         );
-        //     }
-        // }
-    }
-
-    public  final static class Red {
-
-        public final static Command shootOne() {
-            return shoot();
-        }
-
-        public final static class TwoCargo {
-            
-        }
-
-        public final static class ThreeCargo {
-            
-        }
-
-        public final static class FourCargo {
-            
-        }
-    }
 }

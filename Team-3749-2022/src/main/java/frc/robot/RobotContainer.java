@@ -1,35 +1,14 @@
 package frc.robot;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.elevator.*;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.AutoGroups;
-import frc.robot.utilities.Constants;
 import frc.robot.utilities.Xbox;
-import frc.robot.utilities.AutoGroups.Blue;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -49,8 +28,6 @@ public class RobotContainer {
     private final Intake m_intake = new Intake();
 
     private final Elevator m_elevator = new Elevator();
-
-    private final Base m_base = new Base();
 
     Xbox Pilot;
     Xbox Operator;
@@ -114,16 +91,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         AutoGroups autoGrp = new AutoGroups(m_drivetrain, m_intake, m_shooter);
-        // AutoGroups autoGrp1 = new AutoGroups(m_drivetrain, m_intake, m_shooter);
-
-        // // return autoGrp.getRamsete("Auto1");
-        // ParallelRaceGroup race1 = new ParallelRaceGroup(autoGrp.getRamsete("Auto1"), new ContinousIntake(m_intake));
-        // ParallelRaceGroup race2 = new ParallelRaceGroup(autoGrp1.getRamsete("Auto2"), new ShootNew(m_shooter));
-        // SequentialCommandGroup seq = new SequentialCommandGroup(race1, race2);
 
         return autoGrp.getOneBlue();
-        // return new SequentialCommandGroup(new ParallelRaceGroup(autoGrp.getRamsete("Auto1"), new ContinousIntake(m_intake)), autoGrp.getRamsete("Auto2"));
-
-        // return new SequentialCommandGroup(autoGrp.getRamsete("Auto1"), autoGrp.getRamsete("Auto2"), new ShootNew(m_shooter));
     }
 }

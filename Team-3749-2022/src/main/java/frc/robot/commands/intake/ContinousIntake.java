@@ -2,9 +2,6 @@ package frc.robot.commands.intake;
 
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-import java.util.function.BooleanSupplier;
 
 public class ContinousIntake extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })

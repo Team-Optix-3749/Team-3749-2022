@@ -3,8 +3,6 @@ package frc.robot.commands.shooter;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */

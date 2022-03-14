@@ -2,8 +2,6 @@ package frc.robot.commands.shooter;
 
 import frc.robot.subsystems.*;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class VisionAlign extends CommandBase {

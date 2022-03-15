@@ -6,7 +6,9 @@ import frc.robot.commands.shooter.*;
 import frc.robot.commands.elevator.*;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.AutoGroups;
+import frc.robot.utilities.POV;
 import frc.robot.utilities.Xbox;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
@@ -29,8 +31,12 @@ public class RobotContainer {
 
     private final Elevator m_elevator = new Elevator();
 
+    // private final Base m_balls = new Base();
+
     Xbox Pilot;
     Xbox Operator;
+    POV PilotPOV;
+    POV OpPOV;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -44,29 +50,38 @@ public class RobotContainer {
         Pilot = new Xbox(0);
         Operator = new Xbox(1);
 
+        PilotPOV = new POV(new GenericHID(0));
+        OpPOV = new POV(new GenericHID(1));
+
         Pilot.x().whenPressed(new InstantCommand(m_intake::startCompressor))
                 .whenReleased(new InstantCommand(m_intake::stopCompressor));
 
-        Operator.y().whenPressed(new Tilt(m_elevator))
-                .whenReleased(new StopTilt(m_elevator));
+        Pilot.y().whenPressed(new Extend(m_elevator))
+                .whenReleased(new StopClimb(m_elevator));
 
-        Operator.b().whenPressed(new Untilt(m_elevator))
-                .whenReleased(new InstantCommand(m_elevator::stopTilt));
+        Pilot.b().whenPressed(new Lift(m_elevator))
+                .whenReleased(new StopClimb(m_elevator));
 
+        // Pilot.x().whenPressed(new Untilt(m_elevator))
+        //     .whenReleased(new StopTilt(m_elevator));
+        
         Pilot.a().whenPressed(new VisionAlign(m_shooter))
-                .whenReleased(new InstantCommand(m_shooter::stopTurret));
+            .whenReleased(new InstantCommand(m_shooter::stopTurret));
 
-        // Pilot.povUp().whenPressed(new Extend(m_elevator))
-        // .whenReleased(new InstantCommand(m_elevator::stopClimb));
+        // Pilot.a().whenPressed(new VisionAlign(m_shooter))
+        //         .whenReleased(new InstantCommand(m_shooter::stopTurret));
 
-        // Pilot.povDown().whenPressed(new Lift(m_elevator))
-        // .whenReleased(new InstantCommand(m_elevator::stopClimb));
+        PilotPOV.up().whenPressed(new Extend(m_elevator))
+            .whenReleased(new StopClimb(m_elevator));
 
-        // Pilot.povLeft().whenPressed(new Untilt(m_elevator))
-        // .whenReleased(new InstantCommand(m_elevator::stopTilt));
+        PilotPOV.down().whenPressed(new Lift(m_elevator))
+            .whenReleased(new StopClimb(m_elevator));
 
-        // Pilot.povRight().whenPressed(new Tilt(m_elevator))
-        // .whenReleased(new InstantCommand(m_elevator::stopTilt));
+        PilotPOV.left().whenPressed(new Untilt(m_elevator))
+            .whenReleased(new StopTilt(m_elevator));
+
+        PilotPOV.right().whenPressed(new Tilt(m_elevator))
+            .whenReleased(new StopTilt(m_elevator));
 
         m_drivetrain.setDefaultCommand(
                 new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
@@ -92,6 +107,6 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         AutoGroups autoGrp = new AutoGroups(m_drivetrain, m_intake, m_shooter);
 
-        return autoGrp.getOneBlue();
+        return autoGrp.getAutoCommand();
     }
 }

@@ -33,11 +33,8 @@ public final class Constants {
     }
 
     public static final class Auto {
-        // public static final double ksVolts = 0.0015; //0.59817;
-        // public static final double kvVoltSecondsPerMeter = 2; //3.0078
-        // public static final double kaVoltSecondsSquaredPerMeter = 0.15896;
-        // public static final double kPDriveVel = 2.9456;//2.9456;
-        // public static final double kTrackwidthMeters = 0.584;
+        public static final double maxVelocity = 2.0;
+        public static final double maxAcceleration = 1.67;
         public static final double ksVolts = 0.59817;
         public static final double kvVoltSecondsPerMeter = 3.0078;
         public static final double kaVoltSecondsSquaredPerMeter = 0.15896;
@@ -77,9 +74,9 @@ public final class Constants {
         public static final double kP = 0.3;
         public static final double kI = 0.2;
         public static final double kD = 0.0;
-        public static final double shooterHeight = 1;
-        public static final double hubHeight = 2;
-        public static final double limelightAngle = 30;
+        public static final double shooterHeight = 0.8128;
+        public static final double hubHeight = 2.64;
+        public static final double limelightAngle = 40;
         public static final double shooterAngle = (70);
     } 
 

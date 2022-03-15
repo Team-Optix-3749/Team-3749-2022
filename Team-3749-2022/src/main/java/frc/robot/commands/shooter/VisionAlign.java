@@ -27,7 +27,7 @@ public class VisionAlign extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_shooter.stopMotor();
+        m_shooter.stopTurret();
     }
 
     @Override

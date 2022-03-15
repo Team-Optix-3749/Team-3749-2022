@@ -27,7 +27,10 @@ public class Shooter extends SubsystemBase {
 
     private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI,
             Constants.Shooter.kD);
-
+            
+    private PIDController m_pidTurretController = new PIDController(0.01, 0.4,
+    0.0);
+ 
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");
@@ -58,7 +61,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setTargetVelocity(){
-        setRPM(targetVelocity() * 60);
+        setRPM(targetVelocity());
     }
 
     public void rawShoot(double speed) {
@@ -90,8 +93,10 @@ public class Shooter extends SubsystemBase {
         m_turretMotor.stopMotor();
     }
     
-    public void visionAlign(){
+    public void visionAlign() {
+        // m_turretMotor.set(m_pidTurretController.calculate(tx.getDouble(0.0), 0.0));
         m_turretMotor.set(tx.getDouble(0.0)*0.01);
+
         System.out.println(tx.getDouble(0.0));
     }
 

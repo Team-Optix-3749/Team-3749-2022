@@ -3,10 +3,10 @@ package frc.robot.commands.elevator;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Lift extends CommandBase {
+public class StopClimb extends CommandBase {
     private final Elevator m_elevator;
 
-    public Lift(Elevator elevator) {
+    public StopClimb(Elevator elevator) {
         m_elevator = elevator;
         addRequirements(elevator);
     }
@@ -17,7 +17,7 @@ public class Lift extends CommandBase {
 
     @Override
     public void execute() {
-        m_elevator.rawClimbDown();
+        m_elevator.stopClimb();
     }
 
     @Override

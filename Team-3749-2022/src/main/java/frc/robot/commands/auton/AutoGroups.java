@@ -14,6 +14,7 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -38,11 +39,11 @@ public class AutoGroups {
         m_shooter = shoot;
     }
 
-    public final static Command getRamsetePath(String path) {
+    public final static Command getRamseteJSON(String name) {
         Trajectory traj = new Trajectory();
 
         try {
-            Path trajpath = Filesystem.getDeployDirectory().toPath().resolve(path);
+            Path trajpath = Filesystem.getDeployDirectory().toPath().resolve("pathplanner/generatedJSON/" + name + ".wpilib.json");
             traj = TrajectoryUtil.fromPathweaverJson(trajpath);
         } catch (IOException e) {
             DriverStation.reportError("Unable to open traj", e.getStackTrace());
@@ -96,6 +97,66 @@ public class AutoGroups {
         m_drivetrain.resetOdometry(traj.getInitialPose());
 
         return ramseteCommand;
+    }
+
+    public final static Command getRamsete(String name, double velo, double accel) {
+        PathPlannerTrajectory path = PathPlanner.loadPath(name, velo, accel);
+
+        Trajectory traj = new Trajectory();
+
+        traj = path;
+
+        m_drivetrain.setBrake();
+
+        RamseteCommand ramseteCommand = new RamseteCommand(
+                traj,
+                m_drivetrain::getPose,
+                new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
+                new SimpleMotorFeedforward(
+                        Constants.Auto.ksVolts,
+                        Constants.Auto.kvVoltSecondsPerMeter,
+                        Constants.Auto.kaVoltSecondsSquaredPerMeter),
+                Constants.Auto.kDriveKinematics,
+                m_drivetrain::getWheelSpeeds,
+                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
+                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
+                m_drivetrain::tankDriveVolts,
+                m_drivetrain);
+
+        m_drivetrain.resetOdometry(traj.getInitialPose());
+
+        return ramseteCommand;
+    }
+
+    public final static Command getRamsete(String name, String translate) {
+        Trajectory traj = PathPlanner.loadPath(name, 2, 1.67);
+
+        if(translate != "") { 
+            traj = traj.relativeTo(PathPlanner.loadPath(translate, 2, 1.67).getInitialPose());
+        }
+
+        m_drivetrain.setBrake();
+
+        RamseteCommand ramseteCommand = new RamseteCommand(
+                traj,
+                m_drivetrain::getPose,
+                new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
+                new SimpleMotorFeedforward(
+                        Constants.Auto.ksVolts,
+                        Constants.Auto.kvVoltSecondsPerMeter,
+                        Constants.Auto.kaVoltSecondsSquaredPerMeter),
+                Constants.Auto.kDriveKinematics,
+                m_drivetrain::getWheelSpeeds,
+                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
+                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
+                m_drivetrain::tankDriveVolts,
+                m_drivetrain);
+
+        m_drivetrain.resetOdometry(traj.getInitialPose());
+
+        return new SequentialCommandGroup(
+            ramseteCommand
+        );
     }
 
     public final static Command intake(String name) {

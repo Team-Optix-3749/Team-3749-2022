@@ -1,11 +1,11 @@
 package frc.robot;
 
 import frc.robot.commands.*;
+import frc.robot.commands.auton.AutoGroups;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.elevator.*;
 import frc.robot.subsystems.*;
-import frc.robot.utilities.AutoGroups;
 import frc.robot.utilities.POV;
 import frc.robot.utilities.Xbox;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -105,8 +105,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        AutoGroups autoGrp = new AutoGroups(m_drivetrain, m_intake, m_shooter);
+        AutoGroups autoGroup = new AutoGroups(m_drivetrain, m_intake, m_shooter);
 
-        return autoGrp.getAutoCommand();
+        return autoGroup.getAutoCommand();
     }
 }

@@ -1,4 +1,4 @@
-package frc.robot.utilities;
+package frc.robot.commands.auton;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -22,9 +22,11 @@ import frc.robot.commands.intake.ContinousIntake;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.utilities.Constants;
+import frc.robot.utilities.Constants.Auto;
 import frc.robot.commands.shooter.*;
 
-public final class AutoGroups {
+public class AutoGroups {
 
     static Drivetrain m_drivetrain;
     static Intake m_intake;
@@ -115,52 +117,4 @@ public final class AutoGroups {
                 getRamsete("Auto2"),
                 shoot());
     }
-
-    public final Command getOneBlue() {
-        return new SequentialCommandGroup(
-                intake("1BlueIntake"),
-                getRamsete("Auto2"),
-                shoot());
-    }
-
-    public final Command getTwoBlue() {
-        return new SequentialCommandGroup(
-                intake("2BlueIntake"),
-                getRamsete("2BlueReverse"),
-                shoot());
-    }
-
-    public final Command getThreeBlue() {
-        return new SequentialCommandGroup(
-                intake("3BlueIntake"),
-                getRamsete("3BlueReverse"),
-                shoot());
-    }
-
-    public final Command getOneTwoBlue() {
-        return new SequentialCommandGroup(
-                intake("1BlueIntake"),
-                getRamsete("1BlueReverse"),
-                intake("12BlueIntake"),
-                getRamsete("12BlueReverse"),
-                shoot());
-    }
-
-    public final Command getTwoSevenBlue() {
-        return new SequentialCommandGroup(
-                intake("2BlueIntake"),
-                getRamsete("2BlueReverse"),
-                intake("27BlueIntake"),
-                getRamsete("27BlueReverse"));
-    }
-
-    public final Command getOneTwoSevenBlue() {
-        return new SequentialCommandGroup(
-                intake("1BlueIntake"),
-                getRamsete("1BlueReverse"),
-                intake("127BlueIntake"),
-                getRamsete("127BlueReverse"),
-                shoot());
-    }
-
 }

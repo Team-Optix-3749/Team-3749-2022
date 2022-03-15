@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.ResetDrivetrain;
 import frc.robot.commands.intake.ContinousIntake;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -155,6 +156,7 @@ public class AutoGroups {
         m_drivetrain.resetOdometry(traj.getInitialPose());
 
         return new SequentialCommandGroup(
+            new ResetDrivetrain(m_drivetrain, traj),
             ramseteCommand
         );
     }

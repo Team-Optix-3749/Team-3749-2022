@@ -5,9 +5,6 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.*;
-import frc.robot.utilities.Constants;
-
-import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Timer;
@@ -41,6 +38,7 @@ public class ResetDrivetrain extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        t.stop();
     }
 
     // Returns true when the command should end.

@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -98,8 +99,8 @@ public class AutoGroups {
         return ramseteCommand;
     }
 
-    public final static Command getRamsete(String name, boolean reset) {
-        PathPlannerTrajectory path = PathPlanner.loadPath(name, 2, 1.67);
+    public final static Command getRamsete(String name, boolean reset, boolean reversed) {
+        PathPlannerTrajectory path = PathPlanner.loadPath(name, 2, 1.67, reversed);
 
         Trajectory traj = new Trajectory();
 
@@ -158,9 +159,10 @@ public class AutoGroups {
 
     public final static Command getRamsete(String name, String translate) {
         Trajectory traj = PathPlanner.loadPath(name, 2, 1.67);
+        Trajectory translation = PathPlanner.loadPath(name, 2, 1.67);
 
         if(translate != "") { 
-            traj = traj.relativeTo(PathPlanner.loadPath(translate, 2, 1.67).getInitialPose());
+            traj = traj.relativeTo(translation.getInitialPose());
         }
 
         m_drivetrain.setBrake();
@@ -202,7 +204,7 @@ public class AutoGroups {
 
     public final static Command intake(String name, boolean reset) {
         return new ParallelRaceGroup(
-                getRamsete(name, reset),
+                getRamsete(name, reset, false),
                 new ContinousIntake(m_intake));
     }
 
@@ -215,8 +217,12 @@ public class AutoGroups {
 
     public final Command getAutoCommand() {
         return new SequentialCommandGroup(
-                intake("Auto1"),
-                getRamsete("Auto2"),
+                intake("Blue2Intake"),
+                getRamsete("Blue2Intake"),
                 shoot());
+    }
+
+    public final Command tarmacShoot() {
+        return shoot();
     }
 }

@@ -12,50 +12,24 @@ public class Blue extends AutoGroups {
         super(drive, intake, shoot);
     }
 
-    public final Command getOneBlue() {
-        return new SequentialCommandGroup(
-                intake("1BlueIntake"),
-                getRamsete("Auto2"),
-                shoot());
-    }
-
     public final Command getTwoBlue() {
         return new SequentialCommandGroup(
-                intake("2BlueIntake"),
-                getRamsete("2BlueReverse"),
+                intake("Blue2Intake"),
+                getRamsete("Blue2Shoot"),
                 shoot());
     }
 
     public final Command getThreeBlue() {
         return new SequentialCommandGroup(
                 intake("3BlueIntake"),
-                getRamsete("3BlueReverse"),
+                getRamsete("3BlueTurn"),
                 shoot());
     }
 
-    public final Command getOneTwoBlue() {
+    public final Command getThreeBlueReverse() {
         return new SequentialCommandGroup(
-                intake("1BlueIntake"),
-                getRamsete("1BlueReverse"),
-                intake("12BlueIntake"),
-                getRamsete("12BlueReverse"),
-                shoot());
-    }
-
-    public final Command getTwoSevenBlue() {
-        return new SequentialCommandGroup(
-                intake("2BlueIntake"),
-                getRamsete("2BlueReverse"),
-                intake("27BlueIntake"),
-                getRamsete("27BlueReverse"));
-    }
-
-    public final Command getOneTwoSevenBlue() {
-        return new SequentialCommandGroup(
-                intake("1BlueIntake"),
-                getRamsete("1BlueReverse"),
-                intake("127BlueIntake"),
-                getRamsete("127BlueReverse"),
+                intake("3BlueIntake"),
+                getRamsete("3BlueReverse", false, true),
                 shoot());
     }
 }

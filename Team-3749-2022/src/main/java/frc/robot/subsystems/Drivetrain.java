@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
+import frc.robot.utilities.Constants.Auto;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -53,11 +54,11 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setCoast() {
-      m_leftFront.setNeutralMode(NeutralMode.Coast);
-      m_leftBack.setNeutralMode(NeutralMode.Coast);
+        m_leftFront.setNeutralMode(NeutralMode.Coast);
+        m_leftBack.setNeutralMode(NeutralMode.Coast);
 
-      m_rightBack.setNeutralMode(NeutralMode.Coast);
-      m_rightFront.setNeutralMode(NeutralMode.Coast);
+        m_rightBack.setNeutralMode(NeutralMode.Coast);
+        m_rightFront.setNeutralMode(NeutralMode.Coast);
   }
 
     public void arcadeDrive(double speed, double rotation) {
@@ -67,7 +68,7 @@ public class Drivetrain extends SubsystemBase {
     @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    m_odometry.update(
+      m_odometry.update(
         m_gyro.getRotation2d(), m_leftFront.getSelectedSensorPosition()/Constants.Auto.wheelMult, m_rightFront.getSelectedSensorPosition()/Constants.Auto.wheelMult);
   }
 

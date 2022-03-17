@@ -27,6 +27,7 @@ public class ContinousIntake extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         m_intake.stopMotors();
+        m_intake.stopShintake();
         m_intake.intakeRev();
     }
 

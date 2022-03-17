@@ -53,7 +53,7 @@ public class RobotContainer {
         PilotPOV = new POV(new GenericHID(0));
         OpPOV = new POV(new GenericHID(1));
 
-        Pilot.x().whenPressed(new InstantCommand(m_intake::startCompressor))
+        Operator.x().whenPressed(new InstantCommand(m_intake::startCompressor))
                 .whenReleased(new InstantCommand(m_intake::stopCompressor));
 
         Pilot.y().whenPressed(new Extend(m_elevator))
@@ -61,33 +61,18 @@ public class RobotContainer {
 
         Pilot.b().whenPressed(new Lift(m_elevator))
                 .whenReleased(new StopClimb(m_elevator));
-
-        // Pilot.x().whenPressed(new Untilt(m_elevator))
-        //     .whenReleased(new StopTilt(m_elevator));
         
-        Pilot.a().whenPressed(new VisionAlign(m_shooter))
-            .whenReleased(new InstantCommand(m_shooter::stopTurret));
-
-        // Pilot.a().whenPressed(new VisionAlign(m_shooter))
-        //         .whenReleased(new InstantCommand(m_shooter::stopTurret));
-
-        PilotPOV.up().whenPressed(new Extend(m_elevator))
-            .whenReleased(new StopClimb(m_elevator));
-
-        PilotPOV.down().whenPressed(new Lift(m_elevator))
-            .whenReleased(new StopClimb(m_elevator));
-
-        PilotPOV.left().whenPressed(new Untilt(m_elevator))
-            .whenReleased(new StopTilt(m_elevator));
-
-        PilotPOV.right().whenPressed(new Tilt(m_elevator))
-            .whenReleased(new StopTilt(m_elevator));
+        Pilot.rightBumper().whenPressed(new Tilt(m_elevator))
+                .whenReleased(new StopTilt(m_elevator));
+        
+        Pilot.leftBumper().whenPressed(new Untilt(m_elevator))
+                .whenReleased(new StopTilt(m_elevator));
 
         m_drivetrain.setDefaultCommand(
                 new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
 
         m_shooter.setDefaultCommand(
-                new Shoot(m_shooter, Operator::getRightTrigger));
+                new Shoot(m_shooter, m_intake, Operator::getRightTrigger, Operator::getRightX));
 
         m_intake.setDefaultCommand(
             new Input(m_intake, Pilot::getLeftTrigger, Operator.a()));
@@ -107,6 +92,6 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         AutoGroups autoGroup = new AutoGroups(m_drivetrain, m_intake, m_shooter);
 
-        return autoGroup.getAutoCommand();
+        return autoGroup.getRaadwan();
     }
 }

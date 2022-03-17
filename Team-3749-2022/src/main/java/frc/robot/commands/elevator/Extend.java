@@ -1,6 +1,7 @@
 package frc.robot.commands.elevator;
 
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Extend extends CommandBase {

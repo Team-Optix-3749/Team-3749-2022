@@ -123,13 +123,13 @@ public class AutoGroups {
                 m_drivetrain::tankDriveVolts,
                 m_drivetrain);
 
-        if (true) m_drivetrain.resetOdometry(traj.getInitialPose());
+        if (reset) m_drivetrain.resetOdometry(traj.getInitialPose());
 
         return ramseteCommand;
     }
 
     public final static Command getRamsete(String name, double velo, double accel) {
-        PathPlannerTrajectory path = PathPlanner.loadPath(name, velo, accel);
+        PathPlannerTrajectory path = PathPlanner.loadPath(name, .1, .1);
 
         Trajectory traj = new Trajectory();
 
@@ -204,7 +204,7 @@ public class AutoGroups {
 
     public final static Command intake(String name, boolean reset) {
         return new ParallelRaceGroup(
-                getRamsete(name, reset, false),
+                getRamsete(name, reset, true),
                 new ContinousIntake(m_intake));
     }
 
@@ -215,10 +215,24 @@ public class AutoGroups {
                         new WaitCommand(4)));
     }
 
-    public final Command getAutoCommand() {
+    public final Command getRaadwan() {
         return new SequentialCommandGroup(
-                intake("Blue2Intake"),
-                getRamsete("Blue2Intake"),
+                intake("1-Intake"),
+                getRamsete("1-Shoot"),
+                shoot());
+    }
+
+    public final Command getOne() {
+        return new SequentialCommandGroup(
+                intake("1-Intake"),
+                getRamsete("1-Shoot180"),
+                shoot());
+    }
+
+    public final Command getOneTranslate() {
+        return new SequentialCommandGroup(
+                intake("1-Intake", true),
+                getRamsete("1-Shoot180Translate", false, false),
                 shoot());
     }
 

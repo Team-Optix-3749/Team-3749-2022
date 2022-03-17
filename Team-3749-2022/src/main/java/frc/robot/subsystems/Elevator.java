@@ -66,11 +66,11 @@ public class Elevator extends SubsystemBase {
 
     public void rawClimbUp() {
         m_chain.set(0.75);
-        System.out.println(m_chainEncoder.getPosition());
+        // System.out.println(m_chainEncoder.getPosition());
     }
 
     public void rawClimbDown() {
-        System.out.println(m_chainEncoder.getPosition());
+        // System.out.println(m_chainEncoder.getPosition());
         m_chain.set(-0.75);
     }
 

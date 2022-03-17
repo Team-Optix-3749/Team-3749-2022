@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
-import frc.robot.utilities.Constants.Auto;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -110,8 +109,8 @@ public class Drivetrain extends SubsystemBase {
     m_left.setVoltage(-leftVolts*0.3);
     m_right.setVoltage(-rightVolts*0.3);
     m_drive.feed();
-    SmartDashboard.putNumber("heading", getHeading());
-    System.out.println(getHeading());
+    // SmartDashboard.putNumber("heading", getHeading());
+    // System.out.println(getHeading());
 
   }
 
@@ -119,8 +118,8 @@ public class Drivetrain extends SubsystemBase {
     m_left.setVoltage(leftVolts*0.3);
     m_right.setVoltage(rightVolts*0.3);
     m_drive.feed();
-    SmartDashboard.putNumber("heading", getHeading());
-    System.out.println(getHeading());
+    // SmartDashboard.putNumber("heading", getHeading());
+    // System.out.println(getHeading());
 
   }
 

@@ -20,15 +20,15 @@ public class AutoShoot extends CommandBase {
 
     @Override
     public void initialize() {
-        m_shooter.stopMotor();
     }
 
     @Override
     public void execute() {
-        // m_shooter.visionAlign();
-        m_shooter.setRPM(Constants.Shooter.shooterRPM);
-        System.out.println(m_shooter.getRPM());
-        if (m_shooter.getRPM() > Constants.Shooter.shooterRPM)
+        m_shooter.visionAlign();
+        // m_shooter.setRPM(Constants.Shooter.shooterRPM);
+        m_shooter.setTargetVelocity();
+        // System.out.println(m_shooter.getRPM());
+        if (m_shooter.getRPM() > m_shooter.targetVelocity())
             m_intake.setShintake();
         else
             m_intake.stopShintake();
@@ -36,7 +36,9 @@ public class AutoShoot extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        m_shooter.stopTurret();
         m_shooter.stopMotor();
+        m_intake.stopShintake();
     }
 
     // Returns true when the command should end.

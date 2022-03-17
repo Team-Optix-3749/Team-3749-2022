@@ -7,9 +7,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -31,11 +28,6 @@ public class Shooter extends SubsystemBase {
     private PIDController m_pidTurretController = new PIDController(0.01, 0.4,
     0.0);
  
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-    NetworkTableEntry tx = table.getEntry("tx");
-    NetworkTableEntry ty = table.getEntry("ty");
-    NetworkTableEntry ta = table.getEntry("ta");
-
     public Shooter() {
         m_leftShooterMotor.setInverted(true);
         m_turretMotor.setInverted(true);
@@ -60,7 +52,7 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber("Velocity", m_leftShooterMotor.getSelectedSensorVelocity());
     }
 
-    public void setTargetVelocity(){
+    public void setTargetVelocity() {
         setRPM(targetVelocity());
     }
 
@@ -76,13 +68,14 @@ public class Shooter extends SubsystemBase {
         return m_leftShooterMotor.getSelectedSensorVelocity();
     }
 
-    public void setTurret(double position){
-        if(m_turretEncoder.getPosition() + 0.1 > position || m_turretEncoder.getPosition() - 0.1 < position) {
+    public void setTurret(double position) {
+        if(m_turretEncoder.getPosition() + 0.01 > position || m_turretEncoder.getPosition() - 0.01 < position) 
             m_turretMotor.set((Math.abs(m_turretEncoder.getPosition()) - Math.abs(position))*0.5);
-        }
-        else{
-            m_turretMotor.set(0);
-        }
+        else m_turretMotor.set(0);
+    }
+
+    public void resetTurret() {
+        setTurret(0);
     }
 
     public void setTurretRaw(double speed) {
@@ -94,25 +87,20 @@ public class Shooter extends SubsystemBase {
     }
     
     public void visionAlign() {
-        // m_turretMotor.set(m_pidTurretController.calculate(tx.getDouble(0.0), 0.0));
-        m_turretMotor.set(tx.getDouble(0.0)*0.01);
-
-        System.out.println(tx.getDouble(0.0));
+        double hubX = Constants.Auto.tx.getDouble(3749);
+        if (hubX != 3749) setTurretMotor(hubX * 0.2);
+        else resetTurret();
     }
 
-    public void setTurretMotor(double speed){
-        if (Math.abs(m_turretEncoder.getPosition()) <= .24){
+    public void setTurretMotor(double speed) {
+        if (Math.abs(m_turretEncoder.getPosition()) <= .3)
             m_turretMotor.set(speed);
-        }
-        else if (m_turretEncoder.getPosition() * speed < 0) { //Checks if speed and encoder position have opposite signs
+        else if (m_turretEncoder.getPosition() * speed < 0) //Checks if speed and encoder position have opposite signs
             m_turretMotor.set(speed);
-        }
-        else{
-            m_turretMotor.set(0);
-        }
+        else m_turretMotor.set(0);
     }
     
-    public double targetVelocity(){
+    public double targetVelocity() {
         double hubY = Constants.Shooter.shooterHeight - Constants.Shooter.hubHeight;
         double hubX = getDistance()+0.61;
         double A = Math.toRadians(Constants.Shooter.shooterAngle);
@@ -120,7 +108,7 @@ public class Shooter extends SubsystemBase {
         return velocity;
     }
      
-    public double getDistance(){    
+    public double getDistance() {    
         double y = Auto.ty.getDouble(0.0);    
         return (Constants.Shooter.hubHeight - Constants.Shooter.shooterHeight)/Math.tan(Math.toRadians(Constants.Shooter.limelightAngle + y));
     }

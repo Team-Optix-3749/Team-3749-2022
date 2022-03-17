@@ -3,24 +3,25 @@ package frc.robot.commands.intake;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ContinousShintake extends CommandBase {
+public class AutoIntake extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     
     private final Intake m_intake;
 
-    public ContinousShintake(Intake intake) {
+    public AutoIntake(Intake intake) {
         m_intake = intake;
         addRequirements(intake);
     }
 
     @Override
     public void initialize() {
-        m_intake.stopShintake();
+        m_intake.intakeFwd();
     }
 
     @Override
     public void execute() {
-        m_intake.setShintake();
+        m_intake.setIntake();
+        m_intake.holdShintake();
     }
 
     @Override

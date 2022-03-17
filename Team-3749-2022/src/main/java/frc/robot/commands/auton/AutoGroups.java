@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.ResetDrivetrain;
-import frc.robot.commands.intake.ContinousIntake;
+import frc.robot.commands.intake.AutoIntake;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -193,19 +193,19 @@ public class AutoGroups {
     public final static Command intake(String name) {
         return new ParallelRaceGroup(
                 getRamsete(name),
-                new ContinousIntake(m_intake));
+                new AutoIntake(m_intake));
     }
 
     public final static Command intake(String name, String translation) {
         return new ParallelRaceGroup(
                 getRamsete(name, translation),
-                new ContinousIntake(m_intake));
+                new AutoIntake(m_intake));
     }
 
     public final static Command intake(String name, boolean reset) {
         return new ParallelRaceGroup(
                 getRamsete(name, reset, true),
-                new ContinousIntake(m_intake));
+                new AutoIntake(m_intake));
     }
 
     public final static Command shoot() {

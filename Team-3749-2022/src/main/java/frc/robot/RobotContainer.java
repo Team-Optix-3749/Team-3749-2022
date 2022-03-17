@@ -77,11 +77,6 @@ public class RobotContainer {
         m_intake.setDefaultCommand(
             new Input(m_intake, Pilot::getLeftTrigger, Operator.a()));
 
-
-        // m_base.setDefaultCommand(
-        // new Controls(m_base, Pilot, Operator));
-
-        // m_elevator.setDefaultCommand(new Tilt(m_elevator));
     }
 
     /**

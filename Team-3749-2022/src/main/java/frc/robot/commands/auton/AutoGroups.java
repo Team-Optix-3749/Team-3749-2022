@@ -10,7 +10,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -222,18 +221,22 @@ public class AutoGroups {
                 shoot());
     }
 
-    public final Command getOne() {
+    public final Command getTwo() {
         return new SequentialCommandGroup(
                 intake("1-Intake"),
-                getRamsete("1-Shoot180"),
+                getRamsete("1-Shoot180Translate", "1-intake"),
                 shoot());
     }
 
-    public final Command getOneTranslate() {
+    public final Command getFour() {
         return new SequentialCommandGroup(
-                intake("1-Intake", true),
-                getRamsete("1-Shoot180Translate", false, false),
-                shoot());
+            intake("1-Intake", true),
+            getRamsete("1-Shoot180Translate", false, false),
+            intake("7-Intake", "1-Intake"),
+            new WaitCommand(3),
+            getRamsete("7-Shoot", "1-Intake"),
+            shoot()
+        );
     }
 
     public final Command tarmacShoot() {

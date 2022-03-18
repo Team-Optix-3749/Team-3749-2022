@@ -8,6 +8,9 @@ import frc.robot.commands.elevator.*;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.POV;
 import frc.robot.utilities.Xbox;
+
+import java.time.Instant;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -56,6 +59,12 @@ public class RobotContainer {
         Operator.x().whenPressed(new InstantCommand(m_intake::startCompressor))
                 .whenReleased(new InstantCommand(m_intake::stopCompressor));
 
+        Operator.a().whenPressed(new InstantCommand(m_intake::setShintake))
+                .whenReleased(new InstantCommand(m_intake::stopShintake));
+
+        Operator.y().whenPressed(new VisionAlign(m_shooter))
+                .whenReleased(new InstantCommand(m_shooter::stopTurret));
+
         Pilot.y().whenPressed(new Extend(m_elevator))
                 .whenReleased(new StopClimb(m_elevator));
 
@@ -72,7 +81,7 @@ public class RobotContainer {
                 new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
 
         m_shooter.setDefaultCommand(
-                new Shoot(m_shooter, m_intake, Operator::getRightTrigger, Operator::getRightX));
+                new Shoot(m_shooter, m_intake, Operator::getRightTrigger, Operator.y(), Operator::getRightX));
 
         m_intake.setDefaultCommand(
             new Input(m_intake, Pilot::getLeftTrigger, Operator.a()));
@@ -87,6 +96,6 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         AutoGroups autoGroup = new AutoGroups(m_drivetrain, m_intake, m_shooter);
 
-        return autoGroup.getRaadwan();
+        return autoGroup.getTwo();
     }
 }

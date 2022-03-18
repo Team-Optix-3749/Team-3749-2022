@@ -7,6 +7,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /** An example command that uses an example subsystem. */
 public class Shoot extends CommandBase {
@@ -15,12 +16,14 @@ public class Shoot extends CommandBase {
     private Shooter m_shooter;
     private Intake m_intake;
     private BooleanSupplier m_trigger;
+    private JoystickButton align;
     private DoubleSupplier m_joystick;
 
-
-    public Shoot(Shooter shooter, Intake intake, BooleanSupplier trigger, DoubleSupplier joystick) {
+    public Shoot(Shooter shooter, Intake intake, BooleanSupplier trigger, JoystickButton alignBtn, DoubleSupplier joystick) {
         m_shooter = shooter;
+        m_intake = intake;
         m_trigger = trigger;
+        align = alignBtn;
         m_joystick = joystick;
         addRequirements(shooter);
     }
@@ -33,16 +36,21 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
         double turretControl = Constants.round(m_joystick.getAsDouble());
-        if (turretControl != 0) m_shooter.setTurretMotor(turretControl*.2);
-        else m_shooter.visionAlign();
+        if (Math.abs(turretControl) < .1) m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed);
+        // else if (align.get()) m_shooter.visionAlign();
+        else m_shooter.stopTurret();
 
         if (m_trigger.getAsBoolean()) {
-            m_shooter.setTargetVelocity();
+            m_shooter.visionAlign();
+            
+            m_shooter.setRPM(Constants.Shooter.shooterRPM);
 
-            if (m_shooter.getRPM() > m_shooter.targetVelocity())
+            if (m_shooter.getRPM() > Constants.Shooter.shooterRPM)
                 m_intake.setShintake();
-            else m_intake.stopShintake();
-        } else m_shooter.stopMotor();
+            else
+                m_intake.stopShintake();
+        } else 
+            m_shooter.stopMotor();
     }
 
     @Override

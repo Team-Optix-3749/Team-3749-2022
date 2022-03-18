@@ -25,8 +25,7 @@ public class Shooter extends SubsystemBase {
     private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI,
             Constants.Shooter.kD);
             
-    private PIDController m_pidTurretController = new PIDController(0.01, 0.4,
-    0.0);
+    private PIDController m_pidTurretController = new PIDController(0.01, 0.4, 0.0);
  
     public Shooter() {
         m_leftShooterMotor.setInverted(true);
@@ -48,12 +47,12 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setVelocity(double velocity) {
-        setRPM(velocity * 60 / .476);
+        setRPM(velocity / .476);
         SmartDashboard.putNumber("Velocity", m_leftShooterMotor.getSelectedSensorVelocity());
     }
 
     public void setTargetVelocity() {
-        setRPM(targetVelocity());
+        setRPM(targetVelocity() / .476);
     }
 
     public void rawShoot(double speed) {
@@ -68,14 +67,14 @@ public class Shooter extends SubsystemBase {
         return m_leftShooterMotor.getSelectedSensorVelocity();
     }
 
-    public void setTurret(double position) {
+    public void setTurretPosition(double position) {
         if(m_turretEncoder.getPosition() + 0.01 > position || m_turretEncoder.getPosition() - 0.01 < position) 
-            m_turretMotor.set((Math.abs(m_turretEncoder.getPosition()) - Math.abs(position))*0.5);
+            setTurretMotor((m_turretEncoder.getPosition() - position)*0.1);
         else m_turretMotor.set(0);
     }
 
     public void resetTurret() {
-        setTurret(0);
+        setTurretPosition(0);
     }
 
     public void setTurretRaw(double speed) {
@@ -88,13 +87,14 @@ public class Shooter extends SubsystemBase {
     
     public void visionAlign() {
         double hubX = Constants.Auto.tx.getDouble(3749);
-        if (hubX != 3749) setTurretMotor(hubX * 0.2);
+        if (hubX != 3749) setTurretMotor(hubX * 0.015); 
         else resetTurret();
     }
 
     public void setTurretMotor(double speed) {
-        if (Math.abs(m_turretEncoder.getPosition()) <= .3)
-            m_turretMotor.set(speed);
+        if (m_turretEncoder.getPosition() <= .25 || m_turretEncoder.getPosition() >= -.2) {
+                m_turretMotor.set(speed);
+        }
         else if (m_turretEncoder.getPosition() * speed < 0) //Checks if speed and encoder position have opposite signs
             m_turretMotor.set(speed);
         else m_turretMotor.set(0);

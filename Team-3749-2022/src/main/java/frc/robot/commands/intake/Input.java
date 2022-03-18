@@ -1,6 +1,7 @@
 package frc.robot.commands.intake;
 
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -12,6 +13,7 @@ public class Input extends CommandBase {
     private final Intake m_intake;
     private final BooleanSupplier m_trigger;
     private final JoystickButton button;
+    private Timer t = new Timer();
 
     public Input(Intake intake, BooleanSupplier trigger, JoystickButton btn) {
         m_intake = intake;
@@ -22,11 +24,16 @@ public class Input extends CommandBase {
 
     @Override
     public void initialize() {
+        t.start();
         m_intake.stopCompressor();
     }
 
     @Override
     public void execute() {
+        if (t.get() >= 25 && t.get() <= 45) m_intake.startCompressor();
+        else if (t.get() >= 45) t.reset();
+        else m_intake.stopCompressor();
+
         if (m_trigger.getAsBoolean()) {
             m_intake.intakeFwd();
             m_intake.setIntake();
@@ -48,6 +55,7 @@ public class Input extends CommandBase {
         m_intake.intakeRev();
         m_intake.stopIntake();
         m_intake.stopShintake();
+        t.reset();
     }
 
     // Returns true when the command should end.

@@ -25,8 +25,8 @@ public class AutoShoot extends CommandBase {
     @Override
     public void execute() {
         m_shooter.visionAlign();
-        // m_shooter.setRPM(Constants.Shooter.shooterRPM);
-        m_shooter.setTargetVelocity();
+        m_shooter.setRPM(Constants.Shooter.shooterRPM);
+        // m_shooter.setTargetVelocity();
         // System.out.println(m_shooter.getRPM());
         if (m_shooter.getRPM() > m_shooter.targetVelocity())
             m_intake.setShintake();

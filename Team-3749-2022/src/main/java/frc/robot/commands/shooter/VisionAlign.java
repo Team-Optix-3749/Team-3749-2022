@@ -9,7 +9,6 @@ public class VisionAlign extends CommandBase {
 
     private final Shooter m_shooter;
     private boolean finished = false;
-    
 
     public VisionAlign(Shooter shooter) {
         m_shooter = shooter;
@@ -18,6 +17,7 @@ public class VisionAlign extends CommandBase {
 
     @Override
     public void initialize() {
+        m_shooter.resetTurret();
     }
 
     @Override

@@ -36,12 +36,14 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
         double turretControl = Constants.round(m_joystick.getAsDouble());
-        if (Math.abs(turretControl) < .1) m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed);
+        if (Math.abs(turretControl) >= .1) {m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed); System.out.println("manual turret");}
         // else if (align.get()) m_shooter.visionAlign();
+        //else {m_shooter.visionAlign(); System.out.println("align good");}
         else m_shooter.stopTurret();
+             
 
         if (m_trigger.getAsBoolean()) {
-            m_shooter.visionAlign();
+            // m_shooter.visionAlign();
             
             m_shooter.setRPM(Constants.Shooter.shooterRPM);
 

@@ -88,15 +88,16 @@ public class Shooter extends SubsystemBase {
     public void visionAlign() {
         double hubX = Constants.Auto.tx.getDouble(3749);
         if (hubX != 3749) setTurretMotor(hubX * 0.015); 
-        else resetTurret();
+        else stopTurret();
     }
 
     public void setTurretMotor(double speed) {
-        if (m_turretEncoder.getPosition() <= .25 || m_turretEncoder.getPosition() >= -.2) {
+        if (Math.abs(m_turretEncoder.getPosition()) <= .25) {
                 m_turretMotor.set(speed);
         }
-        else if (m_turretEncoder.getPosition() * speed < 0) //Checks if speed and encoder position have opposite signs
-            m_turretMotor.set(speed);
+        else if (m_turretEncoder.getPosition() * speed < 0){ //Checks if speed and encoder position have opposite signs
+            if (m_turretEncoder.getPosition() < 0) {m_turretMotor.set(Math.abs(speed));}
+            else if (m_turretEncoder.getPosition() > 0) m_turretMotor.set(-Math.abs(speed));}
         else m_turretMotor.set(0);
     }
     

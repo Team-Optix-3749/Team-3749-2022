@@ -69,11 +69,11 @@ public class RobotContainer {
         Pilot.b().whenPressed(new Lift(m_elevator))
                 .whenReleased(new StopClimb(m_elevator));
         
-        Pilot.rightBumper().whenPressed(new Tilt(m_elevator))
-                .whenReleased(new StopTilt(m_elevator));
+        // Pilot.rightBumper().whenPressed(new Tilt(m_elevator))
+        //         .whenReleased(new StopTilt(m_elevator));
         
-        Pilot.leftBumper().whenPressed(new Untilt(m_elevator))
-                .whenReleased(new StopTilt(m_elevator));
+        // Pilot.leftBumper().whenPressed(new Untilt(m_elevator))
+        //         .whenReleased(new StopTilt(m_elevator));
 
         m_drivetrain.setDefaultCommand(
                 new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));

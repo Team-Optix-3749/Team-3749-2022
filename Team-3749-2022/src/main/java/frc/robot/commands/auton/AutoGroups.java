@@ -230,7 +230,7 @@ public class AutoGroups {
                 intake("1-Intake"),
                 new ParallelRaceGroup(
                     intake(),
-                    new WaitCommand(2)
+                    new WaitCommand(1)
                 ),
                 getRamsete("1-ShootRotate", "1-intake"),
                 shoot());

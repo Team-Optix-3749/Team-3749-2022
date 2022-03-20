@@ -6,6 +6,7 @@ import frc.robot.utilities.Constants;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -31,17 +32,26 @@ public class Shoot extends CommandBase {
     @Override
     public void initialize() {
         m_shooter.stopMotor();
+        m_shooter.stopTurret();
     }
 
     @Override
     public void execute() {
         double turretControl = Constants.round(m_joystick.getAsDouble());
-        if (Math.abs(turretControl) >= .1) {m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed); System.out.println("manual turret");}
-        // else if (align.get()) m_shooter.visionAlign();
-        //else {m_shooter.visionAlign(); System.out.println("align good");}
-        else m_shooter.stopTurret();
-             
-
+        if (Math.abs(turretControl) >= .1) 
+            { m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed);
+            SmartDashboard.putNumber("turret pos: ", m_shooter.getTurretPosition());
+        }
+        else if (align.get())
+        {
+             m_shooter.visionAlign();}
+        else m_shooter.stopTurret();  
+        
+        SmartDashboard.putNumber("turret pos", m_shooter.getTurretPosition());
+        SmartDashboard.putNumber("Shooter RPM", m_shooter.getRPM());
+        SmartDashboard.putBoolean("align btn t/f", align.get());
+        
+        // System.out.println(m_shooter.getTurretPosition());
         if (m_trigger.getAsBoolean()) {
             // m_shooter.visionAlign();
             

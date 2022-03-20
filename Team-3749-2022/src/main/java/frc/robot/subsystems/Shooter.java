@@ -87,19 +87,27 @@ public class Shooter extends SubsystemBase {
     
     public void visionAlign() {
         double hubX = Constants.Auto.tx.getDouble(3749);
+        SmartDashboard.putNumber("Hub Xz", hubX);
         if (hubX != 3749) setTurretMotor(hubX * 0.015); 
         else stopTurret();
     }
 
+    public double getTurretPosition(){
+        return m_turretEncoder.getPosition();
+    }
+
     public void setTurretMotor(double speed) {
-        if (Math.abs(m_turretEncoder.getPosition()) <= .25) {
+        if (Math.abs(m_turretEncoder.getPosition() /*- .15*/) <= .23) {
                 m_turretMotor.set(speed);
         }
         else if (m_turretEncoder.getPosition() * speed < 0){ //Checks if speed and encoder position have opposite signs
+            m_turretMotor.set(speed);
             if (m_turretEncoder.getPosition() < 0) {m_turretMotor.set(Math.abs(speed));}
-            else if (m_turretEncoder.getPosition() > 0) m_turretMotor.set(-Math.abs(speed));}
-        else m_turretMotor.set(0);
-    }
+            else if (m_turretEncoder.getPosition() > 0) m_turretMotor.set(-Math.abs(speed));
+        }
+         else m_turretMotor.set(0);
+    } 
+    
     
     public double targetVelocity() {
         double hubY = Constants.Shooter.shooterHeight - Constants.Shooter.hubHeight;
@@ -112,5 +120,9 @@ public class Shooter extends SubsystemBase {
     public double getDistance() {    
         double y = Auto.ty.getDouble(0.0);    
         return (Constants.Shooter.hubHeight - Constants.Shooter.shooterHeight)/Math.tan(Math.toRadians(Constants.Shooter.limelightAngle + y));
+    }
+
+    public void resetEncoder(){
+        m_turretEncoder.setPosition(0);
     }
 }

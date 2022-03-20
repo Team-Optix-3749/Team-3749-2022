@@ -13,12 +13,14 @@ public class Input extends CommandBase {
     private final Intake m_intake;
     private final BooleanSupplier m_trigger;
     private final JoystickButton button;
+    private final JoystickButton comp;
     private Timer t = new Timer();
 
-    public Input(Intake intake, BooleanSupplier trigger, JoystickButton btn) {
+    public Input(Intake intake, BooleanSupplier trigger, JoystickButton btn, JoystickButton btn2) {
         m_intake = intake;
         m_trigger = trigger;
         button = btn;
+        comp = btn2;
         addRequirements(intake);
     }
 
@@ -30,7 +32,8 @@ public class Input extends CommandBase {
 
     @Override
     public void execute() {
-        if (t.get() >= 25 && t.get() <= 45) m_intake.startCompressor();
+        if (comp.get()) m_intake.startCompressor();
+        else if (t.get() >= 25 && t.get() <= 45) m_intake.startCompressor();
         else if (t.get() >= 45) t.reset();
         else m_intake.stopCompressor();
 

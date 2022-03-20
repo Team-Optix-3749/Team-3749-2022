@@ -195,6 +195,10 @@ public class AutoGroups {
                 new AutoIntake(m_intake));
     }
 
+    public final static Command intake() {
+        return new AutoIntake(m_intake); 
+    }
+
     public final static Command intake(String name, String translation) {
         return new ParallelRaceGroup(
                 getRamsete(name, translation),
@@ -224,20 +228,40 @@ public class AutoGroups {
     public final Command getTwo() {
         return new SequentialCommandGroup(
                 intake("1-Intake"),
-                getRamsete("1-Shoot180Translate", "1-intake"),
+                new ParallelRaceGroup(
+                    intake(),
+                    new WaitCommand(2)
+                ),
+                getRamsete("1-ShootRotate", "1-intake"),
                 shoot());
     }
 
     public final Command getFour() {
         return new SequentialCommandGroup(
             intake("1-Intake", true),
-            getRamsete("1-Shoot180Translate", false, false),
-            intake("7-Intake", "1-Intake"),
-            new WaitCommand(3),
+            getRamsete("1-Shoot180Translate", "1-Intake"),
+            shoot(),
+            getRamsete("7-Intake"),
+            new ParallelRaceGroup(  
+                intake(),
+                new WaitCommand(3)          
+            ),
             getRamsete("7-Shoot", "1-Intake"),
             shoot()
         );
     }
+
+    public final Command getThree() {
+        return new SequentialCommandGroup(
+            intake("3-Intake"),
+                new ParallelRaceGroup(
+                    intake(),
+                    new WaitCommand(1)
+                ),
+                getRamsete("3-ShootRound", "3-Intake"),
+                shoot());
+    }
+
 
     public final Command tarmacShoot() {
         return shoot();

@@ -84,13 +84,15 @@ public class Elevator extends SubsystemBase {
     }
 
     public void extend() {
-        rawClimb(m_tiltPID.calculate(getChain(), 10));
+        if (getChain() < 3749) rawClimbUp();
+        else {stopClimb();}
         // Dhruv said 10 in 💀
         // need to test encoder pos (https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html#cascade-elevator)
     }
 
     public void lift() {
-        rawClimb(m_tiltPID.calculate(getChain(), 0));
+        if (getChain() > 0) rawClimbDown();
+        else {stopClimb();}
     }
 
     public void tilt() {

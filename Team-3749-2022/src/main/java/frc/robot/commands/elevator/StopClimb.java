@@ -1,6 +1,7 @@
 package frc.robot.commands.elevator;
 
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class StopClimb extends CommandBase {
@@ -17,6 +18,7 @@ public class StopClimb extends CommandBase {
 
     @Override
     public void execute() {
+        SmartDashboard.putNumber("Elevator motor", m_elevator.getChain());
         m_elevator.stopClimb();
     }
 

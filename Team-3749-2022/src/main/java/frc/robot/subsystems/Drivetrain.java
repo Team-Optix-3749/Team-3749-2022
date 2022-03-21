@@ -53,11 +53,11 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setCoast() {
-      m_leftFront.setNeutralMode(NeutralMode.Coast);
-      m_leftBack.setNeutralMode(NeutralMode.Coast);
+        m_leftFront.setNeutralMode(NeutralMode.Coast);
+        m_leftBack.setNeutralMode(NeutralMode.Coast);
 
-      m_rightBack.setNeutralMode(NeutralMode.Coast);
-      m_rightFront.setNeutralMode(NeutralMode.Coast);
+        m_rightBack.setNeutralMode(NeutralMode.Coast);
+        m_rightFront.setNeutralMode(NeutralMode.Coast);
   }
 
     public void arcadeDrive(double speed, double rotation) {
@@ -67,7 +67,7 @@ public class Drivetrain extends SubsystemBase {
     @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    m_odometry.update(
+      m_odometry.update(
         m_gyro.getRotation2d(), m_leftFront.getSelectedSensorPosition()/Constants.Auto.wheelMult, m_rightFront.getSelectedSensorPosition()/Constants.Auto.wheelMult);
   }
 
@@ -109,8 +109,8 @@ public class Drivetrain extends SubsystemBase {
     m_left.setVoltage(-leftVolts*0.3);
     m_right.setVoltage(-rightVolts*0.3);
     m_drive.feed();
-    SmartDashboard.putNumber("heading", getHeading());
-    System.out.println(getHeading());
+    // SmartDashboard.putNumber("heading", getHeading());
+    // System.out.println(getHeading());
 
   }
 
@@ -118,8 +118,8 @@ public class Drivetrain extends SubsystemBase {
     m_left.setVoltage(leftVolts*0.3);
     m_right.setVoltage(rightVolts*0.3);
     m_drive.feed();
-    SmartDashboard.putNumber("heading", getHeading());
-    System.out.println(getHeading());
+    // SmartDashboard.putNumber("heading", getHeading());
+    // System.out.println(getHeading());
 
   }
 

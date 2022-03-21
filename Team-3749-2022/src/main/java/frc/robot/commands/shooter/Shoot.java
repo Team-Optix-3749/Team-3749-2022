@@ -16,14 +16,17 @@ public class Shoot extends CommandBase {
 
     private Shooter m_shooter;
     private Intake m_intake;
-    private BooleanSupplier m_trigger;
+    private BooleanSupplier m_rightTrigger;
+    private BooleanSupplier m_leftTrigger;
+
     private JoystickButton align;
     private DoubleSupplier m_joystick;
 
-    public Shoot(Shooter shooter, Intake intake, BooleanSupplier trigger, JoystickButton alignBtn, DoubleSupplier joystick) {
+    public Shoot(Shooter shooter, Intake intake, BooleanSupplier rightTrig, BooleanSupplier leftTrig, JoystickButton alignBtn, DoubleSupplier joystick) {
         m_shooter = shooter;
         m_intake = intake;
-        m_trigger = trigger;
+        m_rightTrigger = rightTrig;
+        m_leftTrigger = leftTrig;
         align = alignBtn;
         m_joystick = joystick;
         addRequirements(shooter);
@@ -38,31 +41,28 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
         double turretControl = Constants.round(m_joystick.getAsDouble());
-        if (Math.abs(turretControl) >= .1) 
-            { m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed);
+        if (Math.abs(turretControl) >= .1) { 
+            m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed);
             SmartDashboard.putNumber("turret pos: ", m_shooter.getTurretPosition());
+        } else if (align.get()) {
+             m_shooter.visionAlign();
         }
-        else if (align.get())
-        {
-             m_shooter.visionAlign();}
-        else m_shooter.stopTurret();  
-        
+        else {m_shooter.stopTurret();}  
+
         SmartDashboard.putNumber("turret pos", m_shooter.getTurretPosition());
         SmartDashboard.putNumber("Shooter RPM", m_shooter.getRPM());
         SmartDashboard.putBoolean("align btn t/f", align.get());
+        SmartDashboard.putBoolean("lower shoot t/f", m_leftTrigger.getAsBoolean());
+
         
         // System.out.println(m_shooter.getTurretPosition());
-        if (m_trigger.getAsBoolean()) {
+        if (m_rightTrigger.getAsBoolean()) {
             // m_shooter.visionAlign();
             
             m_shooter.setRPM(Constants.Shooter.shooterRPM);
-
-            if (m_shooter.getRPM() > Constants.Shooter.shooterRPM)
-                m_intake.setShintake();
-            else
-                m_intake.stopShintake();
-        } else 
-            m_shooter.stopMotor();
+        } else if (m_leftTrigger.getAsBoolean())
+            m_shooter.setRPM(Constants.Shooter.lowerRPM);
+        else m_shooter.stopMotor();
     }
 
     @Override

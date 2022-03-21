@@ -64,7 +64,8 @@ public final class Constants {
     }
 
     public static final class Shooter{
-        public static final double shooterRPM = 800;
+        public static final double lowerRPM = 200; 
+        public static final double shooterRPM = 600;
         public static final double turretSpeed = 0.2;
 
         public static final int turretMotor = 22;

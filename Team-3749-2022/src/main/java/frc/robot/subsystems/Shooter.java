@@ -39,7 +39,7 @@ public class Shooter extends SubsystemBase {
 
     public void setRPM(double target) {
         m_shooterMotors.setVoltage(m_pidController.calculate(m_leftShooterMotor.getSelectedSensorVelocity(), target * 60) * .0019);
-        SmartDashboard.putNumber("Voltage", m_leftShooterMotor.getBusVoltage());
+        // SmartDashboard.putNumber("Voltage", m_leftShooterMotor.getBusVoltage());
     }
 
     public double getRPM() {

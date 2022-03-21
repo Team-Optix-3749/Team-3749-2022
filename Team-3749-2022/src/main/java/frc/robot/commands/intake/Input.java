@@ -45,7 +45,7 @@ public class Input extends CommandBase {
             m_intake.setIntake();
             m_intake.holdShintake();
         } 
-        else if (button.get()) { 
+        else if (shintakeBtn.get()) { 
             m_intake.setShintake();
         }
         else {

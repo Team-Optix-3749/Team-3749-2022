@@ -39,7 +39,6 @@ public class Shooter extends SubsystemBase {
 
     public void setRPM(double target) {
         m_shooterMotors.setVoltage(m_pidController.calculate(m_leftShooterMotor.getSelectedSensorVelocity(), target * 60) * .0019);
-        // SmartDashboard.putNumber("Voltage", m_leftShooterMotor.getBusVoltage());
     }
 
     public double getRPM() {
@@ -87,7 +86,7 @@ public class Shooter extends SubsystemBase {
     
     public void visionAlign() {
         double hubX = Constants.Auto.tx.getDouble(3749);
-        SmartDashboard.putNumber("Hub Xz", hubX);
+        SmartDashboard.putNumber("Hub Alignment (-3 < x < 3)", hubX);
         if (hubX != 3749) setTurretMotor(hubX * 0.015); 
         else stopTurret();
     }
@@ -107,7 +106,6 @@ public class Shooter extends SubsystemBase {
         }
          else m_turretMotor.set(0);
     } 
-    
     
     public double targetVelocity() {
         double hubY = Constants.Shooter.shooterHeight - Constants.Shooter.hubHeight;

@@ -52,6 +52,8 @@ public class Shoot extends CommandBase {
     public void execute() {
         dashboard();
 
+        // System.out.println(SmartDashboard.getString("RPM CHOOSER", "0"));
+
         double turretControl = Constants.round(m_joystick.getAsDouble());
         if (Math.abs(turretControl) >= .1) { 
             m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed);

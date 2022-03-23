@@ -63,7 +63,8 @@ public class Shoot extends CommandBase {
             
             m_shooter.setRPM(Constants.Shooter.shooterRPM);
         } else if (m_leftTrigger.getAsBoolean())
-            m_shooter.setRPM(Constants.Shooter.lowerRPM);
+            // m_shooter.setRPM(Constants.Shooter.lowerRPM);
+            m_shooter.setTargetVelocity();
         else m_shooter.stopMotor();
     }
 

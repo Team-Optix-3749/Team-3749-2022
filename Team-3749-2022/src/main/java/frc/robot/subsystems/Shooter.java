@@ -45,15 +45,6 @@ public class Shooter extends SubsystemBase {
         return m_leftShooterMotor.getSelectedSensorVelocity() * 0.034;
     }
 
-    public void setVelocity(double velocity) {
-        setRPM(velocity / .476);
-        SmartDashboard.putNumber("Velocity", m_leftShooterMotor.getSelectedSensorVelocity());
-    }
-
-    public void setTargetVelocity() {
-        setRPM(targetVelocity() / .476);
-    }
-
     public void rawShoot(double speed) {
         m_shooterMotors.set(speed);
     }
@@ -96,7 +87,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setTurretMotor(double speed) {
-        if (Math.abs(m_turretEncoder.getPosition() /*- .15*/) <= .23) {
+        if (Math.abs(m_turretEncoder.getPosition()) <= .23) {
                 m_turretMotor.set(speed);
         }
         else if (m_turretEncoder.getPosition() * speed < 0){ //Checks if speed and encoder position have opposite signs
@@ -118,6 +109,15 @@ public class Shooter extends SubsystemBase {
     public double getDistance() {    
         double y = Auto.ty.getDouble(0.0);    
         return (Constants.Shooter.hubHeight - Constants.Shooter.shooterHeight)/Math.tan(Math.toRadians(Constants.Shooter.limelightAngle + y));
+    }
+
+    public void setTargetVelocity() {
+        setRPM(targetVelocity());
+    }
+
+    public void setVelocity(double velocity) {
+        setRPM(velocity / .476);
+        SmartDashboard.putNumber("Velocity", m_leftShooterMotor.getSelectedSensorVelocity());
     }
 
     public void resetEncoder(){

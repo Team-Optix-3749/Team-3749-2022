@@ -32,6 +32,14 @@ public class Shoot extends CommandBase {
         addRequirements(shooter);
     }
 
+    public void dashboard() {
+        SmartDashboard.putNumber("Turret Position", m_shooter.getTurretPosition());
+        SmartDashboard.putNumber("Shooter RPM", m_shooter.getRPM());
+        SmartDashboard.putBoolean("Lower Shoot RPM", m_shooter.getRPM() > 300);
+        SmartDashboard.putBoolean("Upper Shoot RPM", m_shooter.getRPM() > 600);
+        SmartDashboard.putNumber("Distance", m_shooter.getDistance());
+    }
+
     @Override
     public void initialize() {
         m_shooter.stopMotor();
@@ -40,22 +48,16 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
+        dashboard();
+
         double turretControl = Constants.round(m_joystick.getAsDouble());
         if (Math.abs(turretControl) >= .1) { 
             m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed);
-            SmartDashboard.putNumber("turret pos: ", m_shooter.getTurretPosition());
         } else if (align.get()) {
              m_shooter.visionAlign();
         }
         else {m_shooter.stopTurret();}  
 
-        SmartDashboard.putNumber("turret pos", m_shooter.getTurretPosition());
-        SmartDashboard.putNumber("Shooter RPM", m_shooter.getRPM());
-        SmartDashboard.putBoolean("align btn t/f", align.get());
-        SmartDashboard.putBoolean("lower shoot t/f", m_leftTrigger.getAsBoolean());
-
-        
-        // System.out.println(m_shooter.getTurretPosition());
         if (m_rightTrigger.getAsBoolean()) {
             // m_shooter.visionAlign();
             

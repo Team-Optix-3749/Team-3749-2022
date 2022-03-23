@@ -61,6 +61,7 @@ public class RobotContainer {
         //         .whenReleased(new InstantCommand(m_shooter::stopTurret));
 
         Pilot.y().whenPressed(new Extend(m_elevator)).whenReleased(new StopClimb(m_elevator));
+        
         Pilot.b().whenPressed(new Lift(m_elevator)).whenReleased(new StopClimb(m_elevator));
 
         // Pilot.y().whileActiveContinuous(new Extend(m_elevator));

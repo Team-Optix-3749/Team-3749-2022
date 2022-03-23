@@ -20,15 +20,17 @@ public class Shoot extends CommandBase {
     private BooleanSupplier m_leftTrigger;
 
     private JoystickButton align;
+    private JoystickButton alignSkewed;
     private DoubleSupplier m_joystick;
 
-    public Shoot(Shooter shooter, Intake intake, BooleanSupplier rightTrig, BooleanSupplier leftTrig, JoystickButton alignBtn, DoubleSupplier joystick) {
+    public Shoot(Shooter shooter, Intake intake, BooleanSupplier rightTrig, BooleanSupplier leftTrig, JoystickButton alignBtn, JoystickButton alignBtnSkewed, DoubleSupplier joystick) {
         m_shooter = shooter;
         m_intake = intake;
         m_rightTrigger = rightTrig;
         m_leftTrigger = leftTrig;
         align = alignBtn;
         m_joystick = joystick;
+        alignSkewed = alignBtnSkewed;
         addRequirements(shooter);
     }
 
@@ -55,8 +57,9 @@ public class Shoot extends CommandBase {
             m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed);
         } else if (align.get()) {
              m_shooter.visionAlign();
-        }
-        else {m_shooter.stopTurret();}  
+        } else if (alignSkewed.get()){
+            m_shooter.skewedVisionAlign();
+        } else {m_shooter.stopTurret();}  
 
         if (m_rightTrigger.getAsBoolean()) {
             // m_shooter.visionAlign();

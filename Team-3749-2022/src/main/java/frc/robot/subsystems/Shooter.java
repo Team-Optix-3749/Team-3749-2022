@@ -75,12 +75,20 @@ public class Shooter extends SubsystemBase {
         m_turretMotor.stopMotor();
     }
     
-    public void visionAlign() {
+    public void skewedVisionAlign() {
         double hubX = Constants.Auto.tx.getDouble(3749) + 1;
         SmartDashboard.putNumber("Hub Alignment (-3 < x < 3)", hubX - 1);
         if (hubX != 3750) setTurretMotor(hubX * 0.015); 
         else stopTurret();
     }
+
+    public void visionAlign() {
+        double hubX = Constants.Auto.tx.getDouble(3749);
+        SmartDashboard.putNumber("Hub Alignment (-3 < x < 3)", hubX - 1);
+        if (hubX != 3749) setTurretMotor(hubX * 0.015); 
+        else stopTurret();
+    }
+
 
     public double getTurretPosition(){
         return m_turretEncoder.getPosition();

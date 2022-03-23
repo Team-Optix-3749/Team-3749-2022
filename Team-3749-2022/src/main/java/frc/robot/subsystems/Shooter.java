@@ -78,7 +78,7 @@ public class Shooter extends SubsystemBase {
     public void visionAlign() {
         double hubX = Constants.Auto.tx.getDouble(3749) + 1;
         SmartDashboard.putNumber("Hub Alignment (-3 < x < 3)", hubX);
-        if (hubX >= 1 || hubX <= -1) setTurretMotor(hubX * 0.015); 
+        if (hubX != 3750) setTurretMotor(hubX * 0.015); 
         else stopTurret();
     }
 

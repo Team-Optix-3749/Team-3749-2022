@@ -74,7 +74,6 @@ public class Shoot extends CommandBase {
 
         if (m_rightTrigger.getAsBoolean()) {
             // m_shooter.visionAlign();
-            
             m_shooter.setRPM(Constants.Shooter.shooterRPM);
         } else if (m_leftTrigger.getAsBoolean())
             m_shooter.setRPM(Constants.Shooter.lowerRPM);

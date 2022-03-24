@@ -84,7 +84,7 @@ public class Shooter extends SubsystemBase {
 
     public void visionAlign() {
         double hubX = Constants.Auto.tx.getDouble(3749);
-        SmartDashboard.putNumber("Hub Alignment (-3 < x < 3)", hubX - 1);
+        SmartDashboard.putNumber("Hub Alignment (-3 < x < 3)", hubX);
         if (hubX != 3749) setTurretMotor(hubX * 0.015); 
         else stopTurret();
     }
@@ -119,12 +119,13 @@ public class Shooter extends SubsystemBase {
         return (Constants.Shooter.hubHeight - Constants.Shooter.shooterHeight)/Math.tan(Math.toRadians(Constants.Shooter.limelightAngle + y));
     }
 
-    public void distanceCheck(){
-        if (getDistance() > Constants.Shooter.upperHubLesserDistance && getDistance() < Constants.Shooter.upperHubGreaterDistance) SmartDashboard.putBoolean("upper hub", true);
-        else if (getDistance() < Constants.Shooter.lowerHubDistance) SmartDashboard.putBoolean("lower hub", true);
-        else {SmartDashboard.putBoolean("upper hub", false);  SmartDashboard.putBoolean("lower hub", false); }
-    }
+    public void distanceCheck() {
+        boolean upperCheck = (getDistance() > Constants.Shooter.upperHubLesserDistance && getDistance() < Constants.Shooter.upperHubGreaterDistance);
+        boolean lowerCheck = (getDistance() < Constants.Shooter.lowerHubDistance);
 
+        SmartDashboard.putBoolean("UPPER HUB DISTANCE CHECK", upperCheck);
+        SmartDashboard.putBoolean("LOWER HUB DISTANCE CHECK", lowerCheck);
+    }
 
     public void setTargetVelocity() {
         setRPM(targetVelocity());
@@ -132,7 +133,6 @@ public class Shooter extends SubsystemBase {
 
     public void setVelocity(double velocity) {
         setRPM(velocity / .476);
-        // SmartDashboard.putNumber("Velocity", m_leftShooterMotor.getSelectedSensorVelocity());
     }
 
     public void resetEncoder(){

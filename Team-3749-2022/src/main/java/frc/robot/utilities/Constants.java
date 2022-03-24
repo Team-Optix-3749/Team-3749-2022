@@ -81,6 +81,10 @@ public final class Constants {
         public static final double hubHeight = 2.64;
         public static final double limelightAngle = 50;
         public static final double shooterAngle = (47.5);
+
+        public static final double upperHubLesserDistance = 1.905;
+        public static final double upperHubGreaterDistance = 2.413; 
+        public static final double lowerHubDistance = 1;
     } 
 
     public static final class Vision{

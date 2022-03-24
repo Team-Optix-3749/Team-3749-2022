@@ -55,6 +55,8 @@ public class Shoot extends CommandBase {
     public void execute() {
         SmartDashboard.putNumber("SHOOTER RPM", 0);
 
+        m_shooter.distanceCheck();
+
         // SmartDashboard.getNumber("SHOOTER RPM");
 
         dashboard();

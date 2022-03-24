@@ -119,6 +119,13 @@ public class Shooter extends SubsystemBase {
         return (Constants.Shooter.hubHeight - Constants.Shooter.shooterHeight)/Math.tan(Math.toRadians(Constants.Shooter.limelightAngle + y));
     }
 
+    public void distanceCheck(){
+        if (getDistance() > Constants.Shooter.upperHubLesserDistance && getDistance() < Constants.Shooter.upperHubGreaterDistance) SmartDashboard.putBoolean("upper hub", true);
+        else if (getDistance < Constants.Shooter.lowerHubDistance) SmartDashboard.putBoolean("lower hub", true);
+        else {SmartDashboard.putBoolean("upper hub", false);  SmartDashboard.putBoolean("lower hub", false); }
+    }
+
+
     public void setTargetVelocity() {
         setRPM(targetVelocity());
     }

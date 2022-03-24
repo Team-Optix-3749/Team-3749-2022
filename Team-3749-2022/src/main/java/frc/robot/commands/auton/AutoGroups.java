@@ -158,7 +158,7 @@ public class AutoGroups {
 
     public final static Command getRamsete(String name, String translate) {
         Trajectory traj = PathPlanner.loadPath(name, 2, 1.67);
-        Trajectory translation = PathPlanner.loadPath(name, 2, 1.67);
+        Trajectory translation = PathPlanner.loadPath(name, 2, 1.67); // why does this work??????
 
         if(translate != "") { 
             traj = traj.relativeTo(translation.getInitialPose());
@@ -235,6 +235,17 @@ public class AutoGroups {
                 getRamsete("1-ShootRotate", "1-intake"),
                 shoot());
     }
+    
+    public final Command getThree() {
+        return new SequentialCommandGroup(
+            intake("3-Intake"),
+                new ParallelRaceGroup(
+                    intake(),
+                    new WaitCommand(1)
+                ),
+                getRamsete("3-ShootRound", "3-Intake"),
+                shoot());
+    }
 
     public final Command getFour() {
         return new SequentialCommandGroup(
@@ -251,16 +262,6 @@ public class AutoGroups {
         );
     }
 
-    public final Command getThree() {
-        return new SequentialCommandGroup(
-            intake("3-Intake"),
-                new ParallelRaceGroup(
-                    intake(),
-                    new WaitCommand(1)
-                ),
-                getRamsete("3-ShootRound", "3-Intake"),
-                shoot());
-    }
 
 
     public final Command tarmacShoot() {

@@ -6,6 +6,7 @@ import frc.robot.utilities.Constants;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -18,6 +19,7 @@ public class Shoot extends CommandBase {
     private Intake m_intake;
     private BooleanSupplier m_rightTrigger;
     private BooleanSupplier m_leftTrigger;
+    // private Sendable send = new Sendable();
 
     private JoystickButton align;
     private JoystickButton alignSkewed;
@@ -37,9 +39,10 @@ public class Shoot extends CommandBase {
     public void dashboard() {
         SmartDashboard.putNumber("Turret Position", m_shooter.getTurretPosition());
         SmartDashboard.putNumber("Shooter RPM", m_shooter.getRPM());
-        SmartDashboard.putBoolean("Lower Shoot RPM", m_shooter.getRPM() > 300);
-        SmartDashboard.putBoolean("Upper Shoot RPM", m_shooter.getRPM() > 600);
+        SmartDashboard.putBoolean("Lower Shoot RPM", m_shooter.getRPM() > Constants.Shooter.lowerRPM);
+        SmartDashboard.putBoolean("Upper Shoot RPM", m_shooter.getRPM() > Constants.Shooter.shooterRPM);
         SmartDashboard.putNumber("Distance", m_shooter.getDistance());
+        SmartDashboard.putNumber("Shooter Velocity", m_shooter.getVelocity());
     }
 
     @Override
@@ -50,6 +53,10 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
+        SmartDashboard.putNumber("SHOOTER RPM", 0);
+
+        // SmartDashboard.getNumber("SHOOTER RPM");
+
         dashboard();
 
         // System.out.println(SmartDashboard.getString("RPM CHOOSER", "0"));
@@ -68,8 +75,8 @@ public class Shoot extends CommandBase {
             
             m_shooter.setRPM(Constants.Shooter.shooterRPM);
         } else if (m_leftTrigger.getAsBoolean())
-            // m_shooter.setRPM(Constants.Shooter.lowerRPM);
-            m_shooter.setTargetVelocity();
+            m_shooter.setRPM(Constants.Shooter.lowerRPM);
+            // m_shooter.setVelocity(100);
         else m_shooter.stopMotor();
     }
 

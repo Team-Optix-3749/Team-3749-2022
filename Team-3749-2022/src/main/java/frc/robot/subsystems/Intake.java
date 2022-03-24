@@ -5,9 +5,11 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake extends SubsystemBase {
     public CANSparkMax m_intakeMotor = new CANSparkMax(Constants.Intake.intakeMotor, MotorType.kBrushless);
@@ -22,6 +24,9 @@ public class Intake extends SubsystemBase {
 
     public CANSparkMax m_shintakeFront = new CANSparkMax(Constants.Shintake.shintakeFront, MotorType.kBrushless);
     public CANSparkMax m_shintakeBack = new CANSparkMax(Constants.Shintake.shintakeBack, MotorType.kBrushless);
+
+    private PIDController m_pidController = new PIDController(0.3, 0.2, 0);
+
 
     public Intake() {
         m_shintakeBack.setInverted(true);
@@ -64,6 +69,12 @@ public class Intake extends SubsystemBase {
 
     public void stopCompressor() {
         m_comp.disable();
+    }
+
+    public void setShintakeVoltage(double volts) {
+        m_shintakeFront.setVoltage(volts);
+        m_shintakeBack.setVoltage(volts);
+        
     }
 
     public void intakeFwd() {

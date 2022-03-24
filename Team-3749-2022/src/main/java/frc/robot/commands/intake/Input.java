@@ -33,6 +33,10 @@ public class Input extends CommandBase {
 
     @Override
     public void execute() {
+        SmartDashboard.putNumber("shintak front voltage", m_intake.m_shintakeFront.getAppliedOutput());
+        SmartDashboard.putNumber("shintak back voltage", m_intake.m_shintakeBack.getAppliedOutput());
+
+
         // if (comp.get()) m_intake.startCompressor();
         // else if (t.get() >= 25 && t.get() <= 45) m_intake.startCompressor();
         // else if (t.get() >= 45) t.reset();
@@ -47,6 +51,7 @@ public class Input extends CommandBase {
         } 
         else if (shintakeBtn.get()) { 
             m_intake.setShintake();
+            // m_intake.setShintakeVoltage(1);
         }
         else {
             m_intake.intakeRev();

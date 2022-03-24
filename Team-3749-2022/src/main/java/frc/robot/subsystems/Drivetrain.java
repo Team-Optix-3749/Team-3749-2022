@@ -135,7 +135,7 @@ public class Drivetrain extends SubsystemBase {
    * @return the average of the two encoder readings
    */
   public double getAverageEncoderDistance() {
-    SmartDashboard.putNumber("bruh", ((m_leftFront.getSelectedSensorPosition() + m_rightFront.getSelectedSensorPosition()) / 2.0) / Constants.Auto.wheelMult);
+    // SmartDashboard.putNumber("bruh", ((m_leftFront.getSelectedSensorPosition() + m_rightFront.getSelectedSensorPosition()) / 2.0) / Constants.Auto.wheelMult);
     return ((m_leftFront.getSelectedSensorPosition() + m_rightFront.getSelectedSensorPosition()) / 2.0) / Constants.Auto.wheelMult;
   }
 

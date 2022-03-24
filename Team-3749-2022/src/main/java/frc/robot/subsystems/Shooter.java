@@ -125,7 +125,7 @@ public class Shooter extends SubsystemBase {
 
     public void setVelocity(double velocity) {
         setRPM(velocity / .476);
-        SmartDashboard.putNumber("Velocity", m_leftShooterMotor.getSelectedSensorVelocity());
+        // SmartDashboard.putNumber("Velocity", m_leftShooterMotor.getSelectedSensorVelocity());
     }
 
     public void resetEncoder(){

@@ -18,7 +18,7 @@ public class StopClimb extends CommandBase {
 
     @Override
     public void execute() {
-        SmartDashboard.putNumber("Elevator motor", m_elevator.getChain());
+        // SmartDashboard.putNumber("Elevator motor", m_elevator.getChain());
         m_elevator.stopClimb();
     }
 

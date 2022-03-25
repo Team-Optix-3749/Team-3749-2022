@@ -3,8 +3,6 @@ package frc.robot.commands.shooter;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
 
-import javax.xml.stream.events.StartDocument;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 

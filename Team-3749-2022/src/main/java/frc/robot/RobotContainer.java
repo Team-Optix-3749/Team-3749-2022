@@ -11,7 +11,6 @@ import frc.robot.utilities.Xbox;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since

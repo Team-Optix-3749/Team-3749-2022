@@ -5,7 +5,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -23,9 +22,6 @@ public class Intake extends SubsystemBase {
 
     public CANSparkMax m_shintakeFront = new CANSparkMax(Constants.Shintake.shintakeFront, MotorType.kBrushless);
     public CANSparkMax m_shintakeBack = new CANSparkMax(Constants.Shintake.shintakeBack, MotorType.kBrushless);
-
-    private PIDController m_pidController = new PIDController(0.3, 0.2, 0);
-
 
     public Intake() {
         m_shintakeBack.setInverted(true);

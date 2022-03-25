@@ -13,14 +13,16 @@ public class Input extends CommandBase {
     
     private final Intake m_intake;
     private final BooleanSupplier m_trigger;
-    private final JoystickButton shintakeBtn;
+    private final JoystickButton m_shintake;
+    private final JoystickButton m_shintakeBumper;
     private final JoystickButton comp;
     private Timer t = new Timer();
 
-    public Input(Intake intake, BooleanSupplier trigger, JoystickButton shint, JoystickButton compress) {
+    public Input(Intake intake, BooleanSupplier trigger, JoystickButton shint, JoystickButton shintakeBumper, JoystickButton compress) {
         m_intake = intake;
         m_trigger = trigger;
-        shintakeBtn = shint;
+        m_shintake = shint;
+        m_shintakeBumper = shintakeBumper;
         comp = compress;
         addRequirements(intake);
     }
@@ -49,7 +51,7 @@ public class Input extends CommandBase {
             m_intake.setIntake();
             m_intake.holdShintake();
         } 
-        else if (shintakeBtn.get()) { 
+        else if (m_shintake.get() || m_shintakeBumper.get()) { 
             m_intake.setShintake();
             // m_intake.setShintakeVoltage(1);
         }

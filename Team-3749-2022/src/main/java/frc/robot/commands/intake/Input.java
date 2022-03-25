@@ -51,10 +51,12 @@ public class Input extends CommandBase {
             m_intake.setIntake();
             m_intake.holdShintake();
         } 
-        else if (m_shintake.get() || m_shintakeBumper.get()) { 
+        else if (m_shintake.get()) { 
             m_intake.setShintake();
             // m_intake.setShintakeVoltage(1);
         }
+        else if (m_shintakeBumper.get())
+            m_intake.holdShintake();
         else {
             m_intake.intakeRev();
             m_intake.stopIntake();

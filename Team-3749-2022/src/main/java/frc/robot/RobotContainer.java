@@ -64,7 +64,7 @@ public class RobotContainer {
                 new Shoot(m_shooter, m_intake, Operator::getRightTrigger, Operator::getLeftTrigger, Operator.rightBumper(), Operator.leftBumper(), Operator::getRightX, OpPOV.up(), OpPOV.down()));
 
         m_intake.setDefaultCommand(
-            new Input(m_intake, Pilot::getLeftTrigger, Operator.a(), Operator.x()));
+            new Input(m_intake, Pilot::getLeftTrigger, Operator.a(), Pilot.leftBumper(), Operator.x()));
 
     }
 

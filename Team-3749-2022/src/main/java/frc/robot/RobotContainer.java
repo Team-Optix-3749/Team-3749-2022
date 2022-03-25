@@ -77,6 +77,6 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         AutoGroups autoGroup = new AutoGroups(m_drivetrain, m_intake, m_shooter);
 
-        return autoGroup.getTwo();
+        return autoGroup.getFour();
     }
 }

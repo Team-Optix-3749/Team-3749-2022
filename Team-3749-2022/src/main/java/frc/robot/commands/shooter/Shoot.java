@@ -23,13 +23,14 @@ public class Shoot extends CommandBase {
     private JoystickButton m_alignButton;
     private JoystickButton m_skewedAlignButton;
     private JoystickButton m_shintakeButton;
+    private JoystickButton m_shintakeHoldButton;
 
     private DoubleSupplier m_turretControl;
 
     private POVButton m_upperShootButton;
     private POVButton m_lowerShootButton;
 
-    public Shoot(Shooter shooter, Intake intake, JoystickButton shintakeBtn, BooleanSupplier rightTrig, BooleanSupplier leftTrig, JoystickButton alignBtn, JoystickButton alignBtnSkewed, DoubleSupplier joystick, POVButton up, POVButton down) {
+    public Shoot(Shooter shooter, Intake intake, JoystickButton shintakeBtn, JoystickButton shintakehold, BooleanSupplier rightTrig, BooleanSupplier leftTrig, JoystickButton alignBtn, JoystickButton alignBtnSkewed, DoubleSupplier joystick, POVButton up, POVButton down) {
         m_shooter = shooter;
         m_intake = intake;
         m_upperShintakeShootTrigger = rightTrig;
@@ -76,6 +77,8 @@ public class Shoot extends CommandBase {
 
         if (m_shintakeButton.get()) {
             m_intake.setShintake();
+        }  else if (m_shintakeHoldButton.get()) {
+            m_intake.holdShintake(); 
         } else if (m_upperShintakeShootTrigger.getAsBoolean()) {
             if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 20) {
                 m_intake.setShintake();

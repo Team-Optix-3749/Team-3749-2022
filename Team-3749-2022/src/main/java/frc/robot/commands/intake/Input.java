@@ -49,8 +49,7 @@ public class Input extends CommandBase {
             m_intake.intakeFwd();
             m_intake.setIntake();
             m_intake.holdShintake();
-        } 
-        else {
+        } else {
             m_intake.intakeRev();
             m_intake.stopIntake();
             // m_intake.stopShintake();

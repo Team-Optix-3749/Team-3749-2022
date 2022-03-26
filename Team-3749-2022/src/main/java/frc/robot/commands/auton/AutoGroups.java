@@ -258,7 +258,7 @@ public class AutoGroups {
             getRamsete("7-Intake", ""),
             new ParallelRaceGroup(  
                 intake(),
-                new WaitCommand(2)          
+                new WaitCommand(3.5)          
             ),
             getRamsete("7-ShootReversalNew", true),
             shoot()

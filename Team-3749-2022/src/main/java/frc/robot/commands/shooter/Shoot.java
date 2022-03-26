@@ -19,21 +19,20 @@ public class Shoot extends CommandBase {
     
     private BooleanSupplier m_upperShintakeShootTrigger;
     private BooleanSupplier m_lowerShintakeShootTrigger;
-    private DoubleSupplier m_turretControl;
-    private JoystickButton alignButton;
+    private JoystickButton m_shintakeButton;
 
-    public Shoot(Shooter shooter, Shintake shintake, BooleanSupplier rightTrig, BooleanSupplier leftTrig,  DoubleSupplier joystick, JoystickButton align) {
+    private ShooterState state;
+
+    public Shoot(Shooter shooter, Shintake shintake, BooleanSupplier rightTrig, BooleanSupplier leftTrig, JoystickButton shintakeButton) {
         m_shooter = shooter;
         m_shintake = shintake;
         m_upperShintakeShootTrigger = rightTrig;
         m_lowerShintakeShootTrigger = leftTrig;
-        m_turretControl = joystick;
-        alignButton = align;
+        m_shintakeButton = shintakeButton;
         addRequirements(shooter);
     }
 
     public void dashboard() {
-        SmartDashboard.putNumber("Turret Position", m_shooter.getTurretPosition());
         SmartDashboard.putNumber("SHOOTER RPM", m_shooter.getRPM());
         SmartDashboard.putBoolean("LOWER SHOOT CHECK", m_shooter.getRPM() > Constants.Shooter.lowerRPM);
         SmartDashboard.putBoolean("UPPER SHOOT CHECK", m_shooter.getRPM() > Constants.Shooter.upperRPM);
@@ -43,41 +42,43 @@ public class Shoot extends CommandBase {
     @Override
     public void initialize() {
         m_shooter.stopShooter();
-        m_shooter.stopTurret();
         SmartDashboard.putNumber("TEST", 100);
+    }
+
+    public void manageState () {
+        if (m_shintakeButton.get()) {
+            state = ShooterState.SHINTAKE;
+        } else if (m_upperShintakeShootTrigger.getAsBoolean()) {
+            if (state != ShooterState.SHINTAKE) state = ShooterState.SPOOL_UPPER;
+        } else if (m_lowerShintakeShootTrigger.getAsBoolean()) {
+            if (state != ShooterState.SHINTAKE) state = ShooterState.SPOOL_LOWER;
+        } else {
+            state = ShooterState.STOP;
+        }
+        
     }
 
     @Override
     public void execute() {
 
         m_shooter.distanceCheck();
-
         dashboard();
+        manageState();
 
-        double turretControl = Constants.round(m_turretControl.getAsDouble());
-        if (Math.abs(turretControl) >= .1) { 
-            m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed);
-        } if (alignButton.get()) {
-            m_shooter.visionAlign();
-        }
-
-        if (m_upperShintakeShootTrigger.getAsBoolean()) {
-            if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 20) {
+        switch (state) {
+            case SHINTAKE:
                 m_shintake.setShintake();
-            } else m_shintake.stopShintake();
-
-            m_shooter.setRPM(Constants.Shooter.upperRPM);
-        } else if (m_lowerShintakeShootTrigger.getAsBoolean()) {
-            if (m_shooter.getRPM() > Constants.Shooter.lowerRPM - 20) {
-                m_shintake.setShintake();
-            } else m_shintake.stopShintake();
-
-            m_shooter.setRPM(Constants.Shooter.lowerRPM);
-        } else {
-            m_shooter.stopShooter();
+                break;
+            case SPOOL_UPPER:
+                if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 20) state = ShooterState.SHINTAKE;
+                m_shooter.setRPM(Constants.Shooter.upperRPM);
+            case SPOOL_LOWER:
+                if (m_shooter.getRPM() > Constants.Shooter.lowerRPM - 20) state = ShooterState.SHINTAKE;
+                m_shooter.setRPM(Constants.Shooter.lowerRPM);
+            case STOP:
+                m_shooter.stopShooter();
+                m_shintake.stopShintake();
         }
-
-        
     }
 
     @Override
@@ -89,5 +90,9 @@ public class Shoot extends CommandBase {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    public enum ShooterState {
+        STOP, SHINTAKE, SPOOL_LOWER, SPOOL_UPPER
     }
 }

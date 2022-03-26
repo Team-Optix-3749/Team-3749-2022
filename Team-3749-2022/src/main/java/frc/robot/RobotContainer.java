@@ -6,6 +6,9 @@ import frc.robot.commands.shintake.HoldShintake;
 import frc.robot.commands.shintake.ShintakeShoot;
 import frc.robot.commands.shintake.StopShintake;
 import frc.robot.commands.shooter.*;
+import frc.robot.commands.turret.SkewedVisionAlign;
+import frc.robot.commands.turret.TurretCmd;
+import frc.robot.commands.turret.VisionAlign;
 import frc.robot.commands.elevator.*;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.AutoGroups;
@@ -36,6 +39,8 @@ public class RobotContainer {
 
     private final Shintake m_shintake = new Shintake();
 
+    private final Turret m_turret = new Turret();
+
     // private final Base m_balls = new Base();
 
     Xbox Pilot;
@@ -62,21 +67,20 @@ public class RobotContainer {
         Pilot.b().whenPressed(new Lift(m_elevator)).whenReleased(new StopClimb(m_elevator));
         Pilot.leftBumper().whenPressed(new HoldShintake(m_shintake)).whenReleased(new StopShintake(m_shintake));
 
-        Operator.a().whenPressed(new ShintakeShoot(m_shintake)).whenReleased(new StopShintake(m_shintake));
-        Operator.rightBumper().whenPressed(new VisionAlign(m_shooter)).whenReleased(new StopTurret(m_shooter));
-        OpPOV.up().whenPressed(new UpperShoot(m_shooter)).whenReleased(new StopShooter(m_shooter));
-        OpPOV.up().whenPressed(new LowerShoot(m_shooter)).whenReleased(new StopShooter(m_shooter));
-
+        Operator.rightBumper().whenPressed(new VisionAlign(m_turret));
+        Operator.leftBumper().whenPressed(new SkewedVisionAlign(m_turret));
 
         m_drivetrain.setDefaultCommand(
                 new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
 
         m_shooter.setDefaultCommand(
-                new Shoot(m_shooter, m_shintake, Operator::getRightTrigger, Operator::getLeftTrigger, Operator::getRightX, Operator.leftBumper()));
+                new Shoot(m_shooter, m_shintake, Operator::getRightTrigger, Operator::getLeftTrigger, Operator.a()));
 
         m_intake.setDefaultCommand(
             new Input(m_intake, m_shintake, Pilot::getLeftTrigger));
 
+        m_turret.setDefaultCommand(
+            new TurretCmd(m_turret, Operator::getRightX));
     }
 
     /**
@@ -85,7 +89,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        AutoGroups autoGroup = new AutoGroups(m_drivetrain, m_shooter, m_shintake, m_intake);
+        AutoGroups autoGroup = new AutoGroups(m_drivetrain, m_shooter, m_shintake, m_intake, m_turret);
 
         return autoGroup.getFour();
     }

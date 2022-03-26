@@ -1,37 +1,34 @@
-package frc.robot.commands.shooter;
+package frc.robot.commands.turret;
 
 import frc.robot.subsystems.*;
-import frc.robot.utilities.Constants;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
-public class UpperShoot extends CommandBase {
+public class SkewedVisionAlign extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
-    private final Shooter m_shooter;
+    private final Turret m_turret;
 
-    public UpperShoot(Shooter shooter) {
-        m_shooter = shooter;
+    public SkewedVisionAlign(Turret shooter) {
+        m_turret = shooter;
         addRequirements(shooter);
     }
 
     @Override
     public void initialize() {
-
+        m_turret.resetTurret();
     }
 
     @Override
     public void execute() {
-        m_shooter.setRPM(Constants.Shooter.upperRPM);
+        m_turret.visionAlign();
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_shooter.stopShooter();
+        m_turret.stopTurret();
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         return false;

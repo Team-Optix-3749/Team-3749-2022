@@ -24,6 +24,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shintake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 import frc.robot.commands.shooter.*;
 
 public class AutoGroups {
@@ -32,12 +33,14 @@ public class AutoGroups {
     static Intake m_intake;
     static Shintake m_shintake;
     static Shooter m_shooter;
+    static Turret m_turret;
 
-    public AutoGroups(Drivetrain drive, Shooter shoot, Shintake shintake, Intake intake) {
+    public AutoGroups(Drivetrain drive, Shooter shoot, Shintake shintake, Intake intake, Turret turret) {
         m_drivetrain = drive;
         m_intake = intake;
         m_shooter = shoot;
         m_shintake = shintake;
+        m_turret = turret;
     }
 
     public final static Command getRamseteJSON(String name) {
@@ -149,7 +152,7 @@ public class AutoGroups {
     public final static Command shoot() {
         return new SequentialCommandGroup(
                 new ParallelRaceGroup(
-                        new AutoShoot(m_shooter, m_shintake),
+                        new AutoShoot(m_shooter, m_shintake, m_turret),
                         new WaitCommand(1.5)));
     }
 

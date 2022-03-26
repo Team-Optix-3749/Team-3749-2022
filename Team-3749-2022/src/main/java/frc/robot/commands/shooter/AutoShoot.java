@@ -11,12 +11,14 @@ public class AutoShoot extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
     private final Shooter m_shooter;
+    private final Turret m_turret;
     private final Shintake m_shintake;
     private final Timer t = new Timer();
 
-    public AutoShoot(Shooter shooter, Shintake shintake) {
+    public AutoShoot(Shooter shooter, Shintake shintake, Turret turret) {
         m_shooter = shooter;
         m_shintake = shintake;
+        m_turret = turret;
         addRequirements(shooter, shintake);
     }
 
@@ -28,7 +30,7 @@ public class AutoShoot extends CommandBase {
 
     @Override
     public void execute() {
-        m_shooter.visionAlign();
+        m_turret.visionAlign();
         m_shooter.setRPM(Constants.Shooter.upperRPM);
         
         if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 20) m_shintake.setShintake();
@@ -36,7 +38,7 @@ public class AutoShoot extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_shooter.stopTurret();
+        m_turret.stopTurret();
         m_shooter.stopShooter();
         m_shintake.stopShintake();
     }

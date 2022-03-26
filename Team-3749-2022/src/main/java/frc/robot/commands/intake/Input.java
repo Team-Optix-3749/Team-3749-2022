@@ -30,7 +30,6 @@ public class Input extends CommandBase {
     @Override
     public void initialize() {
         t.start();
-        m_intake.stopCompressor();
     }
 
     @Override
@@ -51,14 +50,10 @@ public class Input extends CommandBase {
             m_intake.setIntake();
             m_intake.holdShintake();
         } 
-        else if (m_shintake.get() || m_shintakeBumper.get()) { 
-            m_intake.setShintake();
-            // m_intake.setShintakeVoltage(1);
-        }
         else {
             m_intake.intakeRev();
             m_intake.stopIntake();
-            m_intake.stopShintake();
+            // m_intake.stopShintake();
         }
     }
 

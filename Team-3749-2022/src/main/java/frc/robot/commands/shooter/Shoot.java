@@ -22,13 +22,14 @@ public class Shoot extends CommandBase {
     private BooleanSupplier m_lowerShintakeShootTrigger;
     private JoystickButton m_alignButton;
     private JoystickButton m_skewedAlignButton;
+    private JoystickButton m_shintakeButton;
 
     private DoubleSupplier m_turretControl;
 
     private POVButton m_upperShootButton;
     private POVButton m_lowerShootButton;
 
-    public Shoot(Shooter shooter, Intake intake, BooleanSupplier rightTrig, BooleanSupplier leftTrig, JoystickButton alignBtn, JoystickButton alignBtnSkewed, DoubleSupplier joystick, POVButton up, POVButton down) {
+    public Shoot(Shooter shooter, Intake intake, JoystickButton shintakeBtn, BooleanSupplier rightTrig, BooleanSupplier leftTrig, JoystickButton alignBtn, JoystickButton alignBtnSkewed, DoubleSupplier joystick, POVButton up, POVButton down) {
         m_shooter = shooter;
         m_intake = intake;
         m_upperShintakeShootTrigger = rightTrig;
@@ -38,6 +39,7 @@ public class Shoot extends CommandBase {
         m_skewedAlignButton = alignBtnSkewed;
         m_upperShootButton = up;
         m_lowerShootButton = down;
+        m_shintakeButton = shintakeBtn;
         addRequirements(shooter);
     }
 
@@ -58,7 +60,6 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
-        System.out.println(SmartDashboard.getNumber("TEST", 0));
 
         m_shooter.distanceCheck();
 
@@ -73,23 +74,28 @@ public class Shoot extends CommandBase {
             m_shooter.skewedVisionAlign();
         } else m_shooter.stopTurret();  
 
-        if (m_upperShintakeShootTrigger.getAsBoolean()) {
+        if (m_shintakeButton.get()) {
+            m_intake.setShintake();
+        } else if (m_upperShintakeShootTrigger.getAsBoolean()) {
+            if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 20) {
+                m_intake.setShintake();
+            } else m_intake.stopShintake();
+
             m_shooter.setRPM(Constants.Shooter.upperRPM);
-
-            if (m_shooter.getRPM() > Constants.Shooter.upperRPM) {
-                m_intake.setShintake();
-            } else m_intake.stopShintake();
         } else if (m_lowerShintakeShootTrigger.getAsBoolean()) {
-            m_shooter.setRPM(Constants.Shooter.lowerRPM);
-
-            if (m_shooter.getRPM() > Constants.Shooter.lowerRPM) {
+            if (m_shooter.getRPM() > Constants.Shooter.lowerRPM - 20) {
                 m_intake.setShintake();
             } else m_intake.stopShintake();
+
+            m_shooter.setRPM(Constants.Shooter.lowerRPM);
         } else if (m_upperShootButton.get()) {
             m_shooter.setRPM(Constants.Shooter.upperRPM);
         } else if (m_lowerShootButton.get()) {
             m_shooter.setRPM(Constants.Shooter.lowerRPM);
-        } else m_shooter.stopMotor();
+        } else {
+            m_intake.stopShintake();
+            m_shooter.stopMotor();
+        }
 
         
     }

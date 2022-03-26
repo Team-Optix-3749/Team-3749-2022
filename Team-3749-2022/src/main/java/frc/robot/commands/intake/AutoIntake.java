@@ -7,10 +7,12 @@ public class AutoIntake extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     
     private final Intake m_intake;
+    private final Shintake m_shintake;
 
-    public AutoIntake(Intake intake) {
+    public AutoIntake(Intake intake, Shintake shintake) {
         m_intake = intake;
-        addRequirements(intake);
+        m_shintake = shintake;
+        addRequirements(intake, shintake);
     }
 
     @Override
@@ -21,13 +23,13 @@ public class AutoIntake extends CommandBase {
     @Override
     public void execute() {
         m_intake.setIntake();
-        m_intake.holdShintake();
+        m_shintake.holdShintake();
     }
 
     @Override
     public void end(boolean interrupted) {
         m_intake.stopMotors();
-        m_intake.stopShintake();
+        m_shintake.stopShintake();
         m_intake.intakeRev();
     }
 

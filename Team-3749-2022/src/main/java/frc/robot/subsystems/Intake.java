@@ -20,15 +20,9 @@ public class Intake extends SubsystemBase {
             Constants.Intake.kSolenoidForwardChannel[1],
             Constants.Intake.kSolenoidReverseChannel[1]);
 
-    public CANSparkMax m_shintakeFront = new CANSparkMax(Constants.Shintake.shintakeFront, MotorType.kBrushless);
-    public CANSparkMax m_shintakeBack = new CANSparkMax(Constants.Shintake.shintakeBack, MotorType.kBrushless);
 
     public Intake() {
-        m_shintakeBack.setInverted(true);
-
         m_intakeMotor.setIdleMode(IdleMode.kBrake);
-        m_shintakeFront.setIdleMode(IdleMode.kBrake);
-        m_shintakeBack.setIdleMode(IdleMode.kBrake);
     }
 
     public void setIntake() {
@@ -43,33 +37,12 @@ public class Intake extends SubsystemBase {
         m_intakeMotor.stopMotor();
     }
 
-    public void holdShintake() {
-        m_shintakeFront.set(Constants.Shintake.kShintakeSpeed);
-        m_shintakeBack.set(-Constants.Shintake.kShintakeSpeed);
-    }
-
-    public void setShintake() {
-        m_shintakeFront.set(Constants.Shintake.kShintakeSpeed);
-        m_shintakeBack.set(Constants.Shintake.kShintakeSpeed);
-    }
-
-    public void stopShintake() {
-        m_shintakeFront.stopMotor();
-        m_shintakeBack.stopMotor();
-    }
-
     public void startCompressor() {
         m_comp.enableDigital();
     }
 
     public void stopCompressor() {
         m_comp.disable();
-    }
-
-    public void setShintakeVoltage(double volts) {
-        m_shintakeFront.setVoltage(volts);
-        m_shintakeBack.setVoltage(volts);
-        
     }
 
     public void intakeFwd() {

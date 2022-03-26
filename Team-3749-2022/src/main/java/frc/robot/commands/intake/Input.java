@@ -2,9 +2,7 @@ package frc.robot.commands.intake;
 
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import java.util.function.BooleanSupplier;
 
@@ -12,18 +10,15 @@ public class Input extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     
     private final Intake m_intake;
+    private final Shintake m_shintake;
+
     private final BooleanSupplier m_trigger;
-    private final JoystickButton m_shintake;
-    private final JoystickButton m_shintakeBumper;
-    private final JoystickButton comp;
     private Timer t = new Timer();
 
-    public Input(Intake intake, BooleanSupplier trigger, JoystickButton shint, JoystickButton shintakeBumper, JoystickButton compress) {
+    public Input(Intake intake, Shintake shintake, BooleanSupplier trigger) {
         m_intake = intake;
         m_trigger = trigger;
-        m_shintake = shint;
-        m_shintakeBumper = shintakeBumper;
-        comp = compress;
+        m_shintake = shintake;
         addRequirements(intake);
     }
 
@@ -34,25 +29,18 @@ public class Input extends CommandBase {
 
     @Override
     public void execute() {
-        SmartDashboard.putNumber("FRONT SHINTAKE OUTPUT CURRENT", m_intake.m_shintakeFront.getAppliedOutput());
-        SmartDashboard.putNumber("BACK SHINTAKE OUTPUT CURRENT", m_intake.m_shintakeBack.getAppliedOutput());
-
-
-        if (comp.get()) m_intake.startCompressor();
-        else if (t.get() >= 25 && t.get() <= 45) m_intake.startCompressor();
+        if (t.get() >= 25 && t.get() <= 45) m_intake.startCompressor();
         else if (t.get() >= 45) t.reset();
-        else m_intake.stopCompressor();
         
         m_intake.startCompressor();
 
         if (m_trigger.getAsBoolean()) {
             m_intake.intakeFwd();
             m_intake.setIntake();
-            m_intake.holdShintake();
+            m_shintake.holdShintake();
         } else {
             m_intake.intakeRev();
             m_intake.stopIntake();
-            // m_intake.stopShintake();
         }
     }
 
@@ -60,7 +48,7 @@ public class Input extends CommandBase {
     public void end(boolean interrupted) {
         m_intake.intakeRev();
         m_intake.stopIntake();
-        m_intake.stopShintake();
+        m_shintake.stopShintake();
         t.reset();
     }
 

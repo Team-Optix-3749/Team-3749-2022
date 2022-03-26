@@ -39,20 +39,10 @@ public class Shooter extends SubsystemBase {
 
     public void setRPM(double target) {
         m_shooterMotors.setVoltage(m_pidController.calculate(m_leftShooterMotor.getSelectedSensorVelocity(), target * 60) * .0019);
-        // SmartDashboard.putNumber("Voltage", m_leftShooterMotor.getBusVoltage());
     }
 
     public double getRPM() {
         return m_leftShooterMotor.getSelectedSensorVelocity() * 0.034;
-    }
-
-    public void setVelocity(double velocity) {
-        setRPM(velocity / .476);
-        SmartDashboard.putNumber("Velocity", m_leftShooterMotor.getSelectedSensorVelocity());
-    }
-
-    public void setTargetVelocity() {
-        setRPM(targetVelocity() / .476);
     }
 
     public void rawShoot(double speed) {
@@ -68,9 +58,9 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setTurretPosition(double position) {
-        if(m_turretEncoder.getPosition() + 0.01 > position || m_turretEncoder.getPosition() - 0.01 < position) 
-            setTurretMotor((m_turretEncoder.getPosition() - position)*0.1);
-        else m_turretMotor.set(0);
+        // if(m_turretEncoder.getPosition() + 0.01 > position || m_turretEncoder.getPosition() - 0.01 < position) 
+            setTurretMotor(m_pidTurretController.calculate(m_turretEncoder.getPosition()*(1/27), position));
+        // else m_turretMotor.set(0);
     }
 
     public void resetTurret() {
@@ -85,19 +75,27 @@ public class Shooter extends SubsystemBase {
         m_turretMotor.stopMotor();
     }
     
+    public void skewedVisionAlign() {
+        double hubX = Constants.Auto.tx.getDouble(3749) + 1;
+        SmartDashboard.putNumber("Hub Alignment (-3 < x < 3)", hubX - 1);
+        if (hubX != 3750) setTurretMotor(hubX * 0.015); 
+        else stopTurret();
+    }
+
     public void visionAlign() {
         double hubX = Constants.Auto.tx.getDouble(3749);
-        SmartDashboard.putNumber("Hub Xz", hubX);
+        SmartDashboard.putNumber("Hub Alignment (-3 < x < 3)", hubX);
         if (hubX != 3749) setTurretMotor(hubX * 0.015); 
         else stopTurret();
     }
+
 
     public double getTurretPosition(){
         return m_turretEncoder.getPosition();
     }
 
     public void setTurretMotor(double speed) {
-        if (Math.abs(m_turretEncoder.getPosition() /*- .15*/) <= .23) {
+        if (Math.abs(m_turretEncoder.getPosition()) <= .23) {
                 m_turretMotor.set(speed);
         }
         else if (m_turretEncoder.getPosition() * speed < 0){ //Checks if speed and encoder position have opposite signs
@@ -107,7 +105,6 @@ public class Shooter extends SubsystemBase {
         }
          else m_turretMotor.set(0);
     } 
-    
     
     public double targetVelocity() {
         double hubY = Constants.Shooter.shooterHeight - Constants.Shooter.hubHeight;
@@ -120,6 +117,22 @@ public class Shooter extends SubsystemBase {
     public double getDistance() {    
         double y = Auto.ty.getDouble(0.0);    
         return (Constants.Shooter.hubHeight - Constants.Shooter.shooterHeight)/Math.tan(Math.toRadians(Constants.Shooter.limelightAngle + y));
+    }
+
+    public void distanceCheck() {
+        boolean upperCheck = (getDistance() > Constants.Shooter.upperHubLesserDistance && getDistance() < Constants.Shooter.upperHubGreaterDistance);
+        boolean lowerCheck = (getDistance() < Constants.Shooter.lowerHubDistance);
+
+        SmartDashboard.putBoolean("UPPER HUB DISTANCE CHECK", upperCheck);
+        SmartDashboard.putBoolean("LOWER HUB DISTANCE CHECK", lowerCheck);
+    }
+
+    public void setTargetVelocity() {
+        setRPM(targetVelocity());
+    }
+
+    public void setVelocity(double velocity) {
+        setRPM(velocity / .476);
     }
 
     public void resetEncoder(){

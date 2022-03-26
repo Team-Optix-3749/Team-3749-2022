@@ -13,14 +13,16 @@ public class Input extends CommandBase {
     
     private final Intake m_intake;
     private final BooleanSupplier m_trigger;
-    private final JoystickButton shintakeBtn;
+    private final JoystickButton m_shintake;
+    private final JoystickButton m_shintakeBumper;
     private final JoystickButton comp;
     private Timer t = new Timer();
 
-    public Input(Intake intake, BooleanSupplier trigger, JoystickButton shint, JoystickButton compress) {
+    public Input(Intake intake, BooleanSupplier trigger, JoystickButton shint, JoystickButton shintakeBumper, JoystickButton compress) {
         m_intake = intake;
         m_trigger = trigger;
-        shintakeBtn = shint;
+        m_shintake = shint;
+        m_shintakeBumper = shintakeBumper;
         comp = compress;
         addRequirements(intake);
     }
@@ -28,15 +30,18 @@ public class Input extends CommandBase {
     @Override
     public void initialize() {
         t.start();
-        m_intake.stopCompressor();
     }
 
     @Override
     public void execute() {
-        // if (comp.get()) m_intake.startCompressor();
-        // else if (t.get() >= 25 && t.get() <= 45) m_intake.startCompressor();
-        // else if (t.get() >= 45) t.reset();
-        // else m_intake.stopCompressor();
+        SmartDashboard.putNumber("FRONT SHINTAKE OUTPUT CURRENT", m_intake.m_shintakeFront.getAppliedOutput());
+        SmartDashboard.putNumber("BACK SHINTAKE OUTPUT CURRENT", m_intake.m_shintakeBack.getAppliedOutput());
+
+
+        if (comp.get()) m_intake.startCompressor();
+        else if (t.get() >= 25 && t.get() <= 45) m_intake.startCompressor();
+        else if (t.get() >= 45) t.reset();
+        else m_intake.stopCompressor();
         
         m_intake.startCompressor();
 
@@ -44,14 +49,10 @@ public class Input extends CommandBase {
             m_intake.intakeFwd();
             m_intake.setIntake();
             m_intake.holdShintake();
-        } 
-        else if (shintakeBtn.get()) { 
-            m_intake.setShintake();
-        }
-        else {
+        } else {
             m_intake.intakeRev();
             m_intake.stopIntake();
-            m_intake.stopShintake();
+            // m_intake.stopShintake();
         }
     }
 

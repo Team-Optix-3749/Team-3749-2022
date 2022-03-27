@@ -3,8 +3,6 @@ package frc.robot.commands.shooter;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
 
-import javax.xml.stream.events.StartDocument;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -31,10 +29,10 @@ public class AutoShoot extends CommandBase {
     @Override
     public void execute() {
         m_shooter.visionAlign();
-        m_shooter.setRPM(Constants.Shooter.shooterRPM - 30);
+        m_shooter.setRPM(Constants.Shooter.upperRPM - 30);
 
         
-        if (t.get() > 2.5) m_intake.setShintake();
+        if (t.get() > 0.5) m_intake.setShintake();
         // if (m_shooter.getRPM() > Constants.Shooter.shooterRPM) m_intake.setShintake();
 
     }

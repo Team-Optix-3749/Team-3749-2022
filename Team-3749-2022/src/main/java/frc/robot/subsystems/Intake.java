@@ -66,6 +66,12 @@ public class Intake extends SubsystemBase {
         m_comp.disable();
     }
 
+    public void setShintakeVoltage(double volts) {
+        m_shintakeFront.setVoltage(volts);
+        m_shintakeBack.setVoltage(volts);
+        
+    }
+
     public void intakeFwd() {
         m_rightPiston.set(DoubleSolenoid.Value.kForward);
         m_leftPiston.set(DoubleSolenoid.Value.kForward);

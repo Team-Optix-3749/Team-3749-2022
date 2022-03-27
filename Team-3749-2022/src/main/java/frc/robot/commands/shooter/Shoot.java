@@ -41,6 +41,7 @@ public class Shoot extends CommandBase {
         m_upperShootButton = up;
         m_lowerShootButton = down;
         m_shintakeButton = shintakeBtn;
+        m_shintakeHoldButton = shintakehold;
         addRequirements(shooter);
     }
 

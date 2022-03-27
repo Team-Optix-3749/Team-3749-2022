@@ -8,6 +8,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
 
@@ -154,7 +155,10 @@ public class Drivetrain extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
+    // System.out.println(m_gyro.getRotation2d().getDegrees());
+    SmartDashboard.putNumber("gyro", m_gyro.getRotation2d().getDegrees());
     return m_gyro.getRotation2d().getDegrees();
+
   }
 
   /**

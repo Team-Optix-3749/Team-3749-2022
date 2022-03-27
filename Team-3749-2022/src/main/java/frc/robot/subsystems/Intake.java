@@ -25,6 +25,7 @@ public class Intake extends SubsystemBase {
 
     public Intake() {
         m_shintakeBack.setInverted(true);
+        m_shintakeFront.setInverted(false);
 
         m_intakeMotor.setIdleMode(IdleMode.kBrake);
         m_shintakeFront.setIdleMode(IdleMode.kBrake);

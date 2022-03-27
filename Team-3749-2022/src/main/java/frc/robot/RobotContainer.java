@@ -2,9 +2,9 @@ package frc.robot;
 
 import frc.robot.commands.*;
 import frc.robot.commands.auton.AutoGroups;
-import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.elevator.*;
+import frc.robot.commands.intake.*;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.POV;
 import frc.robot.utilities.Xbox;
@@ -61,10 +61,10 @@ public class RobotContainer {
                 new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
 
         m_shooter.setDefaultCommand(
-                new Shoot(m_shooter, m_intake, Operator.a(), Operator.leftBumper(), Operator::getRightTrigger, Operator::getLeftTrigger, Operator.rightBumper(), Operator.leftBumper(), Operator::getRightX, OpPOV.up(), OpPOV.down()));
+                new Shoot(m_shooter, m_intake, Operator.a(), Pilot.leftBumper(), Operator::getRightTrigger, Operator::getLeftTrigger, Operator.rightBumper(), Operator.leftBumper(), Operator::getRightX, OpPOV.up(), OpPOV.down()));
 
         m_intake.setDefaultCommand(
-            new Input(m_intake, Pilot::getLeftTrigger, Operator.a(), Pilot.leftBumper(), Operator.x()));
+            new Input(m_intake, Pilot::getLeftTrigger, Operator.x()));
 
     }
 

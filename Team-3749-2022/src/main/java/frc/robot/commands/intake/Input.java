@@ -13,16 +13,12 @@ public class Input extends CommandBase {
     
     private final Intake m_intake;
     private final BooleanSupplier m_trigger;
-    private final JoystickButton m_shintake;
-    private final JoystickButton m_shintakeBumper;
     private final JoystickButton comp;
     private Timer t = new Timer();
 
-    public Input(Intake intake, BooleanSupplier trigger, JoystickButton shint, JoystickButton shintakeBumper, JoystickButton compress) {
+    public Input(Intake intake, BooleanSupplier trigger, JoystickButton compress) {
         m_intake = intake;
         m_trigger = trigger;
-        m_shintake = shint;
-        m_shintakeBumper = shintakeBumper;
         comp = compress;
         addRequirements(intake);
     }

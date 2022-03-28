@@ -32,6 +32,11 @@ public class Intake extends SubsystemBase {
         m_shintakeBack.setIdleMode(IdleMode.kBrake);
     }
 
+    @Override
+    public void periodic() {
+        startCompressor();
+    }
+
     public void setIntake() {
         m_intakeMotor.set(Constants.Intake.kIntakeSpeed);
     }

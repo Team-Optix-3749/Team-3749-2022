@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.*;
-import frc.robot.utilities.Constants;
 
 import java.util.function.DoubleSupplier;
 
@@ -14,11 +13,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /** An example command that uses an example subsystem. */
 public class ArcadeDrive extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-    
+
     private final Drivetrain m_drive;
     private DoubleSupplier y;
     private DoubleSupplier x;
-
 
     public ArcadeDrive(Drivetrain drivetrain, DoubleSupplier leftY, DoubleSupplier rightX) {
         m_drive = drivetrain;
@@ -33,8 +31,7 @@ public class ArcadeDrive extends CommandBase {
 
     @Override
     public void execute() {
-    //    m_drive.arcadeDrive(Constants.round(y.getAsDouble()), Constants.round(x.getAsDouble()));
-       m_drive.arcadeDrive(y.getAsDouble(), x.getAsDouble());
+        m_drive.arcadeDrive(y.getAsDouble(), x.getAsDouble());
     }
 
     @Override

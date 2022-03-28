@@ -23,14 +23,11 @@ public class Shoot extends CommandBase {
     private JoystickButton m_alignButton;
     private JoystickButton m_skewedAlignButton;
     private JoystickButton m_shintakeButton;
-    private JoystickButton m_shintakeHoldButton;
-
     private DoubleSupplier m_turretControl;
-
     private POVButton m_upperShootButton;
     private POVButton m_lowerShootButton;
 
-    public Shoot(Shooter shooter, Intake intake, JoystickButton shintakeBtn, JoystickButton shintakehold, BooleanSupplier rightTrig, BooleanSupplier leftTrig, JoystickButton alignBtn, JoystickButton alignBtnSkewed, DoubleSupplier joystick, POVButton up, POVButton down) {
+    public Shoot(Shooter shooter, Intake intake, JoystickButton shintakeBtn, BooleanSupplier rightTrig, BooleanSupplier leftTrig, JoystickButton alignBtn, JoystickButton alignBtnSkewed, DoubleSupplier joystick, POVButton up, POVButton down) {
         m_shooter = shooter;
         m_intake = intake;
         m_upperShintakeShootTrigger = rightTrig;
@@ -41,7 +38,6 @@ public class Shoot extends CommandBase {
         m_upperShootButton = up;
         m_lowerShootButton = down;
         m_shintakeButton = shintakeBtn;
-        m_shintakeHoldButton = shintakehold;
         addRequirements(shooter);
     }
 

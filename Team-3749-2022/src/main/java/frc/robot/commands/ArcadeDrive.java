@@ -33,7 +33,8 @@ public class ArcadeDrive extends CommandBase {
 
     @Override
     public void execute() {
-       m_drive.arcadeDrive(Constants.round(y.getAsDouble()), Constants.round(x.getAsDouble()));
+    //    m_drive.arcadeDrive(Constants.round(y.getAsDouble()), Constants.round(x.getAsDouble()));
+       m_drive.arcadeDrive(y.getAsDouble(), x.getAsDouble());
     }
 
     @Override

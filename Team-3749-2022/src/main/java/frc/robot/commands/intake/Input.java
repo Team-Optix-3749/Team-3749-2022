@@ -12,13 +12,19 @@ public class Input extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     
     private final Intake m_intake;
-    private final BooleanSupplier m_trigger;
+    private final BooleanSupplier m_triggerLeft;
+    private final BooleanSupplier m_triggerRight;
+    private final JoystickButton m_bumperLeft;
+    private final JoystickButton m_bumperRight;
     private final JoystickButton comp;
     private Timer t = new Timer();
 
-    public Input(Intake intake, BooleanSupplier trigger, JoystickButton compress) {
+    public Input(Intake intake, BooleanSupplier triggerLeft, BooleanSupplier triggerRight, JoystickButton bumperLeft, JoystickButton bumperRight, JoystickButton compress) {
         m_intake = intake;
-        m_trigger = trigger;
+        m_triggerLeft = triggerLeft;
+        m_triggerRight = triggerRight;
+        m_bumperLeft = bumperLeft;
+        m_bumperRight = bumperRight;
         comp = compress;
         addRequirements(intake);
     }
@@ -40,10 +46,18 @@ public class Input extends CommandBase {
         
         m_intake.startCompressor();
 
-        if (m_trigger.getAsBoolean()) {
-            m_intake.intakeFwd();
+        if (m_triggerLeft.getAsBoolean()) {
             m_intake.setIntake();
+            m_intake.intakeFwd();
             m_intake.holdShintake();
+        } else if (m_triggerRight.getAsBoolean()) {
+            m_intake.setIntakeReverse();
+            m_intake.intakeFwd();
+            m_intake.setShintakeReverse();
+        } else if (m_bumperLeft.get()) {
+            m_intake.holdShintake();
+        } else if (m_bumperRight.get()) {
+            m_intake.setShintakeReverse();
         } else {
             m_intake.intakeRev();
             m_intake.stopIntake();

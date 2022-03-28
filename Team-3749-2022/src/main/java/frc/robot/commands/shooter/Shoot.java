@@ -78,8 +78,6 @@ public class Shoot extends CommandBase {
 
         if (m_shintakeButton.get()) {
             m_intake.setShintake();
-        }  else if (m_shintakeHoldButton.get()) {
-            m_intake.holdShintake(); 
         } else if (m_upperShintakeShootTrigger.getAsBoolean()) {
             if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 20) {
                 m_intake.setShintake();
@@ -100,8 +98,6 @@ public class Shoot extends CommandBase {
             m_intake.stopShintake();
             m_shooter.stopMotor();
         }
-
-        
     }
 
     @Override

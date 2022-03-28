@@ -40,6 +40,10 @@ public class Intake extends SubsystemBase {
     public void setIntake() {
         m_intakeMotor.set(Constants.Intake.kIntakeSpeed);
     }
+    
+    public void setIntakeReverse() {
+        m_intakeMotor.set(-Constants.Intake.kIntakeSpeed);
+    }
 
     public void stopMotors() {
         m_intakeMotor.set(0);
@@ -57,6 +61,11 @@ public class Intake extends SubsystemBase {
     public void setShintake() {
         m_shintakeFront.set(Constants.Shintake.kShintakeSpeed);
         m_shintakeBack.set(Constants.Shintake.kShintakeSpeed);
+    }
+
+    public void setShintakeReverse() {
+        m_shintakeFront.set(-Constants.Shintake.kShintakeSpeed);
+        m_shintakeBack.set(-Constants.Shintake.kShintakeSpeed);
     }
 
     public void stopShintake() {

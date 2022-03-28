@@ -2,7 +2,6 @@ package frc.robot.commands.intake;
 
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -36,9 +35,6 @@ public class Input extends CommandBase {
 
     @Override
     public void execute() {
-        SmartDashboard.putNumber("FRONT SHINTAKE OUTPUT CURRENT", m_intake.m_shintakeFront.getAppliedOutput());
-        SmartDashboard.putNumber("BACK SHINTAKE OUTPUT CURRENT", m_intake.m_shintakeBack.getAppliedOutput());
-
         if (comp.get()) m_intake.startCompressor();
         // else if (t.get() >= 25 && t.get() <= 45) m_intake.startCompressor();
         // else if (t.get() >= 45) t.reset();

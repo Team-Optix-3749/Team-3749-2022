@@ -33,10 +33,9 @@ public class Input extends CommandBase {
         SmartDashboard.putNumber("FRONT SHINTAKE OUTPUT CURRENT", m_intake.m_shintakeFront.getAppliedOutput());
         SmartDashboard.putNumber("BACK SHINTAKE OUTPUT CURRENT", m_intake.m_shintakeBack.getAppliedOutput());
 
-
         if (comp.get()) m_intake.startCompressor();
-        else if (t.get() >= 25 && t.get() <= 45) m_intake.startCompressor();
-        else if (t.get() >= 45) t.reset();
+        // else if (t.get() >= 25 && t.get() <= 45) m_intake.startCompressor();
+        // else if (t.get() >= 45) t.reset();
         else m_intake.stopCompressor();
         
         m_intake.startCompressor();

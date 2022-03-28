@@ -17,7 +17,7 @@ public class Lift extends CommandBase {
 
     @Override
     public void execute() {
-        m_elevator.rawClimbDown();
+        m_elevator.lift();
     }
 
     @Override

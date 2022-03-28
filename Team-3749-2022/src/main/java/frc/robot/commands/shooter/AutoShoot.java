@@ -30,9 +30,7 @@ public class AutoShoot extends CommandBase {
     public void execute() {
         m_shooter.visionAlign();
         m_shooter.setRPM(Constants.Shooter.upperRPM);
-
         
-        // if (t.get() > 0.5) m_intake.setShintake();
         if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 20) m_intake.setShintake();
 
     }

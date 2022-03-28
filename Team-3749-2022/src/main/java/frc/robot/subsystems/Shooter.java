@@ -59,7 +59,7 @@ public class Shooter extends SubsystemBase {
 
     public void setTurretPosition(double position) {
         // if(m_turretEncoder.getPosition() + 0.01 > position || m_turretEncoder.getPosition() - 0.01 < position) 
-            setTurretMotor(m_pidTurretController.calculate(m_turretEncoder.getPosition()*(1/27), position));
+        setTurretMotor(m_pidTurretController.calculate(m_turretEncoder.getPosition()*(1/27), position));
         // else m_turretMotor.set(0);
     }
 

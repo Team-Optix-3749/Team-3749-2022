@@ -118,12 +118,9 @@ public final class Constants {
     }
 
     public static final class Elevator {
-        public static final int leftTilt = 26;
-        public static final int rightTilt = 27;
         public static final int chain = 25;
         public static final double chainMPR = 0.0; // FMD SPROCKET DIAMETER
         public static final double chainGR = 0.0; // FIND GEAR RATIO ON MOTOR
-
         
         public static final double kP = 1.0;
         public static final double kI = 0.5;

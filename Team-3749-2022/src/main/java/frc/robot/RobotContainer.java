@@ -54,18 +54,14 @@ public class RobotContainer {
         OpPOV = new POV(new GenericHID(1));
 
         Pilot.y().whenPressed(new Extend(m_elevator)).whenReleased(new StopClimb(m_elevator));
-        
         Pilot.b().whenPressed(new Lift(m_elevator)).whenReleased(new StopClimb(m_elevator));
 
         m_drivetrain.setDefaultCommand(
                 new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
-
         m_shooter.setDefaultCommand(
-                new Shoot(m_shooter, m_intake, Operator.a(), Operator::getRightTrigger, Operator::getLeftTrigger, Operator.rightBumper(), Operator.leftBumper(), Operator::getRightX, OpPOV.up(), OpPOV.down()));
-
+                new Shoot(m_shooter, m_intake, Operator.a(), Operator::getRightTrigger, Operator::getLeftTrigger, Operator.rightBumper(), Operator.leftBumper(), Operator::getRightX, OpPOV.up(), OpPOV.down(), Pilot.leftBumper(), Pilot.rightBumper()));
         m_intake.setDefaultCommand(
-            new Input(m_intake, Pilot::getLeftTrigger, Pilot::getRightTrigger, Pilot.leftBumper(), Pilot.rightBumper(), Operator.x()));
-
+            new Input(m_intake, Pilot::getLeftTrigger, Pilot::getRightTrigger));
     }
 
     /**

@@ -15,4 +15,10 @@ public class Base extends SubsystemBase {
             SmartDashboard.putString("cope " + x, "L ur mom lol cope harder");
         }
     }
+
+    public void copecopecope() {
+        while (true) {
+            SmartDashboard.putString("COPE", "copecopecope");
+        }
+    }
 }

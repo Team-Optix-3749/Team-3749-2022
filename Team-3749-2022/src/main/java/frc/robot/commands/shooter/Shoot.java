@@ -26,8 +26,15 @@ public class Shoot extends CommandBase {
     private DoubleSupplier m_turretControl;
     private POVButton m_upperShootButton;
     private POVButton m_lowerShootButton;
+    private final JoystickButton m_bumperRight;
+    private final JoystickButton m_bumperLeft;
 
-    public Shoot(Shooter shooter, Intake intake, JoystickButton shintakeBtn, BooleanSupplier rightTrig, BooleanSupplier leftTrig, JoystickButton alignBtn, JoystickButton alignBtnSkewed, DoubleSupplier joystick, POVButton up, POVButton down) {
+    public Shoot(Shooter shooter, Intake intake, 
+    JoystickButton shintakeBtn, BooleanSupplier rightTrig, 
+    BooleanSupplier leftTrig, JoystickButton alignBtn, 
+    JoystickButton alignBtnSkewed, DoubleSupplier joystick, 
+    POVButton up, POVButton down, JoystickButton bumperLeft,
+     JoystickButton bumperRight) {
         m_shooter = shooter;
         m_intake = intake;
         m_upperShintakeShootTrigger = rightTrig;
@@ -38,6 +45,8 @@ public class Shoot extends CommandBase {
         m_upperShootButton = up;
         m_lowerShootButton = down;
         m_shintakeButton = shintakeBtn;
+        m_bumperLeft = bumperLeft;
+        m_bumperRight = bumperRight;
         addRequirements(shooter);
     }
 
@@ -90,7 +99,12 @@ public class Shoot extends CommandBase {
             m_shooter.setRPM(Constants.Shooter.upperRPM);
         } else if (m_lowerShootButton.get()) {
             m_shooter.setRPM(Constants.Shooter.lowerRPM);
-        } else {
+        } else if (m_bumperLeft.get()) {
+            m_intake.holdShintake();
+        } else if (m_bumperRight.get()) {
+            m_intake.setShintakeReverse();
+        } 
+        else {
             m_intake.stopShintake();
             m_shooter.stopMotor();
         }

@@ -2,6 +2,8 @@ package frc.robot.commands.shooter;
 
 import frc.robot.subsystems.*;
 import frc.robot.utilities.Constants;
+import frc.robot.utilities.POV;
+import frc.robot.utilities.Xbox;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -18,35 +20,17 @@ public class Shoot extends CommandBase {
     private Shooter m_shooter;
     private Intake m_intake;
     
-    private BooleanSupplier m_upperShintakeShootTrigger;
-    private BooleanSupplier m_lowerShintakeShootTrigger;
-    private JoystickButton m_alignButton;
-    private JoystickButton m_skewedAlignButton;
-    private JoystickButton m_shintakeButton;
-    private DoubleSupplier m_turretControl;
-    private POVButton m_upperShootButton;
-    private POVButton m_lowerShootButton;
-    private final JoystickButton m_bumperRight;
-    private final JoystickButton m_bumperLeft;
+    private Xbox Pilot;
+    private Xbox Operator;
+    private POV OpPOV;
 
-    public Shoot(Shooter shooter, Intake intake, 
-    JoystickButton shintakeBtn, BooleanSupplier rightTrig, 
-    BooleanSupplier leftTrig, JoystickButton alignBtn, 
-    JoystickButton alignBtnSkewed, DoubleSupplier joystick, 
-    POVButton up, POVButton down, JoystickButton bumperLeft,
-     JoystickButton bumperRight) {
-        m_shooter = shooter;
-        m_intake = intake;
-        m_upperShintakeShootTrigger = rightTrig;
-        m_lowerShintakeShootTrigger = leftTrig;
-        m_alignButton = alignBtn;
-        m_turretControl = joystick;
-        m_skewedAlignButton = alignBtnSkewed;
-        m_upperShootButton = up;
-        m_lowerShootButton = down;
-        m_shintakeButton = shintakeBtn;
-        m_bumperLeft = bumperLeft;
-        m_bumperRight = bumperRight;
+
+    public Shoot(Shooter shooter, 
+    Intake intake, 
+    Xbox pilot, Xbox operator, POV opPOV) {
+        Pilot = pilot;
+        Operator = operator;
+        OpPOV = opPOV;
         addRequirements(shooter);
     }
 
@@ -56,6 +40,7 @@ public class Shoot extends CommandBase {
         SmartDashboard.putBoolean("LOWER SHOOT CHECK", m_shooter.getRPM() > Constants.Shooter.lowerRPM);
         SmartDashboard.putBoolean("UPPER SHOOT CHECK", m_shooter.getRPM() > Constants.Shooter.upperRPM);
         SmartDashboard.putNumber("HUB DISTANCE (METERS)", m_shooter.getDistance());
+        m_shooter.distanceCheck();
     }
 
     @Override
@@ -68,45 +53,52 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
 
-        m_shooter.distanceCheck();
-
         dashboard();
 
-        double turretControl = Constants.round(m_turretControl.getAsDouble());
+        double turretControl = Constants.round(Operator.getRightX());
         if (Math.abs(turretControl) >= .1) { 
             m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed);
-        } else if (m_alignButton.get()) {
+        } else if (Operator.rightBumper().get()) {
              m_shooter.visionAlign();
-        } else if (m_skewedAlignButton.get()){
-            m_shooter.skewedVisionAlign();
+        } else if (Operator.leftBumper().get()) {
+            m_shooter.resetTurret();
         } else m_shooter.stopTurret();  
 
-        if (m_shintakeButton.get()) {
+        if (Operator.a().get()) {
             m_intake.setShintake();
-        } else if (m_upperShintakeShootTrigger.getAsBoolean()) {
+        } else if (Operator.getRightTrigger()) {
             if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 20) {
                 m_intake.setShintake();
             } else m_intake.stopShintake();
 
             m_shooter.setRPM(Constants.Shooter.upperRPM);
-        } else if (m_lowerShintakeShootTrigger.getAsBoolean()) {
+        } else if (Operator.getLeftTrigger()) {
             if (m_shooter.getRPM() > Constants.Shooter.lowerRPM - 20) {
                 m_intake.setShintake();
             } else m_intake.stopShintake();
 
             m_shooter.setRPM(Constants.Shooter.lowerRPM);
-        } else if (m_upperShootButton.get()) {
+        } else if (OpPOV.up().get()) {
             m_shooter.setRPM(Constants.Shooter.upperRPM);
-        } else if (m_lowerShootButton.get()) {
+        } else if (OpPOV.down().get()) {
             m_shooter.setRPM(Constants.Shooter.lowerRPM);
-        } else if (m_bumperLeft.get()) {
+        } else if (Pilot.leftBumper().get()) {
             m_intake.holdShintake();
-        } else if (m_bumperRight.get()) {
+        } else if (Pilot.rightBumper().get()) {
             m_intake.setShintakeReverse();
-        } 
-        else {
+        } else if (Pilot.getLeftTrigger()) {
+            m_intake.setIntake();
+            m_intake.intakeFwd();
+            m_intake.holdShintake();
+        } else if (Pilot.getRightTrigger()) {
+            m_intake.setIntakeReverse();
+            m_intake.intakeFwd();
+            m_intake.setShintakeReverse();
+        } else {
             m_intake.stopShintake();
             m_shooter.stopMotor();
+            m_intake.intakeRev();
+            m_intake.stopIntake();
         }
     }
 

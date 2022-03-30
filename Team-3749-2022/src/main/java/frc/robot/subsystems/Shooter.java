@@ -25,7 +25,7 @@ public class Shooter extends SubsystemBase {
     private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI,
             Constants.Shooter.kD);
             
-    private PIDController m_pidTurretController = new PIDController(0.5, 0.4, 0.0);
+    private PIDController m_pidTurretController = new PIDController(1.0, 0.4, 0.0);
  
     public Shooter() {
         m_leftShooterMotor.setInverted(true);
@@ -58,9 +58,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setTurretPosition(double position) {
-        // if(m_turretEncoder.getPosition() + 0.01 > position || m_turretEncoder.getPosition() - 0.01 < position) 
-        setTurretMotor(m_pidTurretController.calculate(m_turretEncoder.getPosition(), position));
-        // else m_turretMotor.set(0);
+        setTurretMotor(m_pidTurretController.calculate(getTurretPosition(), position));
     }
 
     public void resetTurret() {

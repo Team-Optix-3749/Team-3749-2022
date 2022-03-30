@@ -1,4 +1,4 @@
-package frc.robot.commands.auton;
+package frc.robot.utilities;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -23,7 +23,6 @@ import frc.robot.commands.intake.AutoIntake;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import frc.robot.utilities.Constants;
 import frc.robot.commands.shooter.*;
 
 public class AutoGroups {
@@ -128,35 +127,6 @@ public class AutoGroups {
             new ResetDrivetrain(m_drivetrain, traj),
             ramseteCommand
         );
-    }
-
-    public final static Command getRamsete(String name, double velo, double accel) {
-        PathPlannerTrajectory path = PathPlanner.loadPath(name, .1, .1);
-
-        Trajectory traj = new Trajectory();
-
-        traj = path;
-
-        m_drivetrain.setBrake();
-
-        RamseteCommand ramseteCommand = new RamseteCommand(
-                traj,
-                m_drivetrain::getPose,
-                new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
-                new SimpleMotorFeedforward(
-                        Constants.Auto.ksVolts,
-                        Constants.Auto.kvVoltSecondsPerMeter,
-                        Constants.Auto.kaVoltSecondsSquaredPerMeter),
-                Constants.Auto.kDriveKinematics,
-                m_drivetrain::getWheelSpeeds,
-                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
-                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
-                m_drivetrain::tankDriveVolts,
-                m_drivetrain);
-
-        m_drivetrain.resetOdometry(traj.getInitialPose());
-
-        return ramseteCommand;
     }
 
     public final static Command getRamsete(String name, String translate) {
@@ -264,8 +234,6 @@ public class AutoGroups {
             shoot()
         );
     }
-
-
 
     public final Command tarmacShoot() {
         return shoot();

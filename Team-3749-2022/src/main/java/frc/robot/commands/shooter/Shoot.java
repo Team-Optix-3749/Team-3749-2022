@@ -5,13 +5,8 @@ import frc.robot.utilities.Constants;
 import frc.robot.utilities.POV;
 import frc.robot.utilities.Xbox;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 /** An example command that uses an example subsystem. */
 public class Shoot extends CommandBase {

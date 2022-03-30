@@ -101,6 +101,8 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
+        try {m_drivetrain.setCoast();}
+        catch (NullPointerException e) {} 
     }
 
     @Override

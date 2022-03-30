@@ -47,7 +47,6 @@ public class AutoGroups {
         } catch (IOException e) {
             DriverStation.reportError("Unable to open traj", e.getStackTrace());
         }
-        m_drivetrain.setBrake();
 
         RamseteCommand ramseteCommand = new RamseteCommand(
                 traj,
@@ -76,8 +75,6 @@ public class AutoGroups {
 
         traj = path;
 
-        m_drivetrain.setBrake();
-
         RamseteCommand ramseteCommand = new RamseteCommand(
                 traj,
                 m_drivetrain::getPose,
@@ -104,8 +101,6 @@ public class AutoGroups {
         Trajectory traj = new Trajectory();
 
         traj = path;
-
-        m_drivetrain.setBrake();
 
         RamseteCommand ramseteCommand = new RamseteCommand(
                 traj,
@@ -137,8 +132,6 @@ public class AutoGroups {
 
         traj = path;
 
-        m_drivetrain.setBrake();
-
         RamseteCommand ramseteCommand = new RamseteCommand(
                 traj,
                 m_drivetrain::getPose,
@@ -166,8 +159,6 @@ public class AutoGroups {
         if(translate != "") { 
             traj = traj.relativeTo(translation.getInitialPose());
         }
-
-        m_drivetrain.setBrake();
 
         RamseteCommand ramseteCommand = new RamseteCommand(
                 traj,

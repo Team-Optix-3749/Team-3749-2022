@@ -5,13 +5,8 @@ import frc.robot.utilities.Constants;
 import frc.robot.utilities.POV;
 import frc.robot.utilities.Xbox;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 /** An example command that uses an example subsystem. */
 public class Shoot extends CommandBase {
@@ -28,6 +23,8 @@ public class Shoot extends CommandBase {
     public Shoot(Shooter shooter, 
     Intake intake, 
     Xbox pilot, Xbox operator, POV opPOV) {
+        m_shooter = shooter;
+        m_intake = intake;
         Pilot = pilot;
         Operator = operator;
         OpPOV = opPOV;
@@ -66,14 +63,16 @@ public class Shoot extends CommandBase {
 
         if (Operator.a().get()) {
             m_intake.setShintake();
+        } else if (Operator.leftBumper().get()) {
+            m_shooter.resetTurret();
         } else if (Operator.getRightTrigger()) {
-            if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 20) {
+            if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 10) {
                 m_intake.setShintake();
             } else m_intake.stopShintake();
 
             m_shooter.setRPM(Constants.Shooter.upperRPM);
         } else if (Operator.getLeftTrigger()) {
-            if (m_shooter.getRPM() > Constants.Shooter.lowerRPM - 20) {
+            if (m_shooter.getRPM() > Constants.Shooter.lowerRPM - 10) {
                 m_intake.setShintake();
             } else m_intake.stopShintake();
 

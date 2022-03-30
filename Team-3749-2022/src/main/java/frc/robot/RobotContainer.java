@@ -10,6 +10,7 @@ import frc.robot.utilities.Xbox;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -54,6 +55,9 @@ public class RobotContainer {
 
         Pilot.y().whenPressed(new Extend(m_elevator)).whenReleased(new StopClimb(m_elevator));
         Pilot.b().whenPressed(new Lift(m_elevator)).whenReleased(new StopClimb(m_elevator));
+        Pilot.a().toggleWhenPressed(new InstantCommand(m_drivetrain::setCoast));
+        Pilot.b().toggleWhenPressed(new InstantCommand(m_drivetrain::setBrake));
+
 
         m_drivetrain.setDefaultCommand(
                 new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
@@ -71,6 +75,10 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         AutoGroups autoGroup = new AutoGroups(m_drivetrain, m_intake, m_shooter);
 
+        m_drivetrain.setBrake();
+
         return autoGroup.getFour();
     }
+
+    
 }

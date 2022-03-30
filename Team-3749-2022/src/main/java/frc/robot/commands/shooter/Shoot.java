@@ -23,6 +23,8 @@ public class Shoot extends CommandBase {
     public Shoot(Shooter shooter, 
     Intake intake, 
     Xbox pilot, Xbox operator, POV opPOV) {
+        m_shooter = shooter;
+        m_intake = intake;
         Pilot = pilot;
         Operator = operator;
         OpPOV = opPOV;
@@ -61,14 +63,16 @@ public class Shoot extends CommandBase {
 
         if (Operator.a().get()) {
             m_intake.setShintake();
+        } else if (Operator.leftBumper().get()) {
+            m_shooter.resetTurret();
         } else if (Operator.getRightTrigger()) {
-            if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 20) {
+            if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 10) {
                 m_intake.setShintake();
             } else m_intake.stopShintake();
 
             m_shooter.setRPM(Constants.Shooter.upperRPM);
         } else if (Operator.getLeftTrigger()) {
-            if (m_shooter.getRPM() > Constants.Shooter.lowerRPM - 20) {
+            if (m_shooter.getRPM() > Constants.Shooter.lowerRPM - 10) {
                 m_intake.setShintake();
             } else m_intake.stopShintake();
 

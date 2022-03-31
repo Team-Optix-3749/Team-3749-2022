@@ -1,10 +1,10 @@
 package frc.robot;
 
 import frc.robot.commands.*;
+import frc.robot.commands.auton.AutoGroups;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.elevator.*;
 import frc.robot.subsystems.*;
-import frc.robot.utilities.AutoGroups;
 import frc.robot.utilities.POV;
 import frc.robot.utilities.Xbox;
 

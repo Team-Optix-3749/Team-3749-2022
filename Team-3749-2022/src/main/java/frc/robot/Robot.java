@@ -3,10 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.Checks;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,10 +19,7 @@ public class Robot extends TimedRobot {
 
     private RobotContainer m_robotContainer;
 
-    private Drivetrain m_drivetrain = new Drivetrain();
-    private final Shooter m_shooter = new Shooter();
-    private final Intake m_intake = new Intake();
-
+    private Drivetrain m_drivetrain;
     /**
      * This function is run when the robot is first started up and should be used
      * for any
@@ -77,8 +71,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        m_drivetrain.setBrake();
-
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
@@ -99,7 +91,8 @@ public class Robot extends TimedRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
 
-        m_drivetrain.setCoast();
+        try {m_drivetrain.setCoast();}
+        catch (NullPointerException e) {}
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
@@ -108,15 +101,14 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
+        try {m_drivetrain.setCoast();}
+        catch (NullPointerException e) {} 
     }
 
     @Override
     public void testInit() {
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
-
-        CommandScheduler.getInstance().schedule(new Checks(m_drivetrain, m_intake, m_shooter));
-        CommandScheduler.getInstance().run();
     }
 
     /** This function is called periodically during test mode. */

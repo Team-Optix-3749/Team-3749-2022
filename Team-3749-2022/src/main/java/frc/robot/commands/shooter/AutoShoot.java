@@ -6,7 +6,6 @@ import frc.robot.utilities.Constants;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
 public class AutoShoot extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
@@ -31,7 +30,7 @@ public class AutoShoot extends CommandBase {
         m_shooter.visionAlign();
         m_shooter.setRPM(Constants.Shooter.upperRPM);
         
-        if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 20) m_intake.setShintake();
+        if (m_shooter.getRPM() > Constants.Shooter.upperRPM) m_intake.setShintake();
 
     }
 

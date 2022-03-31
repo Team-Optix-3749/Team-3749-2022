@@ -8,7 +8,6 @@ import frc.robot.utilities.Xbox;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
 public class Shoot extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
@@ -66,7 +65,7 @@ public class Shoot extends CommandBase {
         } else if (Operator.leftBumper().get()) {
             m_shooter.resetTurret();
         } else if (Operator.getRightTrigger()) {
-            if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 10) {
+            if (m_shooter.getRPM() > Constants.Shooter.upperRPM) {
                 m_intake.setShintake();
             } else m_intake.stopShintake();
 

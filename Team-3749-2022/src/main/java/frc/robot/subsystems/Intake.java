@@ -28,7 +28,8 @@ public class Intake extends SubsystemBase {
     public RelativeEncoder m_frontEncoder = m_shintakeFront.getEncoder();
     public RelativeEncoder m_backEncoder = m_shintakeBack.getEncoder();
 
-    private final PIDController m_pidController = new PIDController(Constants.Shintake.kP, Constants.Shintake.kI, Constants.Shintake.kD);
+    private final PIDController m_pidControllerHigh = new PIDController(Constants.Shintake.kP, Constants.Shintake.kI, Constants.Shintake.kD);
+    private final PIDController m_pidControllerLow = new PIDController(Constants.Shintake.kPlow, Constants.Shintake.kI, Constants.Shintake.kD);
 
     public Intake() {
         m_shintakeBack.setInverted(true);
@@ -73,12 +74,18 @@ public class Intake extends SubsystemBase {
     }
 
     public void setShintakePID() {
-        double frontVel = m_pidController.calculate(m_frontEncoder.getVelocity(), Constants.Shintake.targetRPM);
-        double backVel = m_pidController.calculate(m_backEncoder.getVelocity(), Constants.Shintake.targetRPM);
+        PIDController frontPIDController = m_frontEncoder.getVelocity() > Constants.Shintake.targetRPM - 50 ? m_pidControllerLow : m_pidControllerHigh;
+        double frontVel = frontPIDController.calculate(m_frontEncoder.getVelocity(), Constants.Shintake.targetRPM);
         m_shintakeFront.set(frontVel);
+
+        PIDController backPIDController = m_backEncoder.getVelocity() > Constants.Shintake.targetRPM - 50 ? m_pidControllerLow : m_pidControllerHigh;
+        double backVel = backPIDController.calculate(m_backEncoder.getVelocity(), Constants.Shintake.targetRPM);
         m_shintakeBack.set(backVel);
         /*
-            if (m_encoder.getVelocity() < Constants.Shintake.targetRPM) m_shintakeMotor.set(frontVel);
+            double frontVel = m_pidControllerHigh.calculate(m_frontEncoder.getVelocity(), Constants.Shintake.targetRPM);
+            double backVel = m_pidControllerHigh.calculate(m_backEncoder.getVelocity(), Constants.Shintake.targetRPM);
+            m_shintakeFront.set(frontVel);
+            m_shintakeBack.set(backVel);
         */
     }
 

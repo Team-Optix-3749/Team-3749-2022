@@ -111,6 +111,7 @@ public final class Constants {
         public static final int shintakeBack = 24;
         public static final double kShintakeSpeed = 0.5;
         public static final double kP = 1;
+        public static final double kPlow = 0.75;
         public static final double kI = 0.3;
         public static final double kD = 0;
         public static final double targetRPM = 2500;

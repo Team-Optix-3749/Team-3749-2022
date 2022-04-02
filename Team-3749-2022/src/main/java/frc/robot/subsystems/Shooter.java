@@ -26,7 +26,7 @@ public class Shooter extends SubsystemBase {
 
     private PIDController m_pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI,
             Constants.Shooter.kD);
-            
+                
     private PIDController m_pidTurretController = new PIDController(0.5, 0.4, 0.0);
 
     public static NetworkTable m_limelight = NetworkTableInstance.getDefault().getTable("limelight");

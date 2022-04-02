@@ -64,8 +64,8 @@ public final class Constants {
     }
 
     public static final class Shooter{
-        public static final double lowerRPM = 200; 
-        public static final double upperRPM = 340;
+        public static final double lowerRPM = 150; 
+        public static final double upperRPM = 480;
         // 340 WORKED FOR 85
         public static final double turretSpeed = 0.2;
 
@@ -110,7 +110,10 @@ public final class Constants {
         public static final int shintakeFront = 23;
         public static final int shintakeBack = 24;
         public static final double kShintakeSpeed = 0.5;
-
+        public static final double kP = 1;
+        public static final double kI = 0.3;
+        public static final double kD = 0;
+        public static final double targetRPM = 2500;
 
         public static enum BallColor {
             RED, BLUE, NULL

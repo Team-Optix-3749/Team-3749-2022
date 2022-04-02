@@ -1,13 +1,16 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake extends SubsystemBase {
     public CANSparkMax m_intakeMotor = new CANSparkMax(Constants.Intake.intakeMotor, MotorType.kBrushless);
@@ -22,6 +25,10 @@ public class Intake extends SubsystemBase {
 
     public CANSparkMax m_shintakeFront = new CANSparkMax(Constants.Shintake.shintakeFront, MotorType.kBrushless);
     public CANSparkMax m_shintakeBack = new CANSparkMax(Constants.Shintake.shintakeBack, MotorType.kBrushless);
+    public RelativeEncoder m_frontEncoder = m_shintakeFront.getEncoder();
+    public RelativeEncoder m_backEncoder = m_shintakeBack.getEncoder();
+
+    private final PIDController m_pidController = new PIDController(Constants.Shintake.kP, Constants.Shintake.kI, Constants.Shintake.kD);
 
     public Intake() {
         m_shintakeBack.setInverted(true);
@@ -34,6 +41,8 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.putNumber("SHINTAKE FRONT RPM", m_frontEncoder.getVelocity());
+        SmartDashboard.putNumber("SHINTAKE BACK RPM", m_backEncoder.getVelocity());
         startCompressor();
     }
 
@@ -61,6 +70,16 @@ public class Intake extends SubsystemBase {
     public void setShintake() {
         m_shintakeFront.set(Constants.Shintake.kShintakeSpeed);
         m_shintakeBack.set(Constants.Shintake.kShintakeSpeed);
+    }
+
+    public void setShintakePID() {
+        double frontVel = m_pidController.calculate(m_frontEncoder.getVelocity(), Constants.Shintake.targetRPM);
+        double backVel = m_pidController.calculate(m_backEncoder.getVelocity(), Constants.Shintake.targetRPM);
+        m_shintakeFront.set(frontVel);
+        m_shintakeBack.set(backVel);
+        /*
+            if (m_encoder.getVelocity() < Constants.Shintake.targetRPM) m_shintakeMotor.set(frontVel);
+        */
     }
 
     public void setShintakeReverse() {

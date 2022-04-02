@@ -31,7 +31,7 @@ public class RobotContainer {
 
     private final Elevator m_elevator = new Elevator();
 
-    // private final Base m_balls = new Base();
+    private final Base m_balls = new Base();
 
     Xbox Pilot;
     Xbox Operator;
@@ -57,6 +57,8 @@ public class RobotContainer {
         Pilot.b().whenPressed(new Lift(m_elevator)).whenReleased(new StopClimb(m_elevator));
         Pilot.a().toggleWhenPressed(new InstantCommand(m_drivetrain::setCoast));
         Pilot.b().toggleWhenPressed(new InstantCommand(m_drivetrain::setBrake));
+
+        PilotPOV.upLeft().toggleWhenActive(new InstantCommand(() -> m_balls.cope()));
 
 
         m_drivetrain.setDefaultCommand(

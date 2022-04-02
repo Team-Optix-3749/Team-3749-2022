@@ -7,6 +7,8 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -26,6 +28,8 @@ public class Shooter extends SubsystemBase {
             Constants.Shooter.kD);
             
     private PIDController m_pidTurretController = new PIDController(0.5, 0.4, 0.0);
+
+    public static NetworkTable m_limelight = NetworkTableInstance.getDefault().getTable("limelight");
  
     public Shooter() {
         m_leftShooterMotor.setInverted(true);
@@ -84,6 +88,9 @@ public class Shooter extends SubsystemBase {
 
     public void visionAlign() {
         double hubX = Constants.Auto.tx.getDouble(3749);
+        // double hubX = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(3749);
+        // double hubX = SmartDashboard.getNumber("limelight/tx", 3749.0);
+        System.out.println(hubX);
         SmartDashboard.putNumber("Hub Alignment (-3 < x < 3)", hubX);
         if (hubX != 3749) setTurretMotor(hubX * 0.015); 
         else stopTurret();

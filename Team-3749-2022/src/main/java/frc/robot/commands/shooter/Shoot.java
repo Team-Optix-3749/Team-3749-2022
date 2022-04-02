@@ -55,6 +55,7 @@ public class Shoot extends CommandBase {
         if (Math.abs(turretControl) >= .1) { 
             m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed);
         } else if (Operator.rightBumper().get()) {
+            System.out.println("align align align");
              m_shooter.visionAlign();
         } else if (Operator.leftBumper().get()) {
             m_shooter.resetTurret();
@@ -66,7 +67,7 @@ public class Shoot extends CommandBase {
             m_shooter.resetTurret();
         } else if (Operator.getRightTrigger()) {
             if (m_shooter.getRPM() > Constants.Shooter.upperRPM) {
-                m_intake.setShintake();
+                m_intake.setShintakePID();
             } else m_intake.stopShintake();
 
             m_shooter.setRPM(Constants.Shooter.upperRPM);

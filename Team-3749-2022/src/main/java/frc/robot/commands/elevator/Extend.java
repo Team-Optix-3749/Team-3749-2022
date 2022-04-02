@@ -17,7 +17,7 @@ public class Extend extends CommandBase {
 
     @Override
     public void execute() {
-        m_elevator.extend();
+        m_elevator.rawClimbUp();
     }
 
     @Override

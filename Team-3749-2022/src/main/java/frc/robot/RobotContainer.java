@@ -56,9 +56,9 @@ public class RobotContainer {
         Pilot.y().whenPressed(new Extend(m_elevator)).whenReleased(new StopClimb(m_elevator));
         Pilot.b().whenPressed(new Lift(m_elevator)).whenReleased(new StopClimb(m_elevator));
         Pilot.a().toggleWhenPressed(new InstantCommand(m_drivetrain::setCoast));
-        Pilot.b().toggleWhenPressed(new InstantCommand(m_drivetrain::setBrake));
+        Pilot.x().toggleWhenPressed(new InstantCommand(m_drivetrain::setBrake));
 
-        PilotPOV.upLeft().toggleWhenActive(new InstantCommand(() -> m_balls.cope()));
+        // PilotPOV.upLeft().toggleWhenActive(new InstantCommand(() -> m_balls.cope()));
 
 
         m_drivetrain.setDefaultCommand(
@@ -84,3 +84,4 @@ public class RobotContainer {
 
     
 }
+ 

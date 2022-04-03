@@ -256,7 +256,12 @@ public class AutoGroups {
         );
     }
 
-
+    public final Command getTwoLA() {
+        return new SequentialCommandGroup(
+            intake("1-Intake", ""),
+            getRamsete("1-ShootRound", "1-Intake"),
+            shoot());
+    }
 
     public final Command tarmacShoot() {
         return shoot();

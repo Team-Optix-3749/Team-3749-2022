@@ -42,9 +42,10 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("SHINTAKE FRONT RPM", m_frontEncoder.getVelocity());
-        SmartDashboard.putNumber("SHINTAKE BACK RPM", m_backEncoder.getVelocity());
         startCompressor();
+        SmartDashboard.putNumber("SHINTAKE BACK RPM", m_backEncoder.getVelocity());
+        SmartDashboard.putNumber("SHINTAKE FRONT RPM", m_frontEncoder.getVelocity());
+
     }
 
     public void setIntake() {
@@ -69,24 +70,35 @@ public class Intake extends SubsystemBase {
     }
 
     public void setShintake() {
-        m_shintakeFront.set(Constants.Shintake.kShintakeSpeed);
+        m_shintakeFront.set(Constants.Shintake.kShintakeSpeed + 0.01);
         m_shintakeBack.set(Constants.Shintake.kShintakeSpeed);
     }
 
-    public void setShintakePID() {
-        PIDController frontPIDController = m_frontEncoder.getVelocity() > Constants.Shintake.targetRPM - 50 ? m_pidControllerLow : m_pidControllerHigh;
-        double frontVel = frontPIDController.calculate(m_frontEncoder.getVelocity(), Constants.Shintake.targetRPM);
-        m_shintakeFront.set(frontVel);
+    public void setShintake(double powerCorrection) {
+        m_shintakeFront.set(Constants.Shintake.kShintakeSpeed + 0.01 + powerCorrection);
+        m_shintakeBack.set(Constants.Shintake.kShintakeSpeed + powerCorrection);
+    }
 
-        PIDController backPIDController = m_backEncoder.getVelocity() > Constants.Shintake.targetRPM - 50 ? m_pidControllerLow : m_pidControllerHigh;
-        double backVel = backPIDController.calculate(m_backEncoder.getVelocity(), Constants.Shintake.targetRPM);
-        m_shintakeBack.set(backVel);
-        /*
+    public void set24() {
+        m_shintakeBack.set(0.5);
+    }
+
+    public void setShintakePID() {
+        // PIDController frontPIDController = m_frontEncoder.getVelocity() > Constants.Shintake.targetRPM - 1500 ? m_pidControllerLow : m_pidControllerHigh;
+        // double frontVel = frontPIDController.calculate(m_frontEncoder.getVelocity(), Constants.Shintake.targetRPM);
+        // m_shintakeFront.set(frontVel);
+
+        // PIDController backPIDController = m_backEncoder.getVelocity() > Constants.Shintake.targetRPM - 1500 ? m_pidControllerLow : m_pidControllerHigh;
+        // double backVel = backPIDController.calculate(m_backEncoder.getVelocity(), Constants.Shintake.targetRPM);
+        // m_shintakeBack.set(backVel);
+         
             double frontVel = m_pidControllerHigh.calculate(m_frontEncoder.getVelocity(), Constants.Shintake.targetRPM);
             double backVel = m_pidControllerHigh.calculate(m_backEncoder.getVelocity(), Constants.Shintake.targetRPM);
             m_shintakeFront.set(frontVel);
             m_shintakeBack.set(backVel);
-        */
+            // if (m_frontEncoder.getVelocity() < Constants.Shintake.targetRPM - 500) m_shintakeFront.set(frontVel);
+            // if (m_backEncoder.getVelocity() < Constants.Shintake.targetRPM - 500) m_shintakeBack.set(backVel);
+        
     }
 
     public void setShintakeReverse() {

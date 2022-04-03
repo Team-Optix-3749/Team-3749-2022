@@ -66,8 +66,8 @@ public class Shoot extends CommandBase {
         } else if (Operator.leftBumper().get()) {
             m_shooter.resetTurret();
         } else if (Operator.getRightTrigger()) {
-            if (m_shooter.getRPM() > Constants.Shooter.upperRPM) {
-                m_intake.setShintakePID();
+            if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 10) {
+                m_intake.setShintake(0.015);
             } else m_intake.stopShintake();
 
             m_shooter.setRPM(Constants.Shooter.upperRPM);

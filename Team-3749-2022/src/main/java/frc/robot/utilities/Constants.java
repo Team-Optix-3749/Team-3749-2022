@@ -109,12 +109,14 @@ public final class Constants {
     public static class Shintake {
         public static final int shintakeFront = 23;
         public static final int shintakeBack = 24;
-        public static final double kShintakeSpeed = 0.5;
-        public static final double kP = 1;
-        public static final double kPlow = 0.75;
-        public static final double kI = 0.3;
+        public static final double kShintakeSpeed = 0.51;
+        public static final double kP = .0002;
+        public static final double kPlow = .0001;
+        public static final double kI = 0;
         public static final double kD = 0;
-        public static final double targetRPM = 2500;
+        // public static final double targetRPM = 2500;
+        public static final double targetRPM = 5500;
+
 
         public static enum BallColor {
             RED, BLUE, NULL

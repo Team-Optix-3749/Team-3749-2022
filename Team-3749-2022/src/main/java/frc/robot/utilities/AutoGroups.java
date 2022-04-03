@@ -199,6 +199,7 @@ public class AutoGroups {
                     new WaitCommand(1)
                 ),
                 getRamsete("1-ShootRound", "1-intake"),
+                new WaitCommand(2),
                 shoot());
     }
     

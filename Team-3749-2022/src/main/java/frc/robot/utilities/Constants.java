@@ -109,7 +109,7 @@ public final class Constants {
     public static class Shintake {
         public static final int shintakeFront = 23;
         public static final int shintakeBack = 24;
-        public static final double kShintakeSpeed = 0.51;
+        public static final double kShintakeSpeed = 0.53;
         public static final double kP = .0002;
         public static final double kPlow = .0001;
         public static final double kI = 0;

@@ -124,6 +124,33 @@ public class AutoGroups {
         );
     }
 
+    public final static Command getRamsete(String name, double velo, double accel) {
+        PathPlannerTrajectory path = PathPlanner.loadPath(name, .1, .1);
+
+        Trajectory traj = new Trajectory();
+
+        traj = path;
+
+        RamseteCommand ramseteCommand = new RamseteCommand(
+                traj,
+                m_drivetrain::getPose,
+                new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
+                new SimpleMotorFeedforward(
+                        Constants.Auto.ksVolts,
+                        Constants.Auto.kvVoltSecondsPerMeter,
+                        Constants.Auto.kaVoltSecondsSquaredPerMeter),
+                Constants.Auto.kDriveKinematics,
+                m_drivetrain::getWheelSpeeds,
+                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
+                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
+                m_drivetrain::tankDriveVolts,
+                m_drivetrain);
+
+        m_drivetrain.resetOdometry(traj.getInitialPose());
+
+        return ramseteCommand;
+    }
+
     public final static Command getRamsete(String name, String translate) {
         Trajectory traj = PathPlanner.loadPath(name, 2.5, 2.5);
         Trajectory translation = PathPlanner.loadPath(name, 2.5, 2.5); // why does this work??????
@@ -184,6 +211,10 @@ public class AutoGroups {
                         new WaitCommand(1.5)));
     }
 
+    public final Command timerShoot() {
+        return new AutoShootTimer(m_shooter, m_intake, 50);
+    }
+
     public final Command getRaadwan() {
         return new SequentialCommandGroup(
                 intake("1-Intake"),
@@ -196,10 +227,9 @@ public class AutoGroups {
                 intake("1-Intake"),
                 new ParallelRaceGroup(
                     intake(),
-                    new WaitCommand(1)
+                    new WaitCommand(1.5)
                 ),
                 getRamsete("1-ShootRound", "1-intake"),
-                new WaitCommand(2),
                 shoot());
     }
     
@@ -219,7 +249,7 @@ public class AutoGroups {
             intake("1-Intake", ""),
             getRamsete("1-ShootRound", "1-Intake"),
             shoot(),
-            intake("7-Intake", ""),
+            getRamsete("7-Intake", ""),
             new ParallelRaceGroup(  
                 intake(),
                 new WaitCommand(2)          
@@ -227,6 +257,27 @@ public class AutoGroups {
             getRamsete("7-ShootReversalNew", true),
             shoot()
         );
+    }
+    public final Command getFourJacked() {
+        return new SequentialCommandGroup(
+            intake("1-Intake", ""),
+            getRamsete("1-ShootRound", "1-Intake"),
+            timerShoot(),
+            getRamsete("7-Intake", ""),
+            new ParallelRaceGroup(  
+                intake(),
+                new WaitCommand(2)          
+            ),
+            getRamsete("7-ShootReversalNew", true),
+            timerShoot()
+        );
+    }
+
+    public final Command getTwoLA() {
+        return new SequentialCommandGroup(
+            intake("1-Intake", ""),
+            getRamsete("1-ShootRound", "1-Intake"),
+            timerShoot());
     }
 
     public final Command tarmacShoot() {

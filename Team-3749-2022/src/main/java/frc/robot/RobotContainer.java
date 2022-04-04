@@ -1,7 +1,7 @@
 package frc.robot;
 
 import frc.robot.commands.*;
-import frc.robot.commands.auton.AutoGroups;
+import frc.robot.utilities.AutoGroups;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.elevator.*;
 import frc.robot.subsystems.*;
@@ -78,10 +78,9 @@ public class RobotContainer {
         AutoGroups autoGroup = new AutoGroups(m_drivetrain, m_intake, m_shooter);
 
         m_drivetrain.setBrake();
-
-        return autoGroup.getFour();
+        return autoGroup.getTwoLA();
+        // return autoGroup.getFourjacked();
     }
-
     
 }
  

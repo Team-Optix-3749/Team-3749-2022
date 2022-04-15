@@ -35,7 +35,7 @@ public class RobotContainer {
 
     Xbox Pilot;
     Xbox Operator;
-    POV PilotPOV;
+    POV PiPOV;
     POV OpPOV;
 
     /**
@@ -50,7 +50,7 @@ public class RobotContainer {
         Pilot = new Xbox(0);
         Operator = new Xbox(1);
 
-        PilotPOV = new POV(new GenericHID(0));
+        PiPOV = new POV(new GenericHID(0));
         OpPOV = new POV(new GenericHID(1));
 
         Pilot.y().whenPressed(new Extend(m_elevator)).whenReleased(new StopClimb(m_elevator));
@@ -64,7 +64,7 @@ public class RobotContainer {
         m_drivetrain.setDefaultCommand(
                 new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
         m_shooter.setDefaultCommand(
-                new Shoot(m_shooter, m_intake, Pilot, Operator, OpPOV));
+                new Shoot(m_shooter, m_intake, Pilot, Operator, OpPOV, PiPOV));
         // m_intake.setDefaultCommand(
         //     new Input(m_intake, Pilot::getLeftTrigger, Pilot::getRightTrigger));
     }

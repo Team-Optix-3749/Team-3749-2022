@@ -17,16 +17,18 @@ public class Shoot extends CommandBase {
     private Xbox Pilot;
     private Xbox Operator;
     private POV OpPOV;
+    private POV PiPOV;
 
 
     public Shoot(Shooter shooter, 
     Intake intake, 
-    Xbox pilot, Xbox operator, POV opPOV) {
+    Xbox pilot, Xbox operator, POV opPOV, POV piPOV) {
         m_shooter = shooter;
         m_intake = intake;
         Pilot = pilot;
         Operator = operator;
         OpPOV = opPOV;
+        PiPOV = piPOV;
         addRequirements(shooter);
     }
 
@@ -90,7 +92,11 @@ public class Shoot extends CommandBase {
             m_intake.intakeFwd();
             m_intake.holdShintake();
         } else if (Pilot.getRightTrigger()) {
-            m_intake.setIntakeReverse();
+            m_intake.setIntakeReverse(1);
+            m_intake.intakeFwd();
+            m_intake.setShintakeReverse();
+        } else if (PiPOV.up().get()){
+            m_intake.setIntakeReverse(0.5);
             m_intake.intakeFwd();
             m_intake.setShintakeReverse();
         } else {

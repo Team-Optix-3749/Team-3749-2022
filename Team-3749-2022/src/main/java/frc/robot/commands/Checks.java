@@ -125,7 +125,7 @@ public class Checks extends SequentialCommandGroup {
             new ParallelRaceGroup(
                 new PrintCommand("REV INTAKE + PISTONS"),
                 new InstantCommand(() -> m_intake.intakeFwd()),
-                new InstantCommand(() -> m_intake.setIntakeReverse()),
+                new InstantCommand(() -> m_intake.setIntakeReverse(1)),
                 new WaitCommand(1.5)
             ),
             new ParallelRaceGroup(
@@ -179,7 +179,7 @@ public class Checks extends SequentialCommandGroup {
             new ParallelRaceGroup(
                 new PrintCommand("open intake + intake out + shintake reverse"),
                 new InstantCommand(() -> m_intake.intakeFwd()),
-                new InstantCommand(() -> m_intake.setIntakeReverse()),
+                new InstantCommand(() -> m_intake.setIntakeReverse(1)),
                 new InstantCommand(() -> m_intake.setShintakeReverse()),
                 new WaitCommand(4)
             ),

@@ -52,8 +52,8 @@ public class Intake extends SubsystemBase {
         m_intakeMotor.set(Constants.Intake.kIntakeSpeed);
     }
     
-    public void setIntakeReverse() {
-        m_intakeMotor.set(-Constants.Intake.kIntakeSpeed);
+    public void setIntakeReverse(double multiplier) {
+        m_intakeMotor.set(-Constants.Intake.kIntakeSpeed * multiplier);
     }
 
     public void stopMotors() {

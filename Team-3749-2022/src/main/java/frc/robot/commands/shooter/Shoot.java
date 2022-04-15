@@ -73,19 +73,18 @@ public class Shoot extends CommandBase {
             } else m_intake.stopShintake();
 
             m_shooter.setRPM(Constants.Shooter.upperRPM);
-        } else if (Operator.getLeftTrigger()) {
+        } else if (Operator.getLeftTrigger() || Pilot.rightBumper().get()) {
             if (m_shooter.getRPM() > Constants.Shooter.lowerRPM - 10) {
                 m_intake.setShintake();
             } else m_intake.stopShintake();
-
             m_shooter.setRPM(Constants.Shooter.lowerRPM);
         } else if (OpPOV.up().get()) {
             m_shooter.setRPM(Constants.Shooter.upperRPM);
         } else if (OpPOV.down().get()) {
             m_shooter.setRPM(Constants.Shooter.lowerRPM);
-        } else if (Pilot.leftBumper().get()) {
+        } else if (PiPOV.left().get()) {
             m_intake.holdShintake();
-        } else if (Pilot.rightBumper().get()) {
+        } else if (PiPOV.right().get()) {
             m_intake.setShintakeReverse();
         } else if (Pilot.getLeftTrigger()) {
             m_intake.setIntake();
@@ -95,7 +94,7 @@ public class Shoot extends CommandBase {
             m_intake.setIntakeReverse();
             m_intake.intakeFwd();
             m_intake.setShintakeReverse();
-        } else if (PiPOV.up().get()){
+        } else if (Pilot.leftBumper().get()){
             m_intake.setIntakeHalfReverse();
             m_intake.intakeFwd();
             m_intake.setShintakeReverse();

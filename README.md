@@ -3,14 +3,13 @@
 ## Controller 1 (Pilot)
 ### Joysticks:
  - 🕹️ **Left Joystick Y:** Drives foward
- - 🕹️ **Left Joystick Button:** Toggle to activate and deactivate sprint (100% speed)
  - 🕹️ **Right Joystick X:** Rotates drivetrain
 
 ### Buttons:
- - 🅰️ **A Button:** 
- - 🅱️ **B Button:** 
- - 🥔 **Y Button:** 
- - ❌ **X Button:** 
+ - 🅰️ **A Button:** toggle coast
+ - 🅱️ **B Button:** toggle break
+ - 🥔 **Y Button:** extend climb
+ - ❌ **X Button:** retract climb
 
 ### D-Pad:
  - ⬆️ **Up:** 
@@ -19,12 +18,12 @@
  - ⬅️ **Left:** 
 
 ### Bumpers:
- - 🤛 **Left Bumper:** 
- - 🤜 **Right Bumper:** Opens Intake, runs intake wheels inwards, and runs shintake inwards to the middle of the robot 
+ - 🤛 **Left Bumper:** shintake hold
+ - 🤜 **Right Bumper:** shintake reverse
 
 ### Triggers:
- - 🔫 **Right Trigger:** 
- - 🔫 **Left Trigger:** 
+ - 🔫 **Right Trigger:** open intake, intake & shintake hold
+ - 🔫 **Left Trigger:** open intake, outtake & shintake reverse
 
 ## Controller 2 (Operator)
 ### Joysticks:

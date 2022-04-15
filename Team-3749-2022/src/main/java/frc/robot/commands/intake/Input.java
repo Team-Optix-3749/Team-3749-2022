@@ -34,7 +34,7 @@ public class Input extends CommandBase {
             m_intake.intakeFwd();
             m_intake.holdShintake();
         } else if (m_triggerRight.getAsBoolean()) {
-            m_intake.setIntakeReverse(1);
+            m_intake.setIntakeReverse();
             m_intake.intakeFwd();
             m_intake.setShintakeReverse();
         } else {

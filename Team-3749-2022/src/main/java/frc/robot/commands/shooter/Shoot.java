@@ -92,11 +92,11 @@ public class Shoot extends CommandBase {
             m_intake.intakeFwd();
             m_intake.holdShintake();
         } else if (Pilot.getRightTrigger()) {
-            m_intake.setIntakeReverse(1);
+            m_intake.setIntakeReverse();
             m_intake.intakeFwd();
             m_intake.setShintakeReverse();
         } else if (PiPOV.up().get()){
-            m_intake.setIntakeReverse(0.5);
+            m_intake.setIntakeHalfReverse();
             m_intake.intakeFwd();
             m_intake.setShintakeReverse();
         } else {

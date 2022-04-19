@@ -2,11 +2,12 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -28,7 +29,14 @@ public class Intake extends SubsystemBase {
     public RelativeEncoder m_frontEncoder = m_shintakeFront.getEncoder();
     public RelativeEncoder m_backEncoder = m_shintakeBack.getEncoder();
 
-    private final PIDController m_pidControllerHigh = new PIDController(Constants.Shintake.kP, Constants.Shintake.kI, Constants.Shintake.kD);
+    private SparkMaxPIDController m_shintakeFrontPIDController;
+    private SparkMaxPIDController m_shintakeBackPIDController;
+    private RelativeEncoder m_shintakeFrontEncoder;
+    private RelativeEncoder m_shintakeBackEncoder;
+
+    // private final PIDController m_pidControllerHigh = new
+    // PIDController(Constants.Shintake.kP, Constants.Shintake.kI,
+    // Constants.Shintake.kD);
 
     public Intake() {
         m_shintakeBack.setInverted(true);
@@ -37,6 +45,22 @@ public class Intake extends SubsystemBase {
         m_intakeMotor.setIdleMode(IdleMode.kBrake);
         m_shintakeFront.setIdleMode(IdleMode.kBrake);
         m_shintakeBack.setIdleMode(IdleMode.kBrake);
+
+        m_shintakeFrontEncoder = m_shintakeFront.getEncoder();
+        m_shintakeFrontPIDController = m_shintakeFront.getPIDController();
+        m_shintakeFrontPIDController.setFeedbackDevice(m_shintakeFrontEncoder);
+        m_shintakeFrontPIDController.setP(Constants.Shintake.kP);
+        m_shintakeFrontPIDController.setI(Constants.Shintake.kI);
+        m_shintakeFrontPIDController.setD(Constants.Shintake.kD);
+        m_shintakeFrontPIDController.setOutputRange(-1, 1);
+
+        m_shintakeBackEncoder = m_shintakeBack.getEncoder();
+        m_shintakeBackPIDController = m_shintakeBack.getPIDController();
+        m_shintakeBackPIDController.setFeedbackDevice(m_shintakeBackEncoder);
+        m_shintakeBackPIDController.setP(Constants.Shintake.kP);
+        m_shintakeBackPIDController.setI(Constants.Shintake.kI);
+        m_shintakeBackPIDController.setD(Constants.Shintake.kD);
+        m_shintakeBackPIDController.setOutputRange(-1, 1);
     }
 
     @Override
@@ -44,13 +68,12 @@ public class Intake extends SubsystemBase {
         startCompressor();
         SmartDashboard.putNumber("SHINTAKE BACK RPM", m_backEncoder.getVelocity());
         SmartDashboard.putNumber("SHINTAKE FRONT RPM", m_frontEncoder.getVelocity());
-
     }
 
     public void setIntake() {
         m_intakeMotor.set(Constants.Intake.kIntakeSpeed);
     }
-    
+
     public void setIntakeReverse() {
         m_intakeMotor.set(-Constants.Intake.kIntakeSpeed);
     }
@@ -87,21 +110,36 @@ public class Intake extends SubsystemBase {
     }
 
     public void setShintakePID() {
-        // PIDController frontPIDController = m_frontEncoder.getVelocity() > Constants.Shintake.targetRPM - 1500 ? m_pidControllerLow : m_pidControllerHigh;
-        // double frontVel = frontPIDController.calculate(m_frontEncoder.getVelocity(), Constants.Shintake.targetRPM);
+        // PIDController frontPIDController = m_frontEncoder.getVelocity() >
+        // Constants.Shintake.targetRPM - 1500 ? m_pidControllerLow :
+        // m_pidControllerHigh;
+        // double frontVel = frontPIDController.calculate(m_frontEncoder.getVelocity(),
+        // Constants.Shintake.targetRPM);
         // m_shintakeFront.set(frontVel);
 
-        // PIDController backPIDController = m_backEncoder.getVelocity() > Constants.Shintake.targetRPM - 1500 ? m_pidControllerLow : m_pidControllerHigh;
-        // double backVel = backPIDController.calculate(m_backEncoder.getVelocity(), Constants.Shintake.targetRPM);
+        // PIDController backPIDController = m_backEncoder.getVelocity() >
+        // Constants.Shintake.targetRPM - 1500 ? m_pidControllerLow :
+        // m_pidControllerHigh;
+        // double backVel = backPIDController.calculate(m_backEncoder.getVelocity(),
+        // Constants.Shintake.targetRPM);
         // m_shintakeBack.set(backVel);
-         
-            double frontVel = m_pidControllerHigh.calculate(m_frontEncoder.getVelocity(), Constants.Shintake.targetRPM);
-            double backVel = m_pidControllerHigh.calculate(m_backEncoder.getVelocity(), Constants.Shintake.targetRPM);
-            m_shintakeFront.set(frontVel);
-            m_shintakeBack.set(backVel);
-            // if (m_frontEncoder.getVelocity() < Constants.Shintake.targetRPM - 500) m_shintakeFront.set(frontVel);
-            // if (m_backEncoder.getVelocity() < Constants.Shintake.targetRPM - 500) m_shintakeBack.set(backVel);
-        
+
+        // if (m_frontEncoder.getVelocity() < Constants.Shintake.targetRPM - 500)
+        // m_shintakeFront.set(frontVel);
+        // if (m_backEncoder.getVelocity() < Constants.Shintake.targetRPM - 500)
+        // m_shintakeBack.set(backVel);
+
+        // **************** LAR SPEC PID CODE ****************
+        // double frontVel = m_pidControllerHigh.calculate(m_frontEncoder.getVelocity(),
+        // Constants.Shintake.targetRPM);
+        // double backVel = m_pidControllerHigh.calculate(m_backEncoder.getVelocity(),
+        // Constants.Shintake.targetRPM);
+        // m_shintakeFront.set(frontVel);
+        // m_shintakeBack.set(backVel);
+
+        // **************** CHAMPS SPEC PID CODE ****************
+        m_shintakeFrontPIDController.setReference(Constants.Shintake.targetRPM, ControlType.kVelocity);
+        m_shintakeBackPIDController.setReference(Constants.Shintake.targetRPM, ControlType.kVelocity);
     }
 
     public void setShintakeReverse() {
@@ -125,7 +163,7 @@ public class Intake extends SubsystemBase {
     public void setShintakeVoltage(double volts) {
         m_shintakeFront.setVoltage(volts);
         m_shintakeBack.setVoltage(volts);
-        
+
     }
 
     public void intakeFwd() {

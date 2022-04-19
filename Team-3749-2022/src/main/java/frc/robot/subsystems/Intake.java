@@ -29,7 +29,6 @@ public class Intake extends SubsystemBase {
     public RelativeEncoder m_backEncoder = m_shintakeBack.getEncoder();
 
     private final PIDController m_pidControllerHigh = new PIDController(Constants.Shintake.kP, Constants.Shintake.kI, Constants.Shintake.kD);
-    private final PIDController m_pidControllerLow = new PIDController(Constants.Shintake.kPlow, Constants.Shintake.kI, Constants.Shintake.kD);
 
     public Intake() {
         m_shintakeBack.setInverted(true);

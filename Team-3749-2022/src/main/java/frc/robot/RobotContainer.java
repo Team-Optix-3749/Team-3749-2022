@@ -31,8 +31,6 @@ public class RobotContainer {
 
     private final Elevator m_elevator = new Elevator();
 
-    private final Base m_balls = new Base();
-
     Xbox Pilot;
     Xbox Operator;
     POV PiPOV;

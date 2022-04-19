@@ -64,12 +64,14 @@ public class Shoot extends CommandBase {
         } else m_shooter.stopTurret();  
 
         if (Operator.a().get()) {
-            m_intake.setShintake();
+            // m_intake.setShintake();
+            m_intake.setShintakePID(); // TODO test if shintake PID works
         } else if (Operator.leftBumper().get()) {
             m_shooter.resetTurret();
         } else if (Operator.getRightTrigger()) {
             if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 10) {
-                m_intake.setShintake(0.015);
+                // m_intake.setShintake(0.015);
+                m_intake.setShintakePID(); // TODO test if shintake PID works
             } else m_intake.stopShintake();
 
             m_shooter.setRPM(Constants.Shooter.upperRPM);

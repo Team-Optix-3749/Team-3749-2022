@@ -14,12 +14,12 @@
 ### D-Pad:
  - ⬆️ **Up:** 
  - ⬇️ **Down:** 
- - ➡️ **Right:**
- - ⬅️ **Left:** 
+ - ➡️ **Right:** Shintake Reverse 
+ - ⬅️ **Left:** Shintake Hold
 
 ### Bumpers:
- - 🤛 **Left Bumper:** shintake hold
- - 🤜 **Right Bumper:** shintake reverse
+ - 🤛 **Left Bumper:** Slow Outtake
+ - 🤜 **Right Bumper:** Lower Hub Shoot
 
 ### Triggers:
  - 🔫 **Right Trigger:** open intake, intake & shintake hold

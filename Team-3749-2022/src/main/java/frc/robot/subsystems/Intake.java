@@ -79,7 +79,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void setIntakeHalfReverse() {
-        m_intakeMotor.set(-Constants.Intake.kIntakeSpeed * 0.5);
+        m_intakeMotor.set(-Constants.Intake.kIntakeSpeed * 0.25);
     }
 
     public void stopMotors() {

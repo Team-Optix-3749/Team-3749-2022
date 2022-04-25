@@ -69,14 +69,19 @@ public class Shoot extends CommandBase {
         } else if (Operator.leftBumper().get()) {
             m_shooter.resetTurret();
         } else if (Operator.getRightTrigger()) {
-            if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 10) {
+            if (m_shooter.getRPM() > Constants.Shooter.upperRPM) {
                 // m_intake.setShintake(0.015);
                 m_intake.setShintakePID(); // TODO test if shintake PID works
             } else m_intake.stopShintake();
 
             m_shooter.setRPM(Constants.Shooter.upperRPM);
-        } else if (Operator.getLeftTrigger() || Pilot.rightBumper().get()) {
-            if (m_shooter.getRPM() > Constants.Shooter.lowerRPM - 10) {
+        } else if (Operator.getLeftTrigger()) {
+            if (m_shooter.getRPM() > Constants.Shooter.lowerRPM - 15) {
+                m_intake.setShintake();
+            } else m_intake.stopShintake();
+            m_shooter.setRPM(Constants.Shooter.lowerRPM);
+        } else if (Pilot.leftBumper().get()) {
+            if (m_shooter.getRPM() > Constants.Shooter.lowerRPM - 15) {
                 m_intake.setShintake();
             } else m_intake.stopShintake();
             m_shooter.setRPM(Constants.Shooter.lowerRPM);
@@ -96,7 +101,7 @@ public class Shoot extends CommandBase {
             m_intake.setIntakeReverse();
             m_intake.intakeFwd();
             m_intake.setShintakeReverse();
-        } else if (Pilot.leftBumper().get()){
+        } else if (Pilot.rightBumper().get()){
             m_intake.setIntakeHalfReverse();
             m_intake.intakeFwd();
             m_intake.setShintakeReverse();

@@ -37,11 +37,11 @@ public class Elevator extends SubsystemBase {
     }
 
     public void rawClimbUp() {
-        m_chain.set(0.75);
+        m_chain.set(1);
     }
 
     public void rawClimbDown() {
-        m_chain.set(-0.75);
+        m_chain.set(-1);
     }
 
     public void stopClimb() {

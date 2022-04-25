@@ -30,7 +30,7 @@ public class AutoShoot extends CommandBase {
         m_shooter.visionAlign();
         m_shooter.setRPM(Constants.Shooter.upperRPM);
         
-        if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 10) 
+        if (m_shooter.getRPM() > Constants.Shooter.upperRPM - 7) 
             // m_intake.setShintake(0.015);
             m_intake.setShintakePID(); // TODO test if shintake PID works
 

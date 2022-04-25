@@ -33,6 +33,7 @@ public class Drivetrain extends SubsystemBase {
 
     private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
 
+    // private final PowerDistribution pdp = new PowerDistribution(0, ModuleType.kCTRE);
 
     public Drivetrain() {
         setCoast();
@@ -69,6 +70,10 @@ public class Drivetrain extends SubsystemBase {
     // Update the odometry in the periodic block
       m_odometry.update(
         m_gyro.getRotation2d(), m_leftFront.getSelectedSensorPosition()/Constants.Auto.wheelMult, m_rightFront.getSelectedSensorPosition()/Constants.Auto.wheelMult);
+
+      // SmartDashboard.putNumber("voltage", pdp.getVoltage());
+      // SmartDashboard.putNumber("channel", pdp.getCurrent(1));
+      SmartDashboard.putString("motor (abnormal, normal)", m_leftFront.getSelectedSensorVelocity() + " " + m_leftBack.getSelectedSensorVelocity());
   }
 
   /**

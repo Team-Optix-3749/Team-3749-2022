@@ -65,7 +65,7 @@ public final class Constants {
 
     public static final class Shooter{
         public static final double lowerRPM = 150; 
-        public static final double upperRPM = 480;
+        public static final double upperRPM = 500;
         // 340 WORKED FOR 85
         public static final double turretSpeed = 0.2;
 
@@ -82,9 +82,9 @@ public final class Constants {
         public static final double limelightAngle = 50;
         public static final double shooterAngle = (47.5);
 
-        public static final double upperHubLesserDistance = 1.905;
-        public static final double upperHubGreaterDistance = 2.413; 
-        public static final double lowerHubDistance = 1;
+        public static final double upperHubLesserDistance = 1.1;
+        public static final double upperHubGreaterDistance = 1.45; 
+        public static final double lowerHubDistance = .4;
     } 
 
     public static final class Vision{

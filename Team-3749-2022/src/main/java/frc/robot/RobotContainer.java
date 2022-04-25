@@ -77,8 +77,8 @@ public class RobotContainer {
 
         m_drivetrain.setBrake();
         return autoGroup.getTwoLA();
-        // return autoGroup.getFourjacked();
-    }
+        // return autoGroup.getFourJacked();
+    };
     
 }
  

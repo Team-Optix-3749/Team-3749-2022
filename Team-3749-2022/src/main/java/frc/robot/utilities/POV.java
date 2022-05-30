@@ -7,7 +7,6 @@ package frc.robot.utilities;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
-/** Provides POVButtons for binding commands to any GenericHID inherited class. */
 public class POV {
 	private final GenericHID m_hid;
 	private final int m_povNumber;
@@ -21,31 +20,15 @@ public class POV {
 	private POVButton m_leftButton; // 270 degrees
 	private POVButton m_upLeftButton; // 315 degrees
 
-	/**
-	 * Constructs a ControllerPOV.
-	 *
-	 * @param hid The HID controller to read the POV from.
-	 */
 	public POV(GenericHID hid) {
 		this(hid, 0);
 	}
 
-	/**
-	 * Constructs a ControllerPOV.
-	 *
-	 * @param hid The HID controller to read the POV from.
-	 * @param povNumber The controller POV index to use.
-	 */
 	public POV(GenericHID hid, int povNumber) {
 		m_hid = hid;
 		m_povNumber = povNumber;
 	}
 
-	/**
-	 * Returns the upper (0 degrees) POVButton object.
-	 *
-	 * <p>To get its value, use {@link POVButton#get()}.
-	 */
 	public POVButton up() {
 		if (m_upButton == null) {
 			m_upButton = new POVButton(m_hid, 0, m_povNumber);
@@ -54,11 +37,6 @@ public class POV {
 		return m_upButton;
 	}
 
-	/**
-	 * Returns the upper-right (45 degrees) POVButton object.
-	 *
-	 * <p>To get its value, use {@link POVButton#get()}.
-	 */
 	public POVButton upRight() {
 		if (m_upRightButton == null) {
 			m_upRightButton = new POVButton(m_hid, 45, m_povNumber);
@@ -67,11 +45,6 @@ public class POV {
 		return m_upRightButton;
 	}
 
-	/**
-	 * Returns the right (90 degrees) POVButton object.
-	 *
-	 * <p>To get its value, use {@link POVButton#get()}.
-	 */
 	public POVButton right() {
 		if (m_rightButton == null) {
 			m_rightButton = new POVButton(m_hid, 90, m_povNumber);
@@ -80,11 +53,6 @@ public class POV {
 		return m_rightButton;
 	}
 
-	/**
-	 * Returns the downwards-right (135 degrees) POVButton object.
-	 *
-	 * <p>To get its value, use {@link POVButton#get()}.
-	 */
 	public POVButton downRight() {
 		if (m_downRightButton == null) {
 			m_downRightButton = new POVButton(m_hid, 135, m_povNumber);
@@ -93,11 +61,6 @@ public class POV {
 		return m_downRightButton;
 	}
 
-	/**
-	 * Returns the downwards (180 degrees) POVButton object.
-	 *
-	 * <p>To get its value, use {@link POVButton#get()}.
-	 */
 	public POVButton down() {
 		if (m_downButton == null) {
 			m_downButton = new POVButton(m_hid, 180, m_povNumber);
@@ -106,11 +69,6 @@ public class POV {
 		return m_downButton;
 	}
 
-	/**
-	 * Returns the downwards-left (225 degrees) POVButton object.
-	 *
-	 * <p>To get its value, use {@link POVButton#get()}.
-	 */
 	public POVButton downLeft() {
 		if (m_downLeftButton == null) {
 			m_downLeftButton = new POVButton(m_hid, 225, m_povNumber);
@@ -119,11 +77,6 @@ public class POV {
 		return m_downLeftButton;
 	}
 
-	/**
-	 * Returns the left (270 degrees) POVButton object.
-	 *
-	 * <p>To get its value, use {@link POVButton#get()}.
-	 */
 	public POVButton left() {
 		if (m_leftButton == null) {
 			m_leftButton = new POVButton(m_hid, 270, m_povNumber);
@@ -132,11 +85,6 @@ public class POV {
 		return m_leftButton;
 	}
 
-	/**
-	 * Returns the upwards-left (315 degrees) POVButton object.
-	 *
-	 * <p>To get its value, use {@link POVButton#get()}.
-	 */
 	public POVButton upLeft() {
 		if (m_upLeftButton == null) {
 			m_upLeftButton = new POVButton(m_hid, 315, m_povNumber);

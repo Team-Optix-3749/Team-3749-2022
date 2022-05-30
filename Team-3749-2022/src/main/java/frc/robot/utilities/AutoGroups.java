@@ -124,33 +124,6 @@ public class AutoGroups {
         );
     }
 
-    public final static Command getRamsete(String name, double velo, double accel) {
-        PathPlannerTrajectory path = PathPlanner.loadPath(name, .1, .1);
-
-        Trajectory traj = new Trajectory();
-
-        traj = path;
-
-        RamseteCommand ramseteCommand = new RamseteCommand(
-                traj,
-                m_drivetrain::getPose,
-                new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
-                new SimpleMotorFeedforward(
-                        Constants.Auto.ksVolts,
-                        Constants.Auto.kvVoltSecondsPerMeter,
-                        Constants.Auto.kaVoltSecondsSquaredPerMeter),
-                Constants.Auto.kDriveKinematics,
-                m_drivetrain::getWheelSpeeds,
-                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
-                new PIDController(Constants.Auto.kPDriveVel, 0, 0),
-                m_drivetrain::tankDriveVolts,
-                m_drivetrain);
-
-        m_drivetrain.resetOdometry(traj.getInitialPose());
-
-        return ramseteCommand;
-    }
-
     public final static Command getRamsete(String name, String translate) {
         Trajectory traj = PathPlanner.loadPath(name, 2.5, 2.5);
         Trajectory translation = PathPlanner.loadPath(name, 2.5, 2.5); // why does this work??????
@@ -212,7 +185,7 @@ public class AutoGroups {
     }
 
     public final Command timerShoot() {
-        return new AutoShootTimer(m_shooter, m_intake, 50);
+        return null;
     }
 
     public final Command getRaadwan() {

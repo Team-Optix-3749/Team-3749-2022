@@ -11,16 +11,6 @@ import frc.robot.utilities.Xbox;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-
-/**
- * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and button mappings) should be declared here.
- */
 public class RobotContainer {
 
     private final Drivetrain m_drivetrain = new Drivetrain();
@@ -36,11 +26,7 @@ public class RobotContainer {
     POV PiPOV;
     POV OpPOV;
 
-    /**
-     * The container for the robot. Contains subsystems, OI devices, and commands.
-     */
     public RobotContainer() {
-        // Configure the button bindings
         configureButtonBindings();
     }
 
@@ -67,18 +53,22 @@ public class RobotContainer {
         //     new Input(m_intake, Pilot::getLeftTrigger, Pilot::getRightTrigger));
     }
 
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
+
     public Command getAutonomousCommand() {
         AutoGroups autoGroup = new AutoGroups(m_drivetrain, m_intake, m_shooter);
 
         m_drivetrain.setBrake();
         return autoGroup.getTwoLA();
         // return autoGroup.getFourJacked();
-    };
+    }
+
+    public Command setCoast() {
+        return new InstantCommand(m_drivetrain::setCoast, m_drivetrain);
+    }
+
+    public Command runChecks() {
+        return new Checks(m_drivetrain, m_intake, m_shooter);
+    }
     
 }
  

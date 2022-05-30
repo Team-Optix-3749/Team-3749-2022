@@ -53,6 +53,8 @@ public class Shoot extends CommandBase {
 
         dashboard();
 
+        // why did we do this bruh 💀💀
+        
         double turretControl = Constants.round(Operator.getRightX());
         if (Math.abs(turretControl) >= .1) { 
             m_shooter.setTurretMotor(turretControl*Constants.Shooter.turretSpeed);

@@ -39,7 +39,6 @@ public class Input extends CommandBase {
         } else {
             m_intake.intakeRev();
             m_intake.stopIntake();
-            // m_intake.stopShintake();
         }
     }
 
@@ -51,7 +50,6 @@ public class Input extends CommandBase {
         t.reset();
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         return false;

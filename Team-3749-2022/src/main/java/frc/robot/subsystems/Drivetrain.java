@@ -3,19 +3,29 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import org.opencv.objdetect.CascadeClassifier;
+
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.*;
+import frc.robot.utils.Constants.Drivetrain.Mode;
 
 /** Represents a differential drive style drivetrain. */
 public class Drivetrain extends SubsystemBase {
@@ -44,8 +54,13 @@ public class Drivetrain extends SubsystemBase {
 
     private final DifferentialDriveOdometry m_odometry;
 
+    private final DifferentialDrive m_drive = new DifferentialDrive(m_leftGroup, m_rightGroup);
+
     // must be determined for your own robot!
     private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(1, 1);
+
+    private final Pose2d zeroPose2d = new Pose2d(0.0, 0.0, new Rotation2d(0.0));
+    private final Rotation2d zeroRotation2d = new Rotation2d(0.0);
 
     /**
      * Constructs a differential drive object & resets the gyro
@@ -59,6 +74,33 @@ public class Drivetrain extends SubsystemBase {
         m_rightGroup.setInverted(true);
 
         m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+    }
+
+    public void periodic() {
+        // Update the odometry in the periodic block
+        m_odometry.update(
+                m_gyro.getRotation2d(), 
+                getLeftDistance(),
+                getRightDistance());
+
+        odometryLogging();
+    }
+
+    public void setMode(Mode mode) {
+        switch(mode) {
+            case COAST:
+                m_leftFollower.setNeutralMode(NeutralMode.Coast);
+                m_rightFollower.setNeutralMode(NeutralMode.Coast);
+                m_rightLeader.setNeutralMode(NeutralMode.Coast);
+                m_leftLeader.setNeutralMode(NeutralMode.Coast);
+                break;
+            case BRAKE:
+                m_leftFollower.setNeutralMode(NeutralMode.Brake);
+                m_rightFollower.setNeutralMode(NeutralMode.Brake);
+                m_rightLeader.setNeutralMode(NeutralMode.Brake);
+                m_leftLeader.setNeutralMode(NeutralMode.Brake);
+                break;
+        }
     }
 
     /**
@@ -80,36 +122,38 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Sets the desired wheel speeds.
+     * Drives the robot with the rotation and speed.
      *
-     * @param speeds The desired wheel speeds.
-     */
-    public void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
-        final double leftFeedforward = m_feedforward.calculate(speeds.leftMetersPerSecond);
-        final double rightFeedforward = m_feedforward.calculate(speeds.rightMetersPerSecond);
-
-        final double leftOutput = m_leftPIDController.calculate(m_leftLeader.getSelectedSensorVelocity(), speeds.leftMetersPerSecond);
-        final double rightOutput = m_rightPIDController.calculate(m_rightLeader.getSelectedSensorVelocity(),
-                speeds.rightMetersPerSecond);
-        m_leftGroup.setVoltage(leftOutput + leftFeedforward);
-        m_rightGroup.setVoltage(rightOutput + rightFeedforward);
-    }
-
-    /**
-     * Drives the robot with the given linear velocity and angular velocity.
-     *
-     * @param xSpeed Linear velocity in m/s.
-     * @param rot    Angular velocity in rad/s.
+     * @param xSpeed Linear speed in %.
+     * @param rot    Angular speed in %.
      */
     @SuppressWarnings("ParameterName")
     public void arcadeDrive(double xSpeed, double rot) {
-        var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
-        setSpeeds(wheelSpeeds);
+        m_drive.arcadeDrive(xSpeed, rot);
     }
 
     /** Updates the field-relative position. */
     public void updateOdometry() {
         m_odometry.update(
                 m_gyro.getRotation2d(), getLeftDistance(), getRightDistance());
+    }
+
+    public void odometryLogging() {
+        Pose2d robotPose = m_odometry.getPoseMeters();
+
+        double[] robotLocation = {robotPose.getX(), robotPose.getY(), robotPose.getRotation().getDegrees()};
+        SmartDashboard.putNumber("X Pos", robotLocation[0]);
+        SmartDashboard.putNumber("Y Pos", robotLocation[1]);
+        SmartDashboard.putNumber("Rot", robotLocation[2]);
+
+        SmartDashboard.putNumberArray("x vs y vs rot", robotLocation);
+    }   
+
+    public void talonLogging () {
+        // m_leftLeader.
+    }
+
+    public void resetRobotPose() {
+        m_odometry.resetPosition(zeroPose2d, zeroRotation2d);
     }
 }

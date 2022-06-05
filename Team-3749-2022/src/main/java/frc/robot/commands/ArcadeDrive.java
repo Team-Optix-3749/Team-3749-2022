@@ -4,8 +4,11 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.utils.Constants;
 
 public class ArcadeDrive extends CommandBase {
+    @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+
     public final Drivetrain m_drive;
     DoubleSupplier fwd;
     DoubleSupplier rot;
@@ -14,16 +17,21 @@ public class ArcadeDrive extends CommandBase {
         this.m_drive = m_drive;
         this.fwd = fwd;
         this.rot = rot;
+
+        addRequirements(m_drive);
     }
 
     @Override
     public void initialize() {
-        
+        m_drive.resetRobotPose();
     }
 
     @Override
     public void execute() {
-        m_drive.arcadeDrive(fwd.getAsDouble(), rot.getAsDouble());
+        double roundedFwd = Constants.round(fwd.getAsDouble());
+        double roundedRot = Constants.round(rot.getAsDouble());
+
+        m_drive.arcadeDrive(roundedFwd, -roundedRot);
     }
 
     // returns true when the command should end

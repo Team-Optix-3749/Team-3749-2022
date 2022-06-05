@@ -126,21 +126,6 @@
                 <li><code>Set shintake PID</code>
             </ul>
         </li>
-        <li>🅱️ B Button<br>
-            <ul>
-                <li><code>Toggle break mode</code>
-            </ul>
-        </li>
-        <li>❓❓❓❓❓ Y button<br>
-            <ul>
-                <li><code>Extend climb</code>
-            </ul>
-        </li>
-        <li>❎ X Button<br>
-            <ul>
-                <li><code>Retract climb</code>
-            </ul>
-        </li>
     </ol>
 </details>
 

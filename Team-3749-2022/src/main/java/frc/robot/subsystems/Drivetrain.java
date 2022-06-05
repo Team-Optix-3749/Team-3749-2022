@@ -33,18 +33,31 @@ public class Drivetrain extends SubsystemBase {
 
     private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
 
-    // private final PowerDistribution pdp = new PowerDistribution(0, ModuleType.kCTRE);
+    // private final PowerDistribution pdp = new PowerDistribution(0,ModuleType.kCTRE);
 
     public Drivetrain() {
         setCoast();
 
-        // m_rightFront.setSensorPhase(true);
-        m_rightFront.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-        m_leftFront.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-
         m_right.setInverted(true);
     }
 
+    @Override
+    public void periodic() {
+        // Update the odometry in the periodic block
+        m_odometry.update(
+                m_gyro.getRotation2d(), m_leftFront.getSelectedSensorPosition() / Constants.Auto.wheelMult,
+                m_rightFront.getSelectedSensorPosition() / Constants.Auto.wheelMult);
+
+        // SmartDashboard.putNumber("voltage", pdp.getVoltage());
+        // SmartDashboard.putNumber("channel", pdp.getCurrent(1));
+        SmartDashboard.putString("motor (abnormal, normal)",
+                m_leftFront.getSelectedSensorVelocity() + " " + m_leftBack.getSelectedSensorVelocity());
+    }
+
+    /*
+     * Sets the drivetrain to brake mode
+     * @use Used during auto to provide accurate PID
+     */
     public void setBrake() {
         m_leftFront.setNeutralMode(NeutralMode.Brake);
         m_leftBack.setNeutralMode(NeutralMode.Brake);
@@ -53,143 +66,148 @@ public class Drivetrain extends SubsystemBase {
         m_rightFront.setNeutralMode(NeutralMode.Brake);
     }
 
+    /*
+     * Sets the drivetrain to coast mode
+     * @use Used during teleop, easier for drivers ot control breaking
+     */
     public void setCoast() {
         m_leftFront.setNeutralMode(NeutralMode.Coast);
         m_leftBack.setNeutralMode(NeutralMode.Coast);
 
         m_rightBack.setNeutralMode(NeutralMode.Coast);
         m_rightFront.setNeutralMode(NeutralMode.Coast);
-  }
+    }
 
+    /* 
+     * Comtrols the speed & rotation of both motor controller groups using DifferentialDrive.arcadeDrive()
+     *  Used during teleop for joystick control of the drivetrain
+     */ 
     public void arcadeDrive(double speed, double rotation) {
         m_drive.arcadeDrive(speed, -rotation * Constants.Drivetrain.rotationalSpeed);
     }
 
-    @Override
-  public void periodic() {
-    // Update the odometry in the periodic block
-      m_odometry.update(
-        m_gyro.getRotation2d(), m_leftFront.getSelectedSensorPosition()/Constants.Auto.wheelMult, m_rightFront.getSelectedSensorPosition()/Constants.Auto.wheelMult);
+    /**
+     * Returns the currently-estimated pose of the robot.
+     *  used in trajectory generation
+     * @return The pose.
+     */
+    public Pose2d getPose() {
+        // System.out.println(m_odometry.getPoseMeters().getX() + " " +
+        // m_odometry.getPoseMeters().getY());
+        return m_odometry.getPoseMeters();
+    }
 
-      // SmartDashboard.putNumber("voltage", pdp.getVoltage());
-      // SmartDashboard.putNumber("channel", pdp.getCurrent(1));
-      SmartDashboard.putString("motor (abnormal, normal)", m_leftFront.getSelectedSensorVelocity() + " " + m_leftBack.getSelectedSensorVelocity());
-  }
+    /**
+     * Returns the current wheel speeds of the robot.
+     *  
+     * @return The current wheel speeds.
+     */
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds(m_leftFront.getSelectedSensorVelocity() / Constants.Auto.wheelMult,
+                m_rightFront.getSelectedSensorVelocity() / Constants.Auto.wheelMult);
+    }
 
-  /**
-   * Returns the currently-estimated pose of the robot.
-   *
-   * @return The pose.
-   */
-  public Pose2d getPose() {
-    // System.out.println(m_odometry.getPoseMeters().getX() + " " + m_odometry.getPoseMeters().getY());
-    return m_odometry.getPoseMeters();
-  }
-
-  /**
-   * Returns the current wheel speeds of the robot.
-   *
-   * @return The current wheel speeds.
-   */
-  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_leftFront.getSelectedSensorVelocity()/Constants.Auto.wheelMult, m_rightFront.getSelectedSensorVelocity()/Constants.Auto.wheelMult);
-  }
-
-  /**
-   * Resets the odometry to the specified pose.
-   *
-   * @param pose The pose to which to set the odometry.
-   */
-  public void resetOdometry(Pose2d pose) {
-    resetEncoders();
-    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
-  }
-  /**
-   * Controls the left and right sides of the drive directly with voltages.
-   *
-   * @param leftVolts the commanded left output
-   * @param rightVolts the commanded right output
-   */
-  public void tankDriveVolts(double leftVolts, double rightVolts) {
-    m_left.setVoltage(-leftVolts*0.3);
-    m_right.setVoltage(-rightVolts*0.3);
-    m_drive.feed();
-
-  }
-
-  public void tankDriveVoltsBackwards(double leftVolts, double rightVolts) {
-    m_left.setVoltage(leftVolts*0.3);
-    m_right.setVoltage(rightVolts*0.3);
-    m_drive.feed();
-
-  }
-
-//   /** Resets the drive encoders to currently read a position of 0. */
-//   public void resetEncoders() {
-//     m_leftEncoder.reset();
-//     m_rightEncoder.reset();
-//   }
-
-  /**
-   * Gets the average distance of the two encoders.
-   *
-   * @return the average of the two encoder readings
-   */
-  public double getAverageEncoderDistance() {
-    // SmartDashboard.putNumber("bruh", ((m_leftFront.getSelectedSensorPosition() + m_rightFront.getSelectedSensorPosition()) / 2.0) / Constants.Auto.wheelMult);
-    return ((m_leftFront.getSelectedSensorPosition() + m_rightFront.getSelectedSensorPosition()) / 2.0) / Constants.Auto.wheelMult;
-  }
-
-  /**
-   * Sets the max output of the drive. Useful for scaling the drive to drive more slowly.
-   *
-   * @param maxOutput the maximum output to which the drive will be constrained
-   */
-  public void setMaxOutput(double maxOutput) {
-    m_drive.setMaxOutput(maxOutput);
-  }
-
-  /** Zeroes the heading of the robot. */
-  public void zeroHeading() {
-    m_gyro.reset();
-  }
-
-  /**
-   * Returns the heading of the robot.
-   *
-   * @return the robot's heading in degrees, from -180 to 180
-   */
-  public double getHeading() {
-    // System.out.println(m_gyro.getRotation2d().getDegrees());
-    SmartDashboard.putNumber("gyro", m_gyro.getRotation2d().getDegrees());
-    return m_gyro.getRotation2d().getDegrees();
-
-  }
-
-  /**
-   * Returns the turn rate of the robot.
-   *
-   * @return The turn rate of the robot, in degrees per second
-   */
-  public double getTurnRate() {
-    return -m_gyro.getRate();
-  }
+    /*
+     * Resets the odometry to the specified pose.
+     *  Used to set the pose to the initial pose of the path
+     * 
+     * @param pose The pose to which to set the odometry.
+     */
+    public void resetOdometry(Pose2d pose) {
+        resetEncoders();
+        m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+    }
 
 
-  public double getDistanceLeft() {
-    return m_leftFront.getSelectedSensorPosition()/Constants.Auto.wheelMult;
-  }
+    /* 
+     * Controls the left and rght motor controller groups using voltages
+     *  RamseteCommand object uses this in accordance with PID calcuations to generate commands for trajectories
+     */
+    public void tankDriveVolts(double leftVolts, double rightVolts) {
+        m_left.setVoltage(-leftVolts * 0.3);
+        m_right.setVoltage(-rightVolts * 0.3);
+        m_drive.feed();
+    }
 
-  public double getDistanceRight() {
-    return m_rightFront.getSelectedSensorPosition()/Constants.Auto.wheelMult;
-  }
+    public void tankDriveVoltsBackwards(double leftVolts, double rightVolts) {
+        m_left.setVoltage(leftVolts * 0.3);
+        m_right.setVoltage(rightVolts * 0.3);
+        m_drive.feed();
 
-  public void stop() {
-    m_drive.arcadeDrive(0, 0);
-  }
+    }
 
-  public void resetEncoders () {
-    m_leftFront.setSelectedSensorPosition(0);
-    m_rightFront.setSelectedSensorPosition(0);
-  }
+    /**
+     * Gets the average distance of the two encoders.
+     *
+     * @return the average of the two encoder readings
+     */
+    public double getAverageEncoderDistance() {
+        // SmartDashboard.putNumber("bruh", ((m_leftFront.getSelectedSensorPosition() +
+        // m_rightFront.getSelectedSensorPosition()) / 2.0) / Constants.Auto.wheelMult);
+        return ((m_leftFront.getSelectedSensorPosition() + m_rightFront.getSelectedSensorPosition()) / 2.0)
+                / Constants.Auto.wheelMult;
+    }
+
+    /**
+     * Sets the max output of the drive. Useful for scaling the drive to drive more
+     * slowly.
+     *
+     * @param maxOutput the maximum output to which the drive will be constrained
+     */
+    public void setMaxOutput(double maxOutput) {
+        m_drive.setMaxOutput(maxOutput);
+    }
+
+    /* 
+     * Resets the gyro heading
+     */
+    public void zeroHeading() {
+        m_gyro.reset();
+    }
+
+    /**
+     * Returns the heading of the robot.
+     *  Used in pose tracking
+     *  TODO: display robot heading for drivers 
+     * 
+     * @return the robot's heading in degrees, from -180 to 180
+     */
+    public double getHeading() {
+        // System.out.println(m_gyro.getRotation2d().getDegrees());
+        SmartDashboard.putNumber("gyro", m_gyro.getRotation2d().getDegrees());
+        return m_gyro.getRotation2d().getDegrees();
+
+    }
+
+    /**
+     * Returns the turn rate of the robot.
+     *
+     * @return The turn rate of the robot, in degrees per second
+     */
+    public double getTurnRate() {
+        return -m_gyro.getRate();
+    }
+
+    public double getDistanceLeft() {
+        return m_leftFront.getSelectedSensorPosition() / Constants.Auto.wheelMult;
+    }
+
+    public double getDistanceRight() {
+        return m_rightFront.getSelectedSensorPosition() / Constants.Auto.wheelMult;
+    }
+
+    /*
+     * Turns off drivetrain
+     */ 
+    public void stop() {
+        m_drive.arcadeDrive(0, 0);
+    }
+
+    /* 
+     * Reset wheel encoders
+     */
+    public void resetEncoders() {
+        m_leftFront.setSelectedSensorPosition(0);
+        m_rightFront.setSelectedSensorPosition(0);
+    }
 }

@@ -1,5 +1,4 @@
 > ### 🎮 Controls
----
 ### 🧑‍✈️ PILOT CONTROLS
 ---
 <details open>

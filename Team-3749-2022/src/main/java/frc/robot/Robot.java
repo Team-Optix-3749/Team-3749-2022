@@ -20,9 +20,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
-        Command m_setTeleop = m_robotContainer.setCoast();
-
-        m_setTeleop.schedule();
     }
 
     @Override
@@ -44,9 +41,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        Command m_setTeleop = m_robotContainer.setCoast();
-
-        m_setTeleop.schedule();
     }
 
     @Override

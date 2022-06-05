@@ -1,47 +1,6 @@
-# Team-3749-2022
+# Team-3749-2022 [![Optix3749](https://github.com/Team-Optix-3749/Team-3749-2022/workflows/gradle/badge.svg)](https://github.com/Team-Optix-3749/Team-3749-2022/actions)
+> 🤖 Team Optix 3749's robot code for the 2021 FIRST® Robotics Competition.
 
-## Controller 1 (Pilot)
-### Joysticks:
- - 🕹️ **Left Joystick Y:** Drives foward
- - 🕹️ **Right Joystick X:** Rotates drivetrain
-
-### Buttons:
- - 🅰️ **A Button:** toggle coast
- - 🅱️ **B Button:** toggle break
- - 🥔 **Y Button:** extend climb
- - ❌ **X Button:** retract climb
-
-### D-Pad:
- - ⬆️ **Up:** 
- - ⬇️ **Down:** 
- - ➡️ **Right:** Shintake Reverse 
- - ⬅️ **Left:** Shintake Hold
-
-### Bumpers:
- - 🤛 **Left Bumper:** Slow Outtake
- - 🤜 **Right Bumper:** Lower Hub Shoot
-
-### Triggers:
- - 🔫 **Right Trigger:** open intake, intake & shintake hold
- - 🔫 **Left Trigger:** open intake, outtake & shintake reverse
-
-## Controller 2 (Operator)
-### Joysticks:
- - 🕹️ **Left Joystick Y:** 
- - 🕹️ **Left Joystick Button:** 
- - 🕹️ **Right Joystick X:** 
-
-### Buttons:
- - 🅰️ **A Button:** 
- - 🅱️ **B Button:** 
- - 🥔 **Y Button:** Set Optix Lights
- - ❌ **X Button:** Toggle to set direction of turret motion 
-
-### Bumpers:
- - 🤛 **Left Bumper:**
- - 🤜 **Right Bumper:** 
-
-### Triggers:
- - 🔫 **Right Trigger:** Runs Shintake and Shooter 
- - 🔫 **Left Trigger:** Manually controls speed of Turret
-
+#### External Libs
+1. [PathPlanner 2.0](https://github.com/mjansen4857/pathplanner)
+2. [XboxController Getters](https://github.com/oscarrobotics/GrouchLib/blob/diffdrive-rework/src/main/java/edu/wpi/first/wpilibj2/command/CommandXboxController.java)

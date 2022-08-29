@@ -4,9 +4,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Base extends SubsystemBase {
-    public Base(){}
-
-
 
     public void cope() {    
         int x = 0;

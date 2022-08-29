@@ -3,7 +3,6 @@ package frc.robot;
 import frc.robot.commands.*;
 import frc.robot.utilities.AutoGroups;
 import frc.robot.commands.shooter.*;
-import frc.robot.commands.elevator.*;
 import frc.robot.subsystems.*;
 import frc.robot.utilities.POV;
 import frc.robot.utilities.Xbox;
@@ -11,6 +10,7 @@ import frc.robot.utilities.Xbox;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+
 public class RobotContainer {
 
     private final Drivetrain m_drivetrain = new Drivetrain();
@@ -19,7 +19,7 @@ public class RobotContainer {
 
     private final Intake m_intake = new Intake();
 
-    private final Elevator m_elevator = new Elevator();
+    // private final Elevator m_elevator = new Elevator();
 
     Xbox Pilot;
     Xbox Operator;
@@ -35,15 +35,12 @@ public class RobotContainer {
         Operator = new Xbox(1);
 
         PiPOV = new POV(new GenericHID(0));
-        OpPOV = new POV(new GenericHID(1));
+        OpPOV = new POV(    new GenericHID(1));
 
-        Pilot.y().whenPressed(new Extend(m_elevator)).whenReleased(new StopClimb(m_elevator));
-        Pilot.b().whenPressed(new Lift(m_elevator)).whenReleased(new StopClimb(m_elevator));
+        // Pilot.y().whenPressed(new Extend(m_elevator)).whenReleased(new StopClimb(m_elevator));
+        // Pilot.b().whenPressed(new Lift(m_elevator)).whenReleased(new StopClimb(m_elevator));
         Pilot.a().toggleWhenPressed(new InstantCommand(m_drivetrain::setCoast));
         Pilot.x().toggleWhenPressed(new InstantCommand(m_drivetrain::setBrake));
-
-        // PilotPOV.upLeft().toggleWhenActive(new InstantCommand(() -> m_balls.cope()));
-
 
         m_drivetrain.setDefaultCommand(
                 new ArcadeDrive(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));
@@ -59,7 +56,6 @@ public class RobotContainer {
 
         m_drivetrain.setBrake();
         return autoGroup.getTwoLA();
-        // return autoGroup.getFourJacked();
     }
 
     public Command setCoast() {

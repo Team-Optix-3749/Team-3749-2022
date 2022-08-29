@@ -28,7 +28,7 @@ public class AutoShootTimer extends CommandBase{
 
     @Override
     public void execute() {
-        m_shooter.visionAlign();
+        // m_shooter.visionAlign();
         m_shooter.setRPM(Constants.Shooter.upperRPM + m_addRPM);
         
         if (t.get() > 2.5) m_intake.setShintake(0.015);
@@ -37,7 +37,7 @@ public class AutoShootTimer extends CommandBase{
 
     @Override
     public void end(boolean interrupted) {
-        m_shooter.stopTurret();
+        // m_shooter.stopTurret();
         m_shooter.stopMotor();
         m_intake.stopShintake();
         t.reset();

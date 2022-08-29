@@ -1,6 +1,5 @@
 > ### 🎮 Controls
-### 🧑‍✈️ PILOT CONTROLS
----
+## 🧑‍✈️ PILOT CONTROLS
 <details open>
     <summary>
         <strong>JOYSTICKS 🕹️</strong>
@@ -101,8 +100,7 @@
     </ol>
 </details>
 
-### 🧑‍⚕️ OP CONTROLS
----
+## 🧑‍⚕️ OP CONTROLS
 <details open>
     <summary>
         <strong>JOYSTICKS 🕹️</strong>

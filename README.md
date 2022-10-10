@@ -6,5 +6,6 @@
 
 ## Links
  - [Instagram](https://www.instagram.com/optix3749/) 
- - [2021 season code](https://github.com/Team-Optix-3749/Team3749-2021)
  - [Website](https://www.team3749.org/) 
+ - [2021 season code](https://github.com/Team-Optix-3749/Team3749-2021)
+
